@@ -1,0 +1,68 @@
+@startuml Class_diagram
+skinparam nodesep 60
+
+class "Persona" as person {
+    nombre
+    cédula 
+}
+
+class "Comensal" as comensal {
+    type
+}
+
+class "Trabajador del \nComedor" as em {}
+class "Administrador" as adm {}
+
+class "Menú" as menu {
+    fecha
+    desc_comida
+    cantidad
+}
+
+class "Insumo" as input {
+    tipo
+    cantidad
+}
+
+class "Plato" as dish {}
+class "Inventario" as inventory {}
+
+class "Reserva" as reservation {
+    horario_inicio
+    horario_fin
+    estado
+}
+
+class "Reporte" as rep {}
+class "Comedor" as dining {}
+
+person <|-u- comensal
+person <|-r- em
+person <|-u- adm
+
+comensal -u- menu : consulta >
+comensal "1" -r- "1    " reservation : solicita >
+reservation ..> menu
+menu "1" o-r- "1..*" dish 
+dish "0..*" *-d- "1..* " input
+
+input "0..*" --- "1   " inventory : controlado en > 
+em "1..*" -- "1     " dining : trabaja en > 
+em "  1..*" - "  1..*" reservation : atiende >
+
+adm "  1..*" -> "  1..*" menu : gestiona >
+adm "1..*" -u-> "0..*" rep : genera >  
+
+rep <.. inventory : datos
+dining "1" *- "1" inventory
+
+reservation -[hidden]down- dining
+
+
+
+
+
+
+
+
+

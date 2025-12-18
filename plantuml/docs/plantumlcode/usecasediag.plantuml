@@ -1,0 +1,63 @@
+@startuml UseCase_Diagram
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Comensal" as User
+actor "Estudiante" as Student
+actor "Empleado" as Employee
+actor "Administrador" as Admin
+actor "Trabajador del Comedor" as Staff
+
+User -[hidden]left- Student
+Student -[hidden]left- Employee
+
+User <|-- Student
+User <|-- Employee
+
+package "Sistema de Comedor Universitario" {
+
+    usecase "Iniciar sesión" as UC_login
+    usecase "Registrarse" as UC_register
+
+    usecase "Consultar menú" as UC_menu
+    usecase "Solicitar turno" as UC_request <<Reserva>>
+    note top of UC_request
+      "Turno" se refiere a la reserva 
+      de una comida en un horario.
+    end note
+
+    usecase "Planificar menú semanal" as UC_weeklyMenu
+    usecase "Administrar menú" as UC_manageMenu
+    usecase "Publicar menú" as UC_publishMenu
+    usecase "Eliminar menú" as UC_deleteMenu
+    usecase "Editar menú" as UC_editMenu
+    usecase "Generar reporte" as UC_generateReport
+    usecase "Consignar documento" as UC_document
+    usecase "Gestionar horarios" as UC_manageTurns
+    usecase "Consultar turnos" as UC_consulteTurns
+    usecase "Verificar planificación" as UC_verifyPlanification
+    usecase "Atender turno" as UC_verifyTurn
+
+    User -- UC_login
+    User -- UC_menu
+    User -- UC_consulteTurns
+    User -- UC_register
+
+    Staff -- UC_verifyPlanification
+    Staff -- UC_verifyTurn
+  
+    Admin -- UC_weeklyMenu
+    Admin -- UC_manageMenu
+    Admin -- UC_generateReport
+    Admin -- UC_manageTurns
+    Admin -- UC_login
+
+    UC_manageMenu <.. UC_publishMenu : <<extend>>
+    UC_manageMenu <.. UC_deleteMenu : <<extend>>
+    UC_manageMenu <.. UC_editMenu : <<extend>>
+    UC_register ..> UC_document : <<include>>
+    UC_consulteTurns ..> UC_request : <<include>>
+
+    
+}
+@enduml

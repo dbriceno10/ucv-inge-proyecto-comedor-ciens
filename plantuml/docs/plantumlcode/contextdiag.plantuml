@@ -1,0 +1,42 @@
+@startuml context-diagram
+
+state ExisteLaCuenta <<choice>>
+
+[*] --> IniciandoSesion
+
+IniciandoSesion --> ExisteLaCuenta : ValidarCuenta
+
+ExisteLaCuenta --> DecisionTipoUsuario : Sí
+ExisteLaCuenta --> Registrandose : No
+
+Registrandose --> ConsignandoDocumentos : CompletarFormulario
+ConsignandoDocumentos --> IniciandoSesion : DocumentosConsignados
+
+state DecisionTipoUsuario <<choice>>
+
+DecisionTipoUsuario --> ModoUsuario : EntrarModoUsuario
+DecisionTipoUsuario --> ModoEmpleado : EntrarModoEmpleado
+DecisionTipoUsuario --> ModoAdmin : EntrarModoAdmin
+
+ModoUsuario --> ConsultandoMenu : ConsultarMenu
+ModoUsuario --> ConsultandoTurno : ConsultarTurnos
+ConsultandoMenu --> [*]
+ConsultandoTurno --> SolicitandoTurno : SolicitarTurno
+SolicitandoTurno --> [*]
+
+ModoEmpleado --> VerificandoPlanificacion : VerificarPlanificacion
+ModoEmpleado --> AtendiendoTurnos : AtenderTurnos
+VerificandoPlanificacion --> [*]
+AtendiendoTurnos --> [*]
+
+ModoAdmin --> GestionandoHorarios : GestionarHorarios
+ModoAdmin --> PlanificandoMenu : PlanificarMenu
+ModoAdmin --> AdministrandoMenu : AdministrarMenu
+ModoAdmin --> GenerandoReporte : GenerarReporte
+
+GestionandoHorarios --> [*]
+PlanificandoMenu --> [*]
+AdministrandoMenu --> [*]
+GenerandoReporte --> [*]
+
+@enduml
