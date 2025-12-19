@@ -1,10 +1,10 @@
 # Comedor Ciens UCV - Sistema de Gestión de Comedor Universitario (SGCU)
 
 ## 📌 Descripción del Proyecto
-El **SGCU** es una solución de escritorio desarrollada en **Java** para automatizar y optimizar el servicio de alimentación de la Facultad de Ciencias de la UCV. Ante la reducción del subsidio gubernamental, el sistema ahora integra una gestión de costos avanzada y una estructura de tarifas diferenciadas para garantizar la sostenibilidad del servicio.
+El **SGCU** es una solución de escritorio desarrollada en **Java** para automatizar y optimizar el servicio de alimentación de la Universidad Central de Venezuela. Ante la reducción del subsidio gubernamental, el sistema ahora integra una gestión de costos avanzada y una estructura de tarifas diferenciadas para garantizar la sostenibilidad del servicio.
 
 ## 🚀 Metodología y Marco de Trabajo
-El proyecto se desarrolla bajo la metodología ágil **Extreme Programming (XP)**, priorizando la entrega continua de software funcional y la excelencia técnica.
+El proyecto inició con la metodología de desarrollo **Rational Unified Process (RUP)** para los artefactos iniciales: modelo de dominio, análisis de requerimientos y diseño. Posteriormente, se adoptó la metodología ágil **Extreme Programming (XP)**, priorizando la entrega continua de software funcional y la excelencia técnica.
 * **Gestión:** Sprints cortos con integración continua.
 * **Control de Versiones:** Git con flujo de trabajo GitHub Flow.
 * **Pruebas:** Desarrollo guiado por pruebas unitarias automatizadas.
@@ -57,7 +57,8 @@ $CCB = [(CF + CV) / NB] * (1 + \%Merma)$
 
 ## 👥 Equipo de Trabajo
 * **Docentes:** Profa. Yosly Hernández B. / Prof. Marcel Castro.
-* **Desarrolladores:** * José Dos Reis
+* **Desarrolladores:**
+  * José Dos Reis
   * Daniel Briceño
   * Jean Cheng
   * Diego Gutierrez
