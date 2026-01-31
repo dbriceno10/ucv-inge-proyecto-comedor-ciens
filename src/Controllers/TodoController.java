@@ -1,7 +1,7 @@
-package com.todolist.controllers;
+package todolist.controllers;
 
-import com.todolist.model.TodoModel;
-import com.todolist.view.TodoView;
+import todolist.model.TodoModel;
+import todolist.view.TodoView;
 
 import javax.swing.*;
 
