@@ -3,6 +3,13 @@ package todolist.view;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import todolist.view.HelloWordView;
 
 public class TodoView {
     private JFrame frame;
@@ -11,6 +18,7 @@ public class TodoView {
     private JTextField taskInput;
     private JButton addButton;
     private JButton removeButton;
+    private JButton helloWorldButton;
 
     public TodoView() {
         frame = new JFrame("Todo List");
@@ -19,6 +27,21 @@ public class TodoView {
         taskInput = new JTextField(20);
         addButton = new JButton("Add Task");
         removeButton = new JButton("Remove Task");
+        helloWorldButton = new JButton("Go to Hello World");
+
+        helloWorldButton.addActionListener(e -> {
+            HelloWordView helloWordView = new HelloWordView();
+            helloWordView.setVisible(true);
+            frame.setVisible(false);
+        });
+
+        addButton.addActionListener(e -> {
+            String task = taskInput.getText().trim();
+            if (!task.isEmpty()) {
+                listModel.addElement(task);
+                taskInput.setText("");
+            }
+        });
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -28,6 +51,7 @@ public class TodoView {
         inputPanel.add(taskInput);
         inputPanel.add(addButton);
         inputPanel.add(removeButton);
+        inputPanel.add(helloWorldButton);
 
         frame.add(panel, BorderLayout.CENTER);
         frame.add(inputPanel, BorderLayout.SOUTH);
@@ -36,6 +60,15 @@ public class TodoView {
     }
 
     public void setVisible(boolean visible) {
+        if (visible) {
+            try {
+                String json = new String(Files.readAllBytes(Paths.get("src/Database/tasks.json")));
+                List<String> tasks = new ArrayList<>(Arrays.asList(json.replace("[", "").replace("]", "").replace("\"", "").split(",")));
+                updateTaskList(tasks);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         frame.setVisible(visible);
     }
 
@@ -60,6 +93,10 @@ public class TodoView {
 
     public JButton getRemoveButton() {
         return removeButton;
+    }
+
+    public JButton getHelloWorldButton() {
+        return helloWorldButton;
     }
 
     public JList<String> getTaskList() {
