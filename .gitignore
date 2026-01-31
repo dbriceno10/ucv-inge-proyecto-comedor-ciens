@@ -1,72 +1,37 @@
-# Java compiled class files
-*.class
+# Maven target directory
+target/
+
+# IntelliJ IDEA project files
+.idea/
+*.iml
+
+# VS Code settings
+.vscode/
+
+# Github settings
+.github/
 
 # Logs
 *.log
 
-# BlueJ files
-*.ctxt
-
-# Package files
-*.jar
-*.war
-*.ear
-
-# Virtual machine crash logs
-hs_err_pid*
-
-# Maven
-target/
-.mvn/
-dependency-reduced-pom.xml
-release.properties
-
-# Gradle
-.gradle/
-build/
-!gradle/wrapper/gradle-wrapper.jar
-
-# Eclipse
-.classpath
-.project
-.settings/
-.factorypath
-
-# IntelliJ IDEA
-.idea/
-*.iml
-*.iws
-out/
-
-# NetBeans
-/nbproject/private/
-/build/
-/dist/
-/.nb-gradle/
-
-# VS Code
-.vscode/
-
-# Generated files
-generated/
-
-# Test output
-test-output/
-target/surefire-reports/
-
-# Coverage
-coverage/
-jacoco.exec
-
-# OS files
+# OS-specific files
 .DS_Store
 Thumbs.db
-ehthumbs.db
-Desktop.ini
 
 # Temporary files
+*.tmp
 *.swp
-*~
+*.bak
+# Compiled class files
+*.class
+# Generated files
+/generated/
+
+# Output directories
+out/
+build/
+dist/
+
 
 # Ignorar .Zone.Identifier para WSL
 *Zone.Identifier
