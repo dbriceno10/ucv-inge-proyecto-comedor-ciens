@@ -16,15 +16,11 @@ This is a simple Todo List application built using Java and the MVC design patte
    ```bash
    git clone <repository-url>
    ```
-2. Navigate to the project directory:
-   ```bash
-   cd test_ia
-   ```
-3. Build the project using Maven:
+2. Build the project using Maven:
    ```bash
    mvn clean install
    ```
-4. Run the application:
+3. Run the application:
    ```bash
    mvn exec:java -Dexec.mainClass="com.todolist.Main"
    ```
