@@ -1,9 +1,9 @@
-package todolist.controllers;
-
-import todolist.model.TodoModel;
-import todolist.view.TodoView;
+package Controllers;
 
 import javax.swing.*;
+
+import Model.TodoModel;
+import View.TodoView;
 
 public class TodoController {
     private TodoModel model;
