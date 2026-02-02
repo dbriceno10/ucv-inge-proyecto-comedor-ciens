@@ -7,16 +7,17 @@ public class UserModel {
   private String email;
   private String password;
   private String role; // 'ADMIN' | 'COMMENSAL'
-  private String type; // 'STUDENT' | 'PROFESSOR' | 'OBRERO'
+  private String type; // 'STUDENT' | 'PROFESSOR' | 'WORKER'
   private Boolean status;
-  private String createdAt;
-  private String updatedAt;
+  private String createdAt = null;
+  private String updatedAt = null;
   private String deletedAt = null;
 
   public UserModel() {
   }
 
   public UserModel(Number id, String firstName, String lastName, String email, String password, String role,
+      String type,
       Boolean status, String createdAt, String updatedAt, String deletedAt) {
     this.id = id;
     this.firstName = firstName;
@@ -24,10 +25,25 @@ public class UserModel {
     this.email = email;
     this.password = password;
     this.role = role;
+    this.type = type;
     this.status = status;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.deletedAt = deletedAt;
+  }
+
+  public UserModel(UserModel user) {
+    this.id = user.id;
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
+    this.email = user.email;
+    this.password = user.password;
+    this.role = user.role;
+    this.type = user.type;
+    this.status = user.status;
+    this.createdAt = user.createdAt;
+    this.updatedAt = user.updatedAt;
+    this.deletedAt = user.deletedAt;
   }
 
   // Getters y setters
@@ -77,6 +93,14 @@ public class UserModel {
 
   public void setRole(String role) {
     this.role = role;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
   }
 
   public Boolean getStatus() {

@@ -9,7 +9,8 @@
     "status": true,
     "createdAt": "2026-01-01T10:00:00Z",
     "updatedAt": "2026-01-10T15:00:00Z",
-    "deletedAt": null
+    "deletedAt": null,
+    "type": ""
   },
   {
     "id": 2,
@@ -21,7 +22,8 @@
     "status": true,
     "createdAt": "2026-01-02T11:00:00Z",
     "updatedAt": "2026-01-12T16:00:00Z",
-    "deletedAt": null
+    "deletedAt": null,
+    "type": "STUDENT"
   },
   {
     "id": 3,
@@ -33,7 +35,8 @@
     "status": false,
     "createdAt": "2026-01-03T12:00:00Z",
     "updatedAt": "2026-01-13T17:00:00Z",
-    "deletedAt": "2026-01-20T18:00:00Z"
+    "deletedAt": "2026-01-20T18:00:00Z",
+    "type": "PROFESSOR"
   },
   {
     "id": 4,
@@ -45,7 +48,8 @@
     "status": true,
     "createdAt": "2026-01-04T13:00:00Z",
     "updatedAt": "2026-01-14T18:00:00Z",
-    "deletedAt": null
+    "deletedAt": null,
+    "type": ""
   },
   {
     "id": 5,
@@ -57,7 +61,8 @@
     "status": true,
     "createdAt": "2026-01-05T14:00:00Z",
     "updatedAt": "2026-01-15T19:00:00Z",
-    "deletedAt": null
+    "deletedAt": null,
+    "type": "WORKER"
   },
   {
     "id": 6,
@@ -69,7 +74,8 @@
     "status": false,
     "createdAt": "2026-01-06T15:00:00Z",
     "updatedAt": "2026-01-16T20:00:00Z",
-    "deletedAt": "2026-01-25T21:00:00Z"
+    "deletedAt": "2026-01-25T21:00:00Z",
+    "type": "STUDENT"
   },
   {
     "id": 7,
@@ -81,7 +87,8 @@
     "status": true,
     "createdAt": "2026-01-07T16:00:00Z",
     "updatedAt": "2026-01-17T21:00:00Z",
-    "deletedAt": null
+    "deletedAt": null,
+    "type": ""
   },
   {
     "id": 8,
@@ -93,7 +100,8 @@
     "status": true,
     "createdAt": "2026-01-08T17:00:00Z",
     "updatedAt": "2026-01-18T22:00:00Z",
-    "deletedAt": null
+    "deletedAt": null,
+    "type": "PROFESSOR"
   },
   {
     "id": 9,
@@ -105,7 +113,8 @@
     "status": false,
     "createdAt": "2026-01-09T18:00:00Z",
     "updatedAt": "2026-01-19T23:00:00Z",
-    "deletedAt": "2026-01-30T00:00:00Z"
+    "deletedAt": "2026-01-30T00:00:00Z",
+    "type": "WORKER"
   },
   {
     "id": 10,
@@ -117,6 +126,7 @@
     "status": true,
     "createdAt": "2026-01-10T19:00:00Z",
     "updatedAt": "2026-01-20T01:00:00Z",
-    "deletedAt": null
+    "deletedAt": null,
+    "type": ""
   }
 ]

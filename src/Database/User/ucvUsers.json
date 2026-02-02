@@ -1,0 +1,212 @@
+[
+  {
+    "id": 1,
+    "firstName": "Juan",
+    "lastName": "Pérez",
+    "email": "juan.perez@example.com",
+    "type": "STUDENT"
+  },
+  {
+    "id": 2,
+    "firstName": "María",
+    "lastName": "Gómez",
+    "email": "maria.gomez@example.com",
+    "type": "PROFESSOR"
+  },
+  {
+    "id": 3,
+    "firstName": "Carlos",
+    "lastName": "López",
+    "email": "carlos.lopez@example.com",
+    "type": "WORKER"
+  },
+  {
+    "id": 4,
+    "firstName": "Ana",
+    "lastName": "Martínez",
+    "email": "ana.martinez@example.com",
+    "type": "ADMIN"
+  },
+  {
+    "id": 5,
+    "firstName": "Luis",
+    "lastName": "Hernández",
+    "email": "luis.hernandez@example.com",
+    "type": "STUDENT"
+  },
+  {
+    "id": 6,
+    "firstName": "Sofía",
+    "lastName": "Ramírez",
+    "email": "sofia.ramirez@example.com",
+    "type": "PROFESSOR"
+  },
+  {
+    "id": 7,
+    "firstName": "Pedro",
+    "lastName": "García",
+    "email": "pedro.garcia@example.com",
+    "type": "WORKER"
+  },
+  {
+    "id": 8,
+    "firstName": "Lucía",
+    "lastName": "Vargas",
+    "email": "lucia.vargas@example.com",
+    "type": "ADMIN"
+  },
+  {
+    "id": 9,
+    "firstName": "Miguel",
+    "lastName": "Torres",
+    "email": "miguel.torres@example.com",
+    "type": "STUDENT"
+  },
+  {
+    "id": 10,
+    "firstName": "Elena",
+    "lastName": "Morales",
+    "email": "elena.morales@example.com",
+    "type": "PROFESSOR"
+  },
+  {
+    "id": 11,
+    "firstName": "Jorge",
+    "lastName": "Castro",
+    "email": "jorge.castro@example.com",
+    "type": "WORKER"
+  },
+  {
+    "id": 12,
+    "firstName": "Valeria",
+    "lastName": "Rojas",
+    "email": "valeria.rojas@example.com",
+    "type": "ADMIN"
+  },
+  {
+    "id": 13,
+    "firstName": "Andrés",
+    "lastName": "Mendoza",
+    "email": "andres.mendoza@example.com",
+    "type": "STUDENT"
+  },
+  {
+    "id": 14,
+    "firstName": "Gabriela",
+    "lastName": "Fernández",
+    "email": "gabriela.fernandez@example.com",
+    "type": "PROFESSOR"
+  },
+  {
+    "id": 15,
+    "firstName": "Ricardo",
+    "lastName": "Suárez",
+    "email": "ricardo.suarez@example.com",
+    "type": "WORKER"
+  },
+  {
+    "id": 16,
+    "firstName": "Natalia",
+    "lastName": "Blanco",
+    "email": "natalia.blanco@example.com",
+    "type": "ADMIN"
+  },
+  {
+    "id": 17,
+    "firstName": "Diego",
+    "lastName": "Ortega",
+    "email": "diego.ortega@example.com",
+    "type": "STUDENT"
+  },
+  {
+    "id": 18,
+    "firstName": "Camila",
+    "lastName": "Vega",
+    "email": "camila.vega@example.com",
+    "type": "PROFESSOR"
+  },
+  {
+    "id": 19,
+    "firstName": "Sebastián",
+    "lastName": "Lara",
+    "email": "sebastian.lara@example.com",
+    "type": "WORKER"
+  },
+  {
+    "id": 20,
+    "firstName": "Isabel",
+    "lastName": "Cruz",
+    "email": "isabel.cruz@example.com",
+    "type": "ADMIN"
+  },
+  {
+    "id": 21,
+    "firstName": "Tomás",
+    "lastName": "Navarro",
+    "email": "tomas.navarro@example.com",
+    "type": "STUDENT"
+  },
+  {
+    "id": 22,
+    "firstName": "Paula",
+    "lastName": "Silva",
+    "email": "paula.silva@example.com",
+    "type": "PROFESSOR"
+  },
+  {
+    "id": 23,
+    "firstName": "Hugo",
+    "lastName": "Moreno",
+    "email": "hugo.moreno@example.com",
+    "type": "WORKER"
+  },
+  {
+    "id": 24,
+    "firstName": "Carolina",
+    "lastName": "Paredes",
+    "email": "carolina.paredes@example.com",
+    "type": "ADMIN"
+  },
+  {
+    "id": 25,
+    "firstName": "Martín",
+    "lastName": "Soto",
+    "email": "martin.soto@example.com",
+    "type": "STUDENT"
+  },
+  {
+    "id": 26,
+    "firstName": "Florencia",
+    "lastName": "Campos",
+    "email": "florencia.campos@example.com",
+    "type": "PROFESSOR"
+  },
+  {
+    "id": 27,
+    "firstName": "Pablo",
+    "lastName": "Reyes",
+    "email": "pablo.reyes@example.com",
+    "type": "WORKER"
+  },
+  {
+    "id": 28,
+    "firstName": "Samantha",
+    "lastName": "Aguilar",
+    "email": "samantha.aguilar@example.com",
+    "type": "ADMIN"
+  },
+  {
+    "id": 29,
+    "firstName": "Felipe",
+    "lastName": "Delgado",
+    "email": "felipe.delgado@example.com",
+    "type": "STUDENT"
+  },
+  {
+    "id": 30,
+    "firstName": "Mónica",
+    "lastName": "Peña",
+    "email": "monica.pena@example.com",
+    "type": "PROFESSOR"
+  }
+]
