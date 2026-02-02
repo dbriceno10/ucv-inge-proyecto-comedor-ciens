@@ -41,6 +41,7 @@ public class UserService {
     return null;
   }
 
+
   private UserModel mapUserModelToUser(UserModel userModel) {
     UserModel user = new UserModel();
     user.setId(userModel.getId());

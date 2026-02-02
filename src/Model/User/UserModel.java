@@ -7,6 +7,7 @@ public class UserModel {
   private String email;
   private String password;
   private String role; // 'ADMIN' | 'COMMENSAL'
+  private String type; // 'STUDENT' | 'PROFESSOR' | 'OBRERO'
   private Boolean status;
   private String createdAt;
   private String updatedAt;
