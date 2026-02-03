@@ -104,7 +104,7 @@ public class UserService {
     user.setStatus(userModel.getStatus());
     user.setCreatedAt(userModel.getCreatedAt());
     user.setUpdatedAt(userModel.getUpdatedAt());
-    user.setDeletedAt(userModel.getDeletedAt());
+    // user.setDeletedAt(userModel.getDeletedAt());
     return user;
   }
 
