@@ -19,7 +19,7 @@ public class Main {
 
     System.out.println("Starting registration test 2...");
     try {
-      authUserService.register("juan.perez@example.com", userRoles.COMMENSAL, "John", "Doe", "password123",
+      authUserService.register("monica.pena@example.com", userRoles.COMMENSAL, "John", "Doe", "password123",
           "password123");
     } catch (IllegalArgumentException e) {
       System.out.println("Registration failed: " + e.getMessage());

@@ -127,17 +127,26 @@ public class UserService {
 
   // metodos privados
 
-  private int getLastIndex() {
-    List<UserModel> users = getAllUsers();
-    int lastIndex = 0;
+  private Integer getLastIndex() {
+    return this.countAllUsers() + 1; // Retorna el siguiente ID disponible
+  }
 
-    for (UserModel user : users) {
-      if (user.getId() instanceof Integer) {
-        lastIndex = Math.max(lastIndex, (Integer) user.getId());
+  private Integer countAllUsers() {
+    ObjectMapper mapper = new ObjectMapper();
+    Integer count = 0;
+    try {
+      File file = new File(FILE_USER);
+      if (file.exists()) {
+        // Leer todos los usuarios desde el archivo JSON
+        List<UserModel> users = mapper.readValue(file,
+            mapper.getTypeFactory().constructCollectionType(List.class, UserModel.class));
+        // Contar todos los registros, incluyendo los que tienen deletedAt
+        count = users.size();
       }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-
-    return lastIndex + 1; // Retorna el siguiente ID disponible
+    return count;
   }
 
   private UserModel mapUserModelToUser(UserModel userModel) {
@@ -191,7 +200,7 @@ public class UserService {
         users = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, UserModel.class));
       }
       // Find and update the user
-      for (int i = 0; i < users.size(); i++) {
+      for (Integer i = 0; i < users.size(); i++) {
         if (users.get(i).getId().equals(user.getId())) {
           users.set(i, user);
           break;
