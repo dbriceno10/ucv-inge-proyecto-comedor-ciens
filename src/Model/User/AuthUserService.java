@@ -1,9 +1,9 @@
 package Model.User;
 
-import Model.User.UserModel;
-import Model.User.UserService;
-import Model.User.AuthUserModel;
-import Model.User.BaseUserModel;
+// import Model.User.UserModel;
+// import Model.User.UserService;
+// import Model.User.AuthUserModel;
+// import Model.User.BaseUserModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class AuthUserService {
     newUser = userService.create(newUser);
 
     return new AuthUserModel(newUser.getId(), newUser.getFirstName(), newUser.getLastName(), newUser.getEmail(),
-        newUser.getRole(), newUser.getType(), "token");
+        newUser.getRole(), newUser.getType(), "token", newUser.getIsActive());
   }
 
   public AuthUserModel login(String email, String password) {
@@ -66,7 +66,7 @@ public class AuthUserService {
       throw new IllegalArgumentException("Invalid email or password.");
     }
     return new AuthUserModel(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
-        user.getRole(), user.getType(), "token");
+        user.getRole(), user.getType(), "token", user.getIsActive());
   }
 
   private List<UserModel> getAllUsers() {
