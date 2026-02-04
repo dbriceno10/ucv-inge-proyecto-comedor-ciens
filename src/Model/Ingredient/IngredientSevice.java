@@ -38,7 +38,7 @@ public class IngredientSevice {
     return ingredients;
   }
 
-  public IngredientModel getIngredientById(Number id) {
+  public IngredientModel getIngredientById(Integer id) {
     List<IngredientModel> ingredients = getAllIngredients();
     IngredientModel found = null;
     for (IngredientModel ingredient : ingredients) {
@@ -81,7 +81,7 @@ public class IngredientSevice {
     return this.edit(updatedIngredient);
   }
 
-  public boolean delete(Number id) {
+  public boolean delete(Integer id) {
     IngredientModel existing = this.getIngredientById(id);
     if (existing != null) {
       existing.setDeletedAt(this.datesUtil.getCurrentDateTime());
