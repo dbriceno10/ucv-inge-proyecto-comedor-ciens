@@ -1,12 +1,9 @@
 package View;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import java.awt.Dimension;
-import java.awt.Font;
 
 public class RegFormView extends JFrame {
     private JTextField txtFirstName, txtLastName, txtID, txtEmail, txtFaculty, txtType, 
@@ -31,36 +28,69 @@ public class RegFormView extends JFrame {
         btnLogin = new JButton("Iniciar sesión");
         btnUpload = new JButton("Cargar documento");
 
-        //---configure JPanel
-        JPanel formPanel = new JPanel();
-        JLabel titleFormPanel = new JLabel("Registrarse");
-        formPanel.setLayout(new GridLayout(0, 2, 20, 15)); // rows - columns - horizontal space - vertical space 
-        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        // 1. main panel (the white background)
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBorder(new EmptyBorder(30, 40, 30, 40));
+        mainPanel.setBackground(Color.WHITE);
 
-        formPanel.add(titleFormPanel);
-        formPanel.add(new JLabel("Nombre")); formPanel.add(txtFirstName);
-        formPanel.add(new JLabel("Apellido")); formPanel.add(txtLastName);
-        formPanel.add(new JLabel("Cédula")); formPanel.add(txtID);
-        formPanel.add(new JLabel("Correo electrónico")); formPanel.add(txtEmail);
-        formPanel.add(new JLabel("Facultad")); formPanel.add(txtFaculty);
-        formPanel.add(new JLabel("Tipo")); formPanel.add(txtType);
-        formPanel.add(new JLabel("Contraseña")); formPanel.add(txtPwd);
-        formPanel.add(new JLabel("Repetir contraseña")); formPanel.add(txtPwd_repeat);
+        // 2. form panel: it has two columns to organize the fields.
+        JPanel formPanel = new JPanel(new GridLayout(0, 2, 20, 15)); // rows - columns - horizontal space - vertical space 
+        formPanel.setBackground(Color.WHITE);
 
-        //---BorderLayout is used to center the form and place the buttons at the bottom.
-        this.setLayout(new BorderLayout()); //defines the JFrame organization.
-        this.add(formPanel, BorderLayout.CENTER); //the panel is added to the JFrame.
+        formPanel.add(newField("NOMBRE", txtFirstName));
+        formPanel.add(newField("APELLIDO", txtLastName));
+        formPanel.add(newField("CÉDULA", txtID));
+        formPanel.add(newField("CORREO ELECTRÓNICO", txtEmail));
+        formPanel.add(newField("FACULTAD", txtFaculty));
+        formPanel.add(newField("TIPO", txtType));
+        formPanel.add(newField("CONTRASEÑA", txtPwd));
+        formPanel.add(newField("REPETIR CONTRASEÑA", txtPwd_repeat));
 
-        //---a separate panel is used for the buttons.
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(btnRegister);
-        buttonPanel.add(btnLogin);
-        buttonPanel.add(btnUpload);
-        this.add(buttonPanel, BorderLayout.SOUTH); //the panel is added to the JFrame at the bottom.
+        // 3. section for the upload document button
+        JPanel uploadDocPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        uploadDocPanel.setBackground(Color.WHITE);
+        uploadDocPanel.add(btnUpload); //personalizar btn icon***
 
-        this.pack(); //adjust size automatically.
+        // 4. section for the register button
+        JPanel registerBtnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        registerBtnPanel.setBackground(Color.WHITE);
+        btnRegister.setPreferredSize(new Dimension(200, 40));
+        btnRegister.setBackground(new Color(30, 80, 150)); //color: dark blue
+        btnRegister.setForeground(Color.WHITE);
+        registerBtnPanel.add(btnRegister);
+
+        // 5. section to link to the login screen
+        JPanel loginBtnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        loginBtnPanel.setBackground(Color.WHITE);
+        loginBtnPanel.add(btnLogin);
+
+        // Final assembly
+        mainPanel.add(formPanel);
+        mainPanel.add(Box.createRigidArea(new Dimension(0,20))); //space
+        mainPanel.add(uploadDocPanel);
+        mainPanel.add(Box.createRigidArea(new Dimension(0,20))); //space
+        mainPanel.add(registerBtnPanel);
+        mainPanel.add(loginBtnPanel);
+        this.add(mainPanel);
+        this.pack();
         this.setLocationRelativeTo(null); //center the window.
-        this.setVisible(true); //window perceptible to the user.
+        this.setVisible(true);
+    }
+
+    private JPanel newField(String title, JTextField txt) {
+        //a small "container" is created, which will be returned as a result.
+        //'BorderLayout' is used to easily configure the container's position.
+        JPanel panel = new JPanel(new BorderLayout(0, 5));
+        panel.setBackground(Color.WHITE);
+        
+        JLabel lbl = new JLabel(title);
+        lbl.setFont(new Font("SansSerif", Font.BOLD, 10));
+        lbl.setForeground(Color.GRAY);
+
+        panel.add(lbl, BorderLayout.NORTH); //the title (or label) is placed above the field
+        panel.add(txt, BorderLayout.CENTER);
+        return panel;
     }
 
     public void clearFields() {
@@ -74,7 +104,7 @@ public class RegFormView extends JFrame {
         txtPwd_repeat.setText("");
     }
 
-    //---getters
+    //---getters/ event listener
     public String getFirstName() { return txtFirstName.getText(); }
     public String getLastName() { return txtLastName.getText(); }
     public String getID() { return txtID.getText(); }
@@ -85,18 +115,7 @@ public class RegFormView extends JFrame {
     public String getPwd_repeat() { return txtPwd_repeat.getText(); }
 
     //---event listener
-    public void addSaveListener(ActionListener listener) { btnRegister.addActionListener(listener);}
-    public void addReportListener(ActionListener listener) { btnLogin.addActionListener(listener);}
-    public void addExitListener(ActionListener listener) { btnUpload.addActionListener(listener);}
-
-    public void displayReport(String reportData) {
-        JTextArea textArea = new JTextArea(reportData);
-        textArea.setEditable(false);
-        textArea.setFont(new java.awt.Font("Monospaced", Font.PLAIN, 12));
-
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setPreferredSize(new Dimension(350, 400));
-        JOptionPane.showMessageDialog(this, scrollPane, "Inventory Statistics", JOptionPane.INFORMATION_MESSAGE);
-    }
-
+    public void registerListener(ActionListener listener) { btnRegister.addActionListener(listener);}
+    public void loginListener(ActionListener listener) { btnLogin.addActionListener(listener);}
+    public void uploadListener(ActionListener listener) { btnUpload.addActionListener(listener);}
 }

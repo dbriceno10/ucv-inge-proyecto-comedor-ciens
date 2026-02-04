@@ -10,9 +10,9 @@ public class RegFormController implements ActionListener{
     public RegFormController(RegFormView view) {
         this.view = view;
 
-        this.view.addSaveListener(this);
-        this.view.addReportListener(this);
-        this.view.addExitListener(this);
+        this.view.registerListener(this);
+        this.view.loginListener(this);
+        this.view.uploadListener(this);
     }
 
     @Override
