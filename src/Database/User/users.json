@@ -4,129 +4,142 @@
     "firstName": "Juan",
     "lastName": "Pérez",
     "email": "juan.perez@example.com",
+    "type": "",
     "password": "password123",
-    "role": "ADMIN",
     "status": true,
     "createdAt": "2026-01-01T10:00:00Z",
     "updatedAt": "2026-01-10T15:00:00Z",
     "deletedAt": null,
-    "type": ""
+    "role": "ADMIN"
   },
   {
     "id": 2,
     "firstName": "María",
     "lastName": "Gómez",
     "email": "maria.gomez@example.com",
+    "type": "STUDENT",
     "password": "securepass",
-    "role": "COMMENSAL",
     "status": true,
     "createdAt": "2026-01-02T11:00:00Z",
     "updatedAt": "2026-01-12T16:00:00Z",
     "deletedAt": null,
-    "type": "STUDENT"
+    "role": "COMMENSAL"
   },
   {
     "id": 3,
     "firstName": "Carlos",
     "lastName": "López",
     "email": "carlos.lopez@example.com",
+    "type": "PROFESSOR",
     "password": "mypassword",
-    "role": "COMMENSAL",
     "status": false,
     "createdAt": "2026-01-03T12:00:00Z",
     "updatedAt": "2026-01-13T17:00:00Z",
     "deletedAt": "2026-01-20T18:00:00Z",
-    "type": "PROFESSOR"
+    "role": "COMMENSAL"
   },
   {
     "id": 4,
     "firstName": "Ana",
     "lastName": "Martínez",
     "email": "ana.martinez@example.com",
+    "type": "",
     "password": "password456",
-    "role": "ADMIN",
     "status": true,
     "createdAt": "2026-01-04T13:00:00Z",
     "updatedAt": "2026-01-14T18:00:00Z",
     "deletedAt": null,
-    "type": ""
+    "role": "ADMIN"
   },
   {
     "id": 5,
     "firstName": "Luis",
     "lastName": "Hernández",
     "email": "luis.hernandez@example.com",
+    "type": "WORKER",
     "password": "pass1234",
-    "role": "COMMENSAL",
     "status": true,
     "createdAt": "2026-01-05T14:00:00Z",
     "updatedAt": "2026-01-15T19:00:00Z",
     "deletedAt": null,
-    "type": "WORKER"
+    "role": "COMMENSAL"
   },
   {
     "id": 6,
     "firstName": "Sofía",
     "lastName": "Ramírez",
     "email": "sofia.ramirez@example.com",
+    "type": "STUDENT",
     "password": "sofiapass",
-    "role": "COMMENSAL",
     "status": false,
     "createdAt": "2026-01-06T15:00:00Z",
     "updatedAt": "2026-01-16T20:00:00Z",
     "deletedAt": "2026-01-25T21:00:00Z",
-    "type": "STUDENT"
+    "role": "COMMENSAL"
   },
   {
     "id": 7,
     "firstName": "Pedro",
     "lastName": "García",
     "email": "pedro.garcia@example.com",
+    "type": "",
     "password": "pedropass",
-    "role": "ADMIN",
     "status": true,
     "createdAt": "2026-01-07T16:00:00Z",
     "updatedAt": "2026-01-17T21:00:00Z",
     "deletedAt": null,
-    "type": ""
+    "role": "ADMIN"
   },
   {
     "id": 8,
     "firstName": "Lucía",
     "lastName": "Vargas",
     "email": "lucia.vargas@example.com",
+    "type": "PROFESSOR",
     "password": "luciapass",
-    "role": "COMMENSAL",
     "status": true,
     "createdAt": "2026-01-08T17:00:00Z",
     "updatedAt": "2026-01-18T22:00:00Z",
     "deletedAt": null,
-    "type": "PROFESSOR"
+    "role": "COMMENSAL"
   },
   {
     "id": 9,
     "firstName": "Miguel",
     "lastName": "Torres",
     "email": "miguel.torres@example.com",
+    "type": "WORKER",
     "password": "miguelpass",
-    "role": "COMMENSAL",
     "status": false,
     "createdAt": "2026-01-09T18:00:00Z",
     "updatedAt": "2026-01-19T23:00:00Z",
     "deletedAt": "2026-01-30T00:00:00Z",
-    "type": "WORKER"
+    "role": "COMMENSAL"
   },
   {
     "id": 10,
     "firstName": "Elena",
     "lastName": "Morales",
     "email": "elena.morales@example.com",
+    "type": "",
     "password": "elenapass",
-    "role": "ADMIN",
     "status": true,
     "createdAt": "2026-01-10T19:00:00Z",
     "updatedAt": "2026-01-20T01:00:00Z",
     "deletedAt": null,
-    "type": ""
+    "role": "ADMIN"
+  },
+  {
+    "id": 11,
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "juan.perez@example.com",
+    "type": "STUDENT",
+    "password": "password123",
+    "status": true,
+    "createdAt": "2026-02-04T12:52:50Z",
+    "updatedAt": "2026-02-04T12:52:50Z",
+    "deletedAt": null,
+    "role": "COMMENSAL"
   }
 ]

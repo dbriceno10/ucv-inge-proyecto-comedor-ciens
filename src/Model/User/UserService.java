@@ -60,11 +60,10 @@ public class UserService {
   }
 
   public UserModel create(UserModel user) {
-    // List<String> errors = user.validate();
-    // if (!errors.isEmpty()) {
-    //   // TODO: crear error con lista de errores
-    //   return null;
-    // }
+    UserModel existing = this.getUserByEmail(user.getEmail());
+    if (existing != null) {
+      throw new IllegalArgumentException("Email already in use: " + user.getEmail());
+    }
     UserModel newUser = new UserModel(
         this.getLastIndex(),
         user.getFirstName(),
@@ -114,16 +113,16 @@ public class UserService {
   }
 
   public BaseUserModel getUCVUserByEmail(String email) {
+    System.out.println("Searching UCV user by email: " + email);
     List<BaseUserModel> users = getAllUCVUsers();
+    BaseUserModel foundUser = null;
     for (BaseUserModel user : users) {
-      // if (user.getEmail().equalsIgnoreCase(email)) {
-      // return user;
-      // }
-      if (user.getEmail() == email) {
-        return user;
+      if (user.getEmail().equalsIgnoreCase(email)) {
+        foundUser = user;
+        break;
       }
     }
-    return null;
+    return foundUser;
   }
 
   // metodos privados
