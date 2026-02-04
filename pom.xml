@@ -2,9 +2,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>todolist</groupId>
-    <artifactId>todo-list</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>edu.ucv.comedor</groupId>
+    <artifactId>SGCU</artifactId>
+    <version>0.1</version>
 
     <dependencies>
         <!-- JSON library -->
