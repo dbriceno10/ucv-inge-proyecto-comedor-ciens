@@ -1,19 +1,21 @@
 package Model.User;
 
-import Model.User.UserModel;
-import Model.User.BaseUserModel;
+// import Model.User.UserModel;
+// import Model.User.BaseUserModel;
+import Model.Common.CommonServises;
+import Utils.Dates;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
   private static final String FILE_USER = "src/Database/User/users.json";
   private static final String FILE_UCV_USERS = "src/Database/User/ucvUsers.json";
+  private CommonServises commonServises = new CommonServises();
+  private Dates datesUtil = new Dates();
 
   // Métodos para manejar usuarios (crear, leer, actualizar, eliminar)
   // TODO: manejar excepciones, se debe manejar que el email sea unico en crear y
@@ -41,22 +43,26 @@ public class UserService {
 
   public UserModel getUserById(Number id) {
     List<UserModel> users = getAllUsers();
+    UserModel foundUser = null;
     for (UserModel user : users) {
       if (user.getId().equals(id)) {
-        return user;
+        foundUser = user;
+        break;
       }
     }
-    return null;
+    return foundUser;
   }
 
   public UserModel getUserByEmail(String email) {
     List<UserModel> users = getAllUsers();
+    UserModel foundUser = null;
     for (UserModel user : users) {
       if (user.getEmail().equalsIgnoreCase(email)) {
-        return user;
+        foundUser = user;
+        break;
       }
     }
-    return null;
+    return foundUser;
   }
 
   public UserModel create(UserModel user) {
@@ -64,8 +70,9 @@ public class UserService {
     if (existing != null) {
       throw new IllegalArgumentException("Email already in use: " + user.getEmail());
     }
+    String date = this.datesUtil.getCurrentDateTime();
     UserModel newUser = new UserModel(
-        this.getLastIndex(),
+        this.commonServises.getLastIndex(FILE_USER, UserModel.class),
         user.getFirstName(),
         user.getLastName(),
         user.getEmail(),
@@ -73,8 +80,8 @@ public class UserService {
         user.getRole(),
         user.getType(),
         true,
-        this.getCurrentDateTime(),
-        this.getCurrentDateTime(),
+        date,
+        date,
         null);
     return this.save(newUser);
   }
@@ -90,7 +97,7 @@ public class UserService {
   public boolean delete(Number id) {
     UserModel existingUser = this.getUserById(id);
     if (existingUser != null) {
-      existingUser.setDeletedAt(this.getCurrentDateTime());
+      existingUser.setDeletedAt(this.datesUtil.getCurrentDateTime());
       this.edit(existingUser);
       return true;
     }
@@ -98,18 +105,7 @@ public class UserService {
   }
 
   public List<BaseUserModel> getAllUCVUsers() {
-    List<BaseUserModel> users = new ArrayList<>();
-    ObjectMapper mapper = new ObjectMapper();
-    try {
-      File file = new File(FILE_UCV_USERS);
-      if (file.exists()) {
-        users = mapper.readValue(file,
-            mapper.getTypeFactory().constructCollectionType(List.class, BaseUserModel.class));
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return users;
+    return this.commonServises.getAllElements(FILE_UCV_USERS, BaseUserModel.class);
   }
 
   public BaseUserModel getUCVUserByEmail(String email) {
@@ -127,28 +123,6 @@ public class UserService {
 
   // metodos privados
 
-  private Integer getLastIndex() {
-    return this.countAllUsers() + 1; // Retorna el siguiente ID disponible
-  }
-
-  private Integer countAllUsers() {
-    ObjectMapper mapper = new ObjectMapper();
-    Integer count = 0;
-    try {
-      File file = new File(FILE_USER);
-      if (file.exists()) {
-        // Leer todos los usuarios desde el archivo JSON
-        List<UserModel> users = mapper.readValue(file,
-            mapper.getTypeFactory().constructCollectionType(List.class, UserModel.class));
-        // Contar todos los registros, incluyendo los que tienen deletedAt
-        count = users.size();
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return count;
-  }
-
   private UserModel mapUserModelToUser(UserModel userModel) {
     UserModel user = new UserModel(
         userModel.getId(),
@@ -158,28 +132,18 @@ public class UserService {
         null,
         userModel.getRole(),
         userModel.getType(),
-        userModel.getStatus(),
+        userModel.getIsActive(),
         userModel.getCreatedAt(),
         userModel.getUpdatedAt(),
         userModel.getDeletedAt());
     return user;
   }
 
-  private String getCurrentDateTime() {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
-    return ZonedDateTime.now(java.time.ZoneOffset.UTC).format(formatter);
-  }
-
   private UserModel save(UserModel user) {
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_USER);
-      List<UserModel> users = new ArrayList<>();
-      // If the file exists, read the existing users
-      if (file.exists()) {
-
-        users = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, UserModel.class));
-      }
+      List<UserModel> users = this.commonServises.getAllElements(FILE_USER, UserModel.class);
       users.add(user);
       // Write the updated list back to the file
       mapper.writeValue(file, users);
@@ -194,11 +158,7 @@ public class UserService {
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_USER);
-      List<UserModel> users = new ArrayList<>();
-      // If the file exists, read the existing users
-      if (file.exists()) {
-        users = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, UserModel.class));
-      }
+      List<UserModel> users = this.commonServises.getAllElements(FILE_USER, UserModel.class);
       // Find and update the user
       for (Integer i = 0; i < users.size(); i++) {
         if (users.get(i).getId().equals(user.getId())) {

@@ -1,13 +1,10 @@
 package Model.User;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import Model.User.BaseUserModel;
+// import Model.User.BaseUserModel;
 
 public class UserModel extends BaseUserModel {
   private String password;
-  private Boolean status;
+  private Boolean isActive;
   private String createdAt = null;
   private String updatedAt = null;
   private String deletedAt = null;
@@ -18,7 +15,7 @@ public class UserModel extends BaseUserModel {
 
   public UserModel(Integer id, String firstName, String lastName, String email, String password, String role,
       String type,
-      Boolean status, String createdAt, String updatedAt, String deletedAt) {
+      Boolean isActive, String createdAt, String updatedAt, String deletedAt) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -26,7 +23,7 @@ public class UserModel extends BaseUserModel {
     this.password = password;
     this.role = role;
     this.type = type;
-    this.status = status;
+    this.isActive = isActive;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.deletedAt = deletedAt;
@@ -40,7 +37,7 @@ public class UserModel extends BaseUserModel {
     this.password = user.password;
     this.role = user.role;
     this.type = user.type;
-    this.status = user.status;
+    this.isActive = user.isActive;
     this.createdAt = user.createdAt;
     this.updatedAt = user.updatedAt;
     this.deletedAt = user.deletedAt;
@@ -62,8 +59,8 @@ public class UserModel extends BaseUserModel {
     return password;
   }
 
-  public Boolean getStatus() {
-    return status;
+  public Boolean getIsActive() {
+    return isActive;
   }
 
   public String getCreatedAt() {

@@ -3,23 +3,20 @@ package Testing.Auth;
 import Model.User.AuthUserModel;
 import Model.User.AuthUserService;
 import Enums.UserRoles;
-import Enums.UserTypes;
 
 public class Main {
   public static void main(String[] args) {
     AuthUserService authUserService = new AuthUserService();
-    UserRoles userRoles = new UserRoles();
-    UserTypes userTypes = new UserTypes();
     System.out.println("Starting registration test 1...");
     try {
-      authUserService.register("helloword@email.com", userRoles.ADMIN, "John", "Doe", "password123", "password123");
+      authUserService.register("helloword@email.com", UserRoles.ADMIN, "John", "Doe", "password123", "password123");
     } catch (IllegalArgumentException e) {
       System.out.println("Registration failed: " + e.getMessage());
     }
 
     System.out.println("Starting registration test 2...");
     try {
-      authUserService.register("monica.pena@example.com", userRoles.COMMENSAL, "John", "Doe", "password123",
+      authUserService.register("monica.pena@example.com", UserRoles.COMMENSAL, "John", "Doe", "password123",
           "password123");
     } catch (IllegalArgumentException e) {
       System.out.println("Registration failed: " + e.getMessage());
