@@ -1,22 +1,22 @@
 package Model.User;
 
-public class UserModel {
-  private Number id;
-  private String firstName;
-  private String lastName;
-  private String email;
+import java.util.ArrayList;
+import java.util.List;
+
+import Model.User.BaseUserModel;
+
+public class UserModel extends BaseUserModel {
   private String password;
-  private String role; // 'ADMIN' | 'COMMENSAL'
-  private String type; // 'STUDENT' | 'PROFESSOR' | 'WORKER'
   private Boolean status;
   private String createdAt = null;
   private String updatedAt = null;
   private String deletedAt = null;
+  private String role; // 'ADMIN' | 'COMMENSAL'
 
   public UserModel() {
   }
 
-  public UserModel(Number id, String firstName, String lastName, String email, String password, String role,
+  public UserModel(Integer id, String firstName, String lastName, String email, String password, String role,
       String type,
       Boolean status, String createdAt, String updatedAt, String deletedAt) {
     this.id = id;
@@ -46,91 +46,43 @@ public class UserModel {
     this.deletedAt = user.deletedAt;
   }
 
-  // Getters y setters
-  public Number getId() {
-    return id;
-  }
-
-  public void setId(Number id) {
-    this.id = id;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
+  public UserModel(String firstName, String lastName, String email, String password, String role,
+      String type) {
     this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
     this.lastName = lastName;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
     this.email = email;
+    this.password = password;
+    this.role = role;
+    this.type = type;
+
   }
 
+  // getters
   public String getPassword() {
     return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public String getRole() {
-    return role;
-  }
-
-  public void setRole(String role) {
-    this.role = role;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
   }
 
   public Boolean getStatus() {
     return status;
   }
 
-  public void setStatus(Boolean status) {
-    this.status = status;
-  }
-
   public String getCreatedAt() {
     return createdAt;
-  }
-
-  public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
   }
 
   public String getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
   public String getDeletedAt() {
     return deletedAt;
   }
 
+  public String getRole() {
+    return role;
+  }
+
+  // setters
   public void setDeletedAt(String deletedAt) {
     this.deletedAt = deletedAt;
   }

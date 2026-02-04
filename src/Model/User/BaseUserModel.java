@@ -1,16 +1,16 @@
 package Model.User;
 
-public class UCVUserModel {
-  private Number id;
-  private String firstName;
-  private String lastName;
-  private String email;
-  private String type; // 'STUDENT' | 'PROFESSOR' | 'WORKER' | 'ADMIN'
+public class BaseUserModel {
+  protected Integer id;
+  protected String firstName;
+  protected String lastName;
+  protected String email;
+  protected String type; // 'STUDENT' | 'PROFESSOR' | 'WORKER' | 'ADMIN'
 
-  public UCVUserModel() {
+  public BaseUserModel() {
   }
 
-  public UCVUserModel(Number id, String firstName, String lastName, String email, String type) {
+  public BaseUserModel(Integer id, String firstName, String lastName, String email, String type) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -18,7 +18,7 @@ public class UCVUserModel {
     this.type = type;
   }
 
-  public UCVUserModel(UserModel user) {
+  public BaseUserModel(UserModel user) {
     this.id = user.getId();
     this.firstName = user.getFirstName();
     this.lastName = user.getLastName();
@@ -27,7 +27,7 @@ public class UCVUserModel {
   }
 
   // getters
-  public Number getId() {
+  public Integer getId() {
     return id;
   }
 

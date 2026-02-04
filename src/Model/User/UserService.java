@@ -1,6 +1,7 @@
 package Model.User;
 
 import Model.User.UserModel;
+import Model.User.BaseUserModel;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -12,8 +13,11 @@ import java.util.List;
 
 public class UserService {
   private static final String FILE_USER = "src/Database/User/users.json";
+  private static final String FILE_UCV_USERS = "src/Database/User/ucvUsers.json";
 
   // Métodos para manejar usuarios (crear, leer, actualizar, eliminar)
+  // TODO: manejar excepciones, se debe manejar que el email sea unico en crear y
+  // editar
 
   public List<UserModel> getAllUsers() {
     List<UserModel> users = new ArrayList<>();
@@ -45,26 +49,41 @@ public class UserService {
     return null;
   }
 
+  public UserModel getUserByEmail(String email) {
+    List<UserModel> users = getAllUsers();
+    for (UserModel user : users) {
+      if (user.getEmail().equalsIgnoreCase(email)) {
+        return user;
+      }
+    }
+    return null;
+  }
+
   public UserModel create(UserModel user) {
-    UserModel newUser = new UserModel(user);
-    newUser.setCreatedAt(this.getCurrentDateTime());
-    newUser.setId(this.getLastIndex());
-    newUser.setUpdatedAt(this.getCurrentDateTime());
-    newUser.setStatus(true);
+    // List<String> errors = user.validate();
+    // if (!errors.isEmpty()) {
+    //   // TODO: crear error con lista de errores
+    //   return null;
+    // }
+    UserModel newUser = new UserModel(
+        this.getLastIndex(),
+        user.getFirstName(),
+        user.getLastName(),
+        user.getEmail(),
+        user.getPassword(),
+        user.getRole(),
+        user.getType(),
+        true,
+        this.getCurrentDateTime(),
+        this.getCurrentDateTime(),
+        null);
     return this.save(newUser);
   }
 
   public UserModel update(UserModel user) {
     UserModel existingUser = this.getUserById(user.getId());
     if (existingUser != null) {
-      existingUser.setFirstName(user.getFirstName());
-      existingUser.setLastName(user.getLastName());
-      existingUser.setEmail(user.getEmail());
-      existingUser.setRole(user.getRole());
-      existingUser.setType(user.getType());
-      existingUser.setStatus(user.getStatus());
-      existingUser.setUpdatedAt(this.getCurrentDateTime());
-      return this.edit(existingUser);
+      return this.edit(user);
     }
     return null;
   }
@@ -79,6 +98,36 @@ public class UserService {
     return false;
   }
 
+  public List<BaseUserModel> getAllUCVUsers() {
+    List<BaseUserModel> users = new ArrayList<>();
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      File file = new File(FILE_UCV_USERS);
+      if (file.exists()) {
+        users = mapper.readValue(file,
+            mapper.getTypeFactory().constructCollectionType(List.class, BaseUserModel.class));
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return users;
+  }
+
+  public BaseUserModel getUCVUserByEmail(String email) {
+    List<BaseUserModel> users = getAllUCVUsers();
+    for (BaseUserModel user : users) {
+      // if (user.getEmail().equalsIgnoreCase(email)) {
+      // return user;
+      // }
+      if (user.getEmail() == email) {
+        return user;
+      }
+    }
+    return null;
+  }
+
+  // metodos privados
+
   private int getLastIndex() {
     List<UserModel> users = getAllUsers();
     int lastIndex = 0;
@@ -92,19 +141,19 @@ public class UserService {
     return lastIndex + 1; // Retorna el siguiente ID disponible
   }
 
-  // metodos privados
   private UserModel mapUserModelToUser(UserModel userModel) {
-    UserModel user = new UserModel();
-    user.setId(userModel.getId());
-    user.setFirstName(userModel.getFirstName());
-    user.setLastName(userModel.getLastName());
-    user.setEmail(userModel.getEmail());
-    user.setRole(userModel.getRole());
-    user.setType(userModel.getType());
-    user.setStatus(userModel.getStatus());
-    user.setCreatedAt(userModel.getCreatedAt());
-    user.setUpdatedAt(userModel.getUpdatedAt());
-    // user.setDeletedAt(userModel.getDeletedAt());
+    UserModel user = new UserModel(
+        userModel.getId(),
+        userModel.getFirstName(),
+        userModel.getLastName(),
+        userModel.getEmail(),
+        null,
+        userModel.getRole(),
+        userModel.getType(),
+        userModel.getStatus(),
+        userModel.getCreatedAt(),
+        userModel.getUpdatedAt(),
+        userModel.getDeletedAt());
     return user;
   }
 
