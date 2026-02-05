@@ -41,7 +41,7 @@ public class UserService {
     return users;
   }
 
-  public UserModel getUserById(Number id) {
+  public UserModel getUserById(Integer id) {
     List<UserModel> users = getAllUsers();
     UserModel foundUser = null;
     for (UserModel user : users) {
@@ -94,7 +94,7 @@ public class UserService {
     return null;
   }
 
-  public boolean delete(Number id) {
+  public Boolean delete(Integer id) {
     UserModel existingUser = this.getUserById(id);
     if (existingUser != null) {
       existingUser.setDeletedAt(this.datesUtil.getCurrentDateTime());
