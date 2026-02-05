@@ -93,7 +93,7 @@ public class Main {
     // Test 6: Eliminar un ingrediente
     System.out.println("Test 6: Delete an ingredient");
     try {
-      boolean isDeleted = ingredientService.delete(1);
+      Boolean isDeleted = ingredientService.delete(1);
       if (isDeleted) {
         System.out.println("Ingredient deleted successfully.");
       } else {

@@ -94,7 +94,7 @@ public class UserService {
     return null;
   }
 
-  public boolean delete(Integer id) {
+  public Boolean delete(Integer id) {
     UserModel existingUser = this.getUserById(id);
     if (existingUser != null) {
       existingUser.setDeletedAt(this.datesUtil.getCurrentDateTime());
