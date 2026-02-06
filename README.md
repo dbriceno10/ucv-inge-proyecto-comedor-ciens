@@ -55,10 +55,12 @@ $CCB = [(CF + CV) / NB] * (1 + \%Merma)$
 
 ---
 
-## Levantar el proyecto con los siguientes comandos Maven:
+### Levantar el proyecto con los siguientes comandos Maven:
 ```bash
 mvn clean install
 mvn exec:java
+ó
+mvn exec:java -Dexec.mainClass="com.edu.ucv.comedor.Main"
 ```
 
 ## 👥 Equipo de Trabajo

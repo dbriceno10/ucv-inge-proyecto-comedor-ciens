@@ -18,7 +18,7 @@ import DTO.Ingredient.IngredientDto;
 
 public class FoodService {
   String FILE_PATH = "src/Database/Food/foods.json";
-  private CommonServises commonServises = new CommonServises();
+  private CommonServises commonServices = new CommonServises();
   private Dates datesUtil = new Dates();
   private IngredientSevice ingredientSevice = new IngredientSevice();
 
@@ -51,10 +51,16 @@ public class FoodService {
   }
 
   public FoodDto create(CreateFoodDto foodDto) {
-    Integer nextId = this.commonServises.getLastIndex(FILE_PATH, FoodModel.class);
+    Integer nextId = this.commonServices.getLastIndex(FILE_PATH, FoodModel.class);
     String date = this.datesUtil.getCurrentDateTime();
     FoodModel newFood = new FoodModel(foodDto, nextId, date);
+    FoodDto auxFood = this.mapToDto(newFood);
+    Double variableCV = this.calculateVariableCost(auxFood);
+    newFood.setValueCV(variableCV);
     FoodModel food = this.save(newFood);
+    if (food == null) {
+      return null;
+    }
     return this.mapToDto(food);
   }
 
@@ -68,12 +74,19 @@ public class FoodService {
         foodDto.getName(),
         foodDto.getDescription(),
         foodDto.getDecrease(),
+        foodDto.getValueCF(),
         existingFood.getIsActive(),
         existingFood.getCreatedAt(),
         this.datesUtil.getCurrentDateTime(),
         existingFood.getDeletedAt(),
         foodDto.getIngredientIds());
+    FoodDto auxFood = this.mapToDto(updatedFood);
+    Double variableCV = this.calculateVariableCost(auxFood);
+    updatedFood.setValueCV(variableCV);
     FoodModel food = this.edit(updatedFood);
+    if (food == null) {
+      return null;
+    }
     return this.mapToDto(food);
   }
 
@@ -87,10 +100,10 @@ public class FoodService {
     return false;
   }
 
-  // metodos privadis
+  // metodos privados
 
   private FoodModel save(FoodModel food) {
-    List<FoodModel> foods = this.getAll();
+    List<FoodModel> foods = this.commonServices.getAllElements(FILE_PATH, FoodModel.class);
     foods.add(food);
     ObjectMapper mapper = new ObjectMapper();
     try {
@@ -103,7 +116,7 @@ public class FoodService {
   }
 
   private FoodModel edit(FoodModel food) {
-    List<FoodModel> foods = this.getAll();
+    List<FoodModel> foods = this.commonServices.getAllElements(FILE_PATH, FoodModel.class);
     boolean found = false;
     for (int i = 0; i < foods.size(); i++) {
       if (foods.get(i).getId().equals(food.getId())) {
@@ -181,6 +194,14 @@ public class FoodService {
       }
     }
     return found;
+  }
+
+  private Double calculateVariableCost(FoodDto foodDto) {
+    Double totalCost = 0.0;
+    for (IngredientDto ingredient : foodDto.getIngredients()) {
+      totalCost += ingredient.getPrice();
+    }
+    return totalCost;
   }
 
 }
