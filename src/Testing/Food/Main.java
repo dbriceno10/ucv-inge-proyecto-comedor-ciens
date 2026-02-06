@@ -49,6 +49,7 @@ public class Main {
           "Pizza Margherita",
           "Pizza clásica con tomate, mozzarella y albahaca.",
           0.1,
+          10.0,
           new Integer[] { 1, 2, 3 });
       FoodDto createdFood = foodService.create(newFood);
       System.out.println("Food created: " + createdFood.getName());
@@ -64,6 +65,7 @@ public class Main {
           "Ensalada César",
           "Ensalada con lechuga, pollo, crutones y aderezo César.",
           0.05,
+          5.0,
           new Integer[] { 4, 5, 6 });
       FoodDto result = foodService.update(updatedFood);
       System.out.println("Food updated: " + result.getName() + ", New Description: " + result.getDescription());
