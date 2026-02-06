@@ -2,7 +2,7 @@ package Model.User;
 
 // import Model.User.UserModel;
 // import Model.User.BaseUserModel;
-import Model.Common.CommonServises;
+import Model.Common.CommonServices;
 import Utils.Dates;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +14,7 @@ import java.util.List;
 public class UserService {
   private static final String FILE_USER = "src/Database/User/users.json";
   private static final String FILE_UCV_USERS = "src/Database/User/ucvUsers.json";
-  private CommonServises commonServises = new CommonServises();
+  private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
 
   // Métodos para manejar usuarios (crear, leer, actualizar, eliminar)
@@ -72,7 +72,7 @@ public class UserService {
     }
     String date = this.datesUtil.getCurrentDateTime();
     UserModel newUser = new UserModel(
-        this.commonServises.getLastIndex(FILE_USER, UserModel.class),
+        this.commonServices.getLastIndex(FILE_USER, UserModel.class),
         user.getFirstName(),
         user.getLastName(),
         user.getEmail(),
@@ -105,7 +105,7 @@ public class UserService {
   }
 
   public List<BaseUserModel> getAllUCVUsers() {
-    return this.commonServises.getAllElements(FILE_UCV_USERS, BaseUserModel.class);
+    return this.commonServices.getAllElements(FILE_UCV_USERS, BaseUserModel.class);
   }
 
   public BaseUserModel getUCVUserByEmail(String email) {
@@ -143,7 +143,7 @@ public class UserService {
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_USER);
-      List<UserModel> users = this.commonServises.getAllElements(FILE_USER, UserModel.class);
+      List<UserModel> users = this.commonServices.getAllElements(FILE_USER, UserModel.class);
       users.add(user);
       // Write the updated list back to the file
       mapper.writeValue(file, users);
@@ -158,7 +158,7 @@ public class UserService {
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_USER);
-      List<UserModel> users = this.commonServises.getAllElements(FILE_USER, UserModel.class);
+      List<UserModel> users = this.commonServices.getAllElements(FILE_USER, UserModel.class);
       // Find and update the user
       for (Integer i = 0; i < users.size(); i++) {
         if (users.get(i).getId().equals(user.getId())) {

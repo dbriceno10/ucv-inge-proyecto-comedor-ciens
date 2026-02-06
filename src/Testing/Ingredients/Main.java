@@ -1,6 +1,6 @@
 package Testing.Ingredients;
 
-import Model.Common.CommonServises;
+import Model.Common.CommonServices;
 import Model.Ingredient.IngredientModel;
 import Model.Ingredient.IngredientSevice;
 
@@ -9,7 +9,7 @@ import java.util.List;
 public class Main {
   public static void main(String[] args) {
     IngredientSevice ingredientService = new IngredientSevice();
-    CommonServises commonServises = new CommonServises();
+    CommonServices commonServices = new CommonServices();
 
     System.out.println("Starting ingredient tests...");
 
@@ -32,7 +32,7 @@ public class Main {
     // Test 2: Contar todos los ingredientes
     System.out.println("Test 2: Count all ingredients");
     try {
-      int totalIngredients = commonServises.countAllElements("src/Database/Ingredient/ingredients.json",
+      int totalIngredients = commonServices.countAllElements("src/Database/Ingredient/ingredients.json",
           IngredientModel.class);
       System.out.println("Total ingredients (including deleted): " + totalIngredients);
     } catch (Exception e) {

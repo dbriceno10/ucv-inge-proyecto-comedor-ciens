@@ -7,14 +7,14 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import Model.Common.CommonServises;
+import Model.Common.CommonServices;
 // import Model.Ingredient.IngredientModel;
 import Utils.Dates;
 import Utils.Formatters;
 
 public class IngredientSevice {
   String FILE_PATH = "src/Database/Ingredient/ingredients.json";
-  private CommonServises commonServises = new CommonServises();
+  private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private Formatters formatters = new Formatters();
 
@@ -51,7 +51,7 @@ public class IngredientSevice {
   }
 
   public IngredientModel create(IngredientModel ingredient) {
-    Integer nextId = this.commonServises.getLastIndex(FILE_PATH, IngredientModel.class);
+    Integer nextId = this.commonServices.getLastIndex(FILE_PATH, IngredientModel.class);
     String date = this.datesUtil.getCurrentDateTime();
     String name = this.formatters.toUpperCase(ingredient.getName());
     IngredientModel newIngredient = new IngredientModel(
@@ -109,7 +109,7 @@ public class IngredientSevice {
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
-      List<IngredientModel> ingredients = this.commonServises.getAllElements(FILE_PATH, IngredientModel.class);
+      List<IngredientModel> ingredients = this.commonServices.getAllElements(FILE_PATH, IngredientModel.class);
       if (ingredients == null) {
         ingredients = new ArrayList<>();
       }
@@ -126,7 +126,7 @@ public class IngredientSevice {
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
-      List<IngredientModel> ingredients = this.commonServises.getAllElements(FILE_PATH, IngredientModel.class);
+      List<IngredientModel> ingredients = this.commonServices.getAllElements(FILE_PATH, IngredientModel.class);
       // Find and update the ingredient
       for (Integer i = 0; i < ingredients.size(); i++) {
         if (ingredients.get(i).getId().equals(ingredient.getId())) {

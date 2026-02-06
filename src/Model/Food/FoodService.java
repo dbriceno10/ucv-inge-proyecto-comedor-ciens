@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import Model.Common.CommonServises;
+import Model.Common.CommonServices;
 import Utils.Dates;
 import DTO.Food.CreateFoodDto;
 import DTO.Food.UpdateFoodDto;
@@ -18,7 +18,7 @@ import DTO.Ingredient.IngredientDto;
 
 public class FoodService {
   String FILE_PATH = "src/Database/Food/foods.json";
-  private CommonServises commonServices = new CommonServises();
+  private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private IngredientSevice ingredientSevice = new IngredientSevice();
 
