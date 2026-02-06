@@ -42,16 +42,12 @@ public class FoodService {
     return foods;
   }
 
-  public FoodModel getFoodById(Integer id) {
-    List<FoodModel> foods = this.getAll();
-    FoodModel found = null;
-    for (FoodModel food : foods) {
-      if (food.getId().equals(id)) {
-        found = food;
-        break;
-      }
+  public FoodDto getFoodById(Integer id) {
+    FoodModel foodModel = this.getById(id);
+    if (foodModel == null) {
+      return null;
     }
-    return found;
+    return this.mapToDto(foodModel);
   }
 
   public FoodDto create(CreateFoodDto foodDto) {
@@ -63,7 +59,7 @@ public class FoodService {
   }
 
   public FoodDto update(UpdateFoodDto foodDto) {
-    FoodModel existingFood = this.getFoodById(foodDto.getId());
+    FoodModel existingFood = this.getById(foodDto.getId());
     if (existingFood == null) {
       throw new IllegalArgumentException("Food not found with id: " + foodDto.getId());
     }
@@ -77,8 +73,18 @@ public class FoodService {
         this.datesUtil.getCurrentDateTime(),
         existingFood.getDeletedAt(),
         foodDto.getIngredientIds());
-    FoodModel food = this.update(updatedFood);
+    FoodModel food = this.edit(updatedFood);
     return this.mapToDto(food);
+  }
+
+  public Boolean delete(Integer id) {
+    FoodModel existing = this.getById(id);
+    if (existing != null) {
+      existing.deletedAt(this.datesUtil.getCurrentDateTime());
+      this.edit(existing);
+      return true;
+    }
+    return false;
   }
 
   // metodos privadis
@@ -96,7 +102,7 @@ public class FoodService {
     return food;
   }
 
-  private FoodModel update(FoodModel food) {
+  private FoodModel edit(FoodModel food) {
     List<FoodModel> foods = this.getAll();
     boolean found = false;
     for (int i = 0; i < foods.size(); i++) {
@@ -163,6 +169,18 @@ public class FoodService {
       e.printStackTrace();
     }
     return foods;
+  }
+
+  private FoodModel getById(Integer id) {
+    List<FoodModel> foods = this.getAll();
+    FoodModel found = null;
+    for (FoodModel food : foods) {
+      if (food.getId().equals(id)) {
+        found = food;
+        break;
+      }
+    }
+    return found;
   }
 
 }

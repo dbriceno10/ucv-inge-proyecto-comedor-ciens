@@ -44,6 +44,9 @@ public class FoodModel {
     this.ingredientIds = foodDto.getIngredientIds();
   }
 
+  public FoodModel() {
+  }
+
   // getters
   public Integer getId() {
     return id;
