@@ -82,7 +82,8 @@ public class UserService {
         true,
         date,
         date,
-        null);
+        null,
+        user.getDocumentId());
     return this.save(newUser);
   }
 
@@ -135,7 +136,8 @@ public class UserService {
         userModel.getIsActive(),
         userModel.getCreatedAt(),
         userModel.getUpdatedAt(),
-        userModel.getDeletedAt());
+        userModel.getDeletedAt(),
+        userModel.getDocumentId());
     return user;
   }
 

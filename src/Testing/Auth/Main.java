@@ -9,7 +9,8 @@ public class Main {
     AuthUserService authUserService = new AuthUserService();
     System.out.println("Starting registration test 1...");
     try {
-      authUserService.register("helloword@email.com", UserRoles.ADMIN, "John", "Doe", "password123", "password123");
+      authUserService.register("helloword@email.com", UserRoles.ADMIN, "John", "Doe", "password123", "password123",
+          1234567);
     } catch (IllegalArgumentException e) {
       System.out.println("Registration failed: " + e.getMessage());
     }
@@ -17,7 +18,7 @@ public class Main {
     System.out.println("Starting registration test 2...");
     try {
       authUserService.register("monica.pena@example.com", UserRoles.COMMENSAL, "John", "Doe", "password123",
-          "password123");
+          "password123", 2345678);
     } catch (IllegalArgumentException e) {
       System.out.println("Registration failed: " + e.getMessage());
     }

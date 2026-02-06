@@ -11,7 +11,7 @@ public class AuthUserModel extends BaseUserModel {
   }
 
   public AuthUserModel(Integer id, String firstName, String lastName, String email, String role, String type,
-      String accessToken, Boolean isActive) {
+      String accessToken, Boolean isActive, Integer documentId) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -20,6 +20,7 @@ public class AuthUserModel extends BaseUserModel {
     this.accessToken = accessToken;
     this.role = role;
     this.isActive = isActive;
+    this.documentId = documentId;
   }
 
   // getters
