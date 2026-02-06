@@ -1,6 +1,6 @@
 package Testing.Ingredients;
 
-import Model.Common.CommonServises;
+import Model.Common.CommonServices;
 import Model.Ingredient.IngredientModel;
 import Model.Ingredient.IngredientSevice;
 
@@ -9,7 +9,7 @@ import java.util.List;
 public class Main {
   public static void main(String[] args) {
     IngredientSevice ingredientService = new IngredientSevice();
-    CommonServises commonServises = new CommonServises();
+    CommonServices commonServises = new CommonServices();
 
     System.out.println("Starting ingredient tests...");
 

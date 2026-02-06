@@ -7,14 +7,14 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import Model.Common.CommonServises;
+import Model.Common.CommonServices;
 // import Model.Ingredient.IngredientModel;
 import Utils.Dates;
 import Utils.Formatters;
 
 public class IngredientSevice {
   String FILE_PATH = "src/Database/Ingredient/ingredients.json";
-  private CommonServises commonServises = new CommonServises();
+  private CommonServices commonServises = new CommonServices();
   private Dates datesUtil = new Dates();
   private Formatters formatters = new Formatters();
 

@@ -1,4 +1,4 @@
-package View;
+package View.CustomComponents;
 
 import javax.swing.*;
 import java.awt.*;

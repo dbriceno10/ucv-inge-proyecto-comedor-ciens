@@ -2,7 +2,7 @@ package Model.User;
 
 // import Model.User.UserModel;
 // import Model.User.BaseUserModel;
-import Model.Common.CommonServises;
+import Model.Common.CommonServices;
 import Utils.Dates;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +14,7 @@ import java.util.List;
 public class UserService {
   private static final String FILE_USER = "src/Database/User/users.json";
   private static final String FILE_UCV_USERS = "src/Database/User/ucvUsers.json";
-  private CommonServises commonServises = new CommonServises();
+  private CommonServices commonServises = new CommonServices();
   private Dates datesUtil = new Dates();
 
   // Métodos para manejar usuarios (crear, leer, actualizar, eliminar)
