@@ -9,7 +9,7 @@ import java.util.List;
 public class Main {
   public static void main(String[] args) {
     IngredientSevice ingredientService = new IngredientSevice();
-    CommonServices commonServises = new CommonServices();
+    CommonServices commonServices = new CommonServices();
 
     System.out.println("Starting ingredient tests...");
 
@@ -32,7 +32,7 @@ public class Main {
     // Test 2: Contar todos los ingredientes
     System.out.println("Test 2: Count all ingredients");
     try {
-      int totalIngredients = commonServises.countAllElements("src/Database/Ingredient/ingredients.json",
+      int totalIngredients = commonServices.countAllElements("src/Database/Ingredient/ingredients.json",
           IngredientModel.class);
       System.out.println("Total ingredients (including deleted): " + totalIngredients);
     } catch (Exception e) {
@@ -93,7 +93,7 @@ public class Main {
     // Test 6: Eliminar un ingrediente
     System.out.println("Test 6: Delete an ingredient");
     try {
-      boolean isDeleted = ingredientService.delete(1);
+      Boolean isDeleted = ingredientService.delete(1);
       if (isDeleted) {
         System.out.println("Ingredient deleted successfully.");
       } else {

@@ -4,209 +4,239 @@
     "firstName": "Juan",
     "lastName": "Pérez",
     "email": "juan.perez@example.com",
-    "type": "STUDENT"
+    "type": "ESTUDIANTE",
+    "documentId": 12345678
   },
   {
     "id": 2,
     "firstName": "María",
     "lastName": "Gómez",
     "email": "maria.gomez@example.com",
-    "type": "PROFESSOR"
+    "type": "PROFESOR",
+    "documentId": 23456789
   },
   {
     "id": 3,
     "firstName": "Carlos",
     "lastName": "López",
     "email": "carlos.lopez@example.com",
-    "type": "WORKER"
+    "type": "OBRERO",
+    "documentId": 34567890
   },
   {
     "id": 4,
     "firstName": "Ana",
     "lastName": "Martínez",
     "email": "ana.martinez@example.com",
-    "type": "ADMIN"
+    "type": "ADMINISTRADOR",
+    "documentId": 45678901
   },
   {
     "id": 5,
     "firstName": "Luis",
     "lastName": "Hernández",
     "email": "luis.hernandez@example.com",
-    "type": "STUDENT"
+    "type": "ESTUDIANTE",
+    "documentId": 56789012
   },
   {
     "id": 6,
     "firstName": "Sofía",
     "lastName": "Ramírez",
     "email": "sofia.ramirez@example.com",
-    "type": "PROFESSOR"
+    "type": "PROFESOR",
+    "documentId": 67890123
   },
   {
     "id": 7,
     "firstName": "Pedro",
     "lastName": "García",
     "email": "pedro.garcia@example.com",
-    "type": "WORKER"
+    "type": "OBRERO",
+    "documentId": 78901234
   },
   {
     "id": 8,
     "firstName": "Lucía",
     "lastName": "Vargas",
     "email": "lucia.vargas@example.com",
-    "type": "ADMIN"
+    "type": "ADMINISTRADOR",
+    "documentId": 89012345
   },
   {
     "id": 9,
     "firstName": "Miguel",
     "lastName": "Torres",
     "email": "miguel.torres@example.com",
-    "type": "STUDENT"
+    "type": "ESTUDIANTE",
+    "documentId": 90123456
   },
   {
     "id": 10,
     "firstName": "Elena",
     "lastName": "Morales",
     "email": "elena.morales@example.com",
-    "type": "PROFESSOR"
+    "type": "PROFESOR",
+    "documentId": 12345678
   },
   {
     "id": 11,
     "firstName": "Jorge",
     "lastName": "Castro",
     "email": "jorge.castro@example.com",
-    "type": "WORKER"
+    "type": "OBRERO",
+    "documentId": 23456789
   },
   {
     "id": 12,
     "firstName": "Valeria",
     "lastName": "Rojas",
     "email": "valeria.rojas@example.com",
-    "type": "ADMIN"
+    "type": "ADMINISTRADOR",
+    "documentId": 34567890
   },
   {
     "id": 13,
     "firstName": "Andrés",
     "lastName": "Mendoza",
     "email": "andres.mendoza@example.com",
-    "type": "STUDENT"
+    "type": "ESTUDIANTE",
+    "documentId": 45678901
   },
   {
     "id": 14,
     "firstName": "Gabriela",
     "lastName": "Fernández",
     "email": "gabriela.fernandez@example.com",
-    "type": "PROFESSOR"
+    "type": "PROFESOR",
+    "documentId": 56789012
   },
   {
     "id": 15,
     "firstName": "Ricardo",
     "lastName": "Suárez",
     "email": "ricardo.suarez@example.com",
-    "type": "WORKER"
+    "type": "OBRERO",
+    "documentId": 67890123
   },
   {
     "id": 16,
     "firstName": "Natalia",
     "lastName": "Blanco",
     "email": "natalia.blanco@example.com",
-    "type": "ADMIN"
+    "type": "ADMINISTRADOR",
+    "documentId": 78901234
   },
   {
     "id": 17,
     "firstName": "Diego",
     "lastName": "Ortega",
     "email": "diego.ortega@example.com",
-    "type": "STUDENT"
+    "type": "ESTUDIANTE",
+    "documentId": 89012345
   },
   {
     "id": 18,
     "firstName": "Camila",
     "lastName": "Vega",
     "email": "camila.vega@example.com",
-    "type": "PROFESSOR"
+    "type": "PROFESOR",
+    "documentId": 90123456
   },
   {
     "id": 19,
     "firstName": "Sebastián",
     "lastName": "Lara",
     "email": "sebastian.lara@example.com",
-    "type": "WORKER"
+    "type": "OBRERO",
+    "documentId": 12345678
   },
   {
     "id": 20,
     "firstName": "Isabel",
     "lastName": "Cruz",
     "email": "isabel.cruz@example.com",
-    "type": "ADMIN"
+    "type": "ADMINISTRADOR",
+    "documentId": 23456789
   },
   {
     "id": 21,
     "firstName": "Tomás",
     "lastName": "Navarro",
     "email": "tomas.navarro@example.com",
-    "type": "STUDENT"
+    "type": "ESTUDIANTE",
+    "documentId": 34567890
   },
   {
     "id": 22,
     "firstName": "Paula",
     "lastName": "Silva",
     "email": "paula.silva@example.com",
-    "type": "PROFESSOR"
+    "type": "PROFESOR",
+    "documentId": 45678901
   },
   {
     "id": 23,
     "firstName": "Hugo",
     "lastName": "Moreno",
     "email": "hugo.moreno@example.com",
-    "type": "WORKER"
+    "type": "OBRERO",
+    "documentId": 56789012
   },
   {
     "id": 24,
     "firstName": "Carolina",
     "lastName": "Paredes",
     "email": "carolina.paredes@example.com",
-    "type": "ADMIN"
+    "type": "ADMINISTRADOR",
+    "documentId": 67890123
   },
   {
     "id": 25,
     "firstName": "Martín",
     "lastName": "Soto",
     "email": "martin.soto@example.com",
-    "type": "STUDENT"
+    "type": "ESTUDIANTE",
+    "documentId": 78901234
   },
   {
     "id": 26,
     "firstName": "Florencia",
     "lastName": "Campos",
     "email": "florencia.campos@example.com",
-    "type": "PROFESSOR"
+    "type": "PROFESOR",
+    "documentId": 89012345
   },
   {
     "id": 27,
     "firstName": "Pablo",
     "lastName": "Reyes",
     "email": "pablo.reyes@example.com",
-    "type": "WORKER"
+    "type": "OBRERO",
+    "documentId": 90123456
   },
   {
     "id": 28,
     "firstName": "Samantha",
     "lastName": "Aguilar",
     "email": "samantha.aguilar@example.com",
-    "type": "ADMIN"
+    "type": "ADMINISTRADOR",
+    "documentId": 12345678
   },
   {
     "id": 29,
     "firstName": "Felipe",
     "lastName": "Delgado",
     "email": "felipe.delgado@example.com",
-    "type": "STUDENT"
+    "type": "ESTUDIANTE",
+    "documentId": 23456789
   },
   {
     "id": 30,
     "firstName": "Mónica",
     "lastName": "Peña",
     "email": "monica.pena@example.com",
-    "type": "PROFESSOR"
+    "type": "PROFESOR",
+    "documentId": 34567890
   }
 ]

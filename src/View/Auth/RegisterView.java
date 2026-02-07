@@ -180,13 +180,22 @@ public class RegisterView extends JFrame {
     //---getters/ event listener
     public String getFirstName() { return txtFirstName.getText(); }
     public String getLastName() { return txtLastName.getText(); }
-    public String get_documentId() { return txt_documentId.getText(); }
     public String getEmail() { return txtEmail.getText(); }
     public String getFaculty() { return (String) cmbFaculty.getSelectedItem(); }
     public String getType_() { return (String) cmbType.getSelectedItem(); }
     public String getPwd() { return txtPwd.getText(); }
     public String getPwd_repeat() { return txtPwd_repeat.getText(); }
+    public Integer get_documentId() { 
+        String text = txt_documentId.getText().trim();
+        if (text.isEmpty()) { return null; }
 
+        try {
+            return Integer.parseInt(text);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+    
     // component getters, not text
     public JTextField getComponentFirstName() { return txtFirstName; }
     public JTextField getComponentLastName() { return txtLastName; }
@@ -198,4 +207,5 @@ public class RegisterView extends JFrame {
     public void registerListener(ActionListener listener) { btnRegister.addActionListener(listener);}
     public void loginListener(ActionListener listener) { btnLogin.addActionListener(listener);}
     public void uploadListener(ActionListener listener) { btnUpload.addActionListener(listener);}   
+
 }

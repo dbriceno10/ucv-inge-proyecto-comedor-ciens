@@ -1,17 +1,17 @@
-import View.Auth.RegisterView;
-import View.Main.DashboardView;
-import View.Auth.LoginView;
+import View.Auth.*;
+import View.Admin.*;
+import View.Main.*;
+import Controllers.AuthControllers.*;
+import Controllers.MainControllers.*;
 
 import javax.swing.SwingUtilities; //to ensure that the graphical interface is handled on its own dedicated thread.
-
-import Controllers.AuthControllers.RegisterController;
 
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            RegisterView view = new RegisterView();
+            DashboardView view = new DashboardView();
             
-            new RegisterController(view);
+            new DashboardController(view);
 
         });
     }

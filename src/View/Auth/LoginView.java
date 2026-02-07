@@ -143,6 +143,10 @@ public class LoginView extends JFrame {
     //---getters/ event listener
     public String getEmail_login() { return txtEmail.getText(); }
     public String getPwd_login() { return txtPwd.getText(); }
+
+    // component getters, not text
+    public JTextField getComponentEmail() { return txtEmail; }
+    public JTextField getComponentPwd() { return txtPwd; }
  
     public void loginListener(ActionListener listener) { btnLogin.addActionListener(listener);}
     public void registerListener(ActionListener listener) { btnRegister.addActionListener(listener);}
