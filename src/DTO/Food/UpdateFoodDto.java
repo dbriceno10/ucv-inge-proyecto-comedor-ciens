@@ -8,6 +8,9 @@ public class UpdateFoodDto {
   private Double valueCF;// valor de costos fijos como servicios, salarios, etc.
   private Integer[] ingredientIds;
 
+  public UpdateFoodDto() {
+  }
+
   public UpdateFoodDto(
       Integer id,
       String name,
