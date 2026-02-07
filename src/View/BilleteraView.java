@@ -2,71 +2,52 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.JFrame;
 
-public class BilleteraView extends JPanel {
-    private JLabel lblSaldoMonto;
-    private JButton btnRecargar;
+public class BilleteraView extends JFrame {
 
     public BilleteraView() {
-     
-
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(Color.WHITE);
-        setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-
-       
-        JLabel lblTitulo = new JLabel("Monedero Digital");
-        lblTitulo.setFont(new Font("Arial", Font.BOLD, 22));
-        lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+        // 1. Configuración de la ventana (Tamaño y Título)
+        setTitle("Mi Billetera - UCV");
+        setSize(400, 400); 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null); // Esto la centra en tu pantalla
         
-        add(Box.createRigidArea(new Dimension(0, 20)));
+        // 2. Fondo y Layout
+        setLayout(new BorderLayout());
+        getContentPane().setBackground(Color.WHITE); 
 
+        // 3. Título Superior (Azul)
+        JLabel lblTitulo = new JLabel("Mi Monedero Digital", SwingConstants.CENTER);
+        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 24));
+        lblTitulo.setForeground(new Color(0, 51, 153)); 
+        lblTitulo.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
+        add(lblTitulo, BorderLayout.NORTH);
+
+        // 4. Saldo Central (Verde y Grande)
+        // Usamos un JPanel para centrar el texto vertical y horizontalmente
+        JPanel pnlCentral = new JPanel(new GridBagLayout());
+        pnlCentral.setBackground(Color.WHITE);
+
+        JLabel lblSaldoMonto = new JLabel("Bs. 500.00");
+        lblSaldoMonto.setFont(new Font("SansSerif", Font.BOLD, 48));
+        lblSaldoMonto.setForeground(new Color(0, 153, 76)); 
         
-        JLabel lblInfo = new JLabel("Saldo disponible:");
-        lblInfo.setFont(new Font("Arial", Font.PLAIN, 14));
-        lblInfo.setForeground(Color.GRAY);
-        lblInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(lblInfo);
+        pnlCentral.add(lblSaldoMonto);
+        add(pnlCentral, BorderLayout.CENTER);
 
-        // Monto del Saldo (Grande y azul como la UCV)
-        lblSaldoMonto = new JLabel("Bs. 0.00");
-        lblSaldoMonto.setFont(new Font("Arial", Font.BOLD, 36));
-        lblSaldoMonto.setForeground(new Color(0, 102, 204));
-        lblSaldoMonto.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(lblSaldoMonto);
-
-        // Espacio grande antes del botón
-        add(Box.createRigidArea(new Dimension(0, 40)));
-
-        
-        btnRecargar = new JButton("Recargar Saldo");
-        btnRecargar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnRecargar.setBackground(new Color(0, 153, 76)); // Verde
-        btnRecargar.setForeground(Color.WHITE);
-        btnRecargar.setFocusPainted(false);
-        btnRecargar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        add(btnRecargar);
-
-        add(lblTitulo);
+        // 5. Mensaje inferior (Gris)
+        JLabel lblFooter = new JLabel("Saldo disponible", SwingConstants.CENTER);
+        lblFooter.setFont(new Font("SansSerif", Font.ITALIC, 14));
+        lblFooter.setForeground(Color.GRAY);
+        lblFooter.setBorder(BorderFactory.createEmptyBorder(0, 0, 50, 0));
+        add(lblFooter, BorderLayout.SOUTH);
     }
 
-    
-    public void setSaldo(double monto) {
-        lblSaldoMonto.setText(String.format("Bs. %.2f", monto));
-    }
-
-  
+    // EL MÉTODO MAIN: Esto es lo que hace que se abra tu ventana y no el login
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Prueba de Billetera");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 500); 
-        frame.setLocationRelativeTo(null); 
-        
-        BilleteraView vista = new BilleteraView();
-        frame.add(vista);
-        
-        frame.setVisible(true); 
+        SwingUtilities.invokeLater(() -> {
+            BilleteraView vista = new BilleteraView();
+            vista.setVisible(true); // Hace que la ventana aparezca
+        });
     }
 }
