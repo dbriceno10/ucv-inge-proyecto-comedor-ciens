@@ -16,9 +16,7 @@ import Enums.UserRoles;
 import Enums.UserTypes;
 
 public class AuthUserService {
-  UserService userService = new UserService();
-  UserRoles userRoles = new UserRoles();
-  UserTypes userTypes = new UserTypes();
+  private UserService userService = new UserService();
   private static final String FILE_USER = "src/Database/User/users.json";
 
   public AuthUserModel register(String email, String role, String firstName, String lastName, String password,
