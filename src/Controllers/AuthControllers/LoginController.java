@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 public class LoginController implements ActionListener {
     private LoginView view;
 
-    LoginController(LoginView view) {
+    public LoginController(LoginView view) {
         this.view = view;
 
         this.view.loginListener(this);
