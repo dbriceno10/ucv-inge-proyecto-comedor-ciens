@@ -5,10 +5,10 @@ public class CreateMenuDto {
   private Integer[] foodIds;
   private String date; // e.g., "2024-06-10"
 
-  CreateMenuDto() {
+  public CreateMenuDto() {
   }
 
-  CreateMenuDto(String day, Integer[] foodIds, String date) {
+  public CreateMenuDto(String day, Integer[] foodIds, String date) {
     this.day = day;
     this.foodIds = foodIds;
     this.date = date;
