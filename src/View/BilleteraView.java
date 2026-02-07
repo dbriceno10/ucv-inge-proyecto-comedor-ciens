@@ -6,48 +6,117 @@ import java.awt.*;
 public class BilleteraView extends JFrame {
 
     public BilleteraView() {
-        // 1. Configuración de la ventana (Tamaño y Título)
-        setTitle("Mi Billetera - UCV");
-        setSize(400, 400); 
+        
+        setTitle("Billetera Digital");
+        setSize(500, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Esto la centra en tu pantalla
+        setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(245, 245, 245)); 
+        setLayout(new BorderLayout(15, 15));
+
         
-        // 2. Fondo y Layout
-        setLayout(new BorderLayout());
-        getContentPane().setBackground(Color.WHITE); 
-
-        // 3. Título Superior (Azul)
-        JLabel lblTitulo = new JLabel("Mi Monedero Digital", SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 24));
-        lblTitulo.setForeground(new Color(0, 51, 153)); 
-        lblTitulo.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
-        add(lblTitulo, BorderLayout.NORTH);
-
-        // 4. Saldo Central (Verde y Grande)
-        // Usamos un JPanel para centrar el texto vertical y horizontalmente
-        JPanel pnlCentral = new JPanel(new GridBagLayout());
-        pnlCentral.setBackground(Color.WHITE);
-
-        JLabel lblSaldoMonto = new JLabel("Bs. 500.00");
-        lblSaldoMonto.setFont(new Font("SansSerif", Font.BOLD, 48));
-        lblSaldoMonto.setForeground(new Color(0, 153, 76)); 
+        JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        headerPanel.setBackground(new Color(245, 245, 245));
         
-        pnlCentral.add(lblSaldoMonto);
-        add(pnlCentral, BorderLayout.CENTER);
+        JPanel balanceContainer = new JPanel(new GridLayout(2, 1));
+        balanceContainer.setBackground(new Color(210, 230, 235)); 
+        balanceContainer.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        
+        JLabel balanceTitleLabel = new JLabel("Balance Total", SwingConstants.RIGHT);
+        balanceTitleLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        
+        JLabel balanceValueLabel = new JLabel("$7,783.00");
+        balanceValueLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        
+        balanceContainer.add(balanceTitleLabel);
+        balanceContainer.add(balanceValueLabel);
+        headerPanel.add(balanceContainer);
+        add(headerPanel, BorderLayout.NORTH);
 
-        // 5. Mensaje inferior (Gris)
-        JLabel lblFooter = new JLabel("Saldo disponible", SwingConstants.CENTER);
-        lblFooter.setFont(new Font("SansSerif", Font.ITALIC, 14));
-        lblFooter.setForeground(Color.GRAY);
-        lblFooter.setBorder(BorderFactory.createEmptyBorder(0, 0, 50, 0));
-        add(lblFooter, BorderLayout.SOUTH);
+       
+        JPanel mainContentPanel = new JPanel(new BorderLayout());
+        mainContentPanel.setBackground(Color.WHITE);
+        mainContentPanel.setBorder(BorderFactory.createLineBorder(new Color(230, 230, 230)));
+
+        
+        JPanel navigationMenu = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        navigationMenu.setBackground(Color.WHITE);
+        
+        JButton payButton = new JButton("Pagos");
+        JButton topUpButton = new JButton("Recarga");
+        JButton historyButton = new JButton("Historial");
+        
+        
+        Dimension navBtnSize = new Dimension(110, 30);
+        payButton.setPreferredSize(navBtnSize);
+        topUpButton.setPreferredSize(navBtnSize);
+        historyButton.setPreferredSize(navBtnSize);
+
+        navigationMenu.add(payButton);
+        navigationMenu.add(topUpButton);
+        navigationMenu.add(historyButton);
+        
+        mainContentPanel.add(navigationMenu, BorderLayout.NORTH);
+
+        
+        JPanel transactionListPanel = new JPanel();
+        transactionListPanel.setLayout(new BoxLayout(transactionListPanel, BoxLayout.Y_AXIS));
+        transactionListPanel.setBackground(Color.WHITE);
+
+        transactionListPanel.add(createTransactionRow("07/02/2026", "$100.00"));
+        transactionListPanel.add(createTransactionRow("06/02/2026", "$250.00"));
+        transactionListPanel.add(createTransactionRow("05/02/2026", "$50.00"));
+        transactionListPanel.add(createTransactionRow("04/02/2026", "$1,200.00"));
+
+        JScrollPane scrollPane = new JScrollPane(transactionListPanel);
+        scrollPane.setBorder(null);
+        mainContentPanel.add(scrollPane, BorderLayout.CENTER);
+        
+        add(mainContentPanel, BorderLayout.CENTER);
+
+      
+        JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 20));
+        footerPanel.setBackground(new Color(245, 245, 245));
+
+        JButton saveButton = new JButton("Guardar");
+        saveButton.setPreferredSize(new Dimension(120, 40));
+        saveButton.setBackground(new Color(0, 102, 204));
+        saveButton.setForeground(Color.WHITE);
+        saveButton.setFocusPainted(false);
+
+        JButton cancelButton = new JButton("Cancelar");
+        cancelButton.setPreferredSize(new Dimension(120, 40));
+        cancelButton.setBackground(new Color(255, 204, 153)); 
+        cancelButton.setFocusPainted(false);
+
+        footerPanel.add(saveButton);
+        footerPanel.add(cancelButton);
+        add(footerPanel, BorderLayout.SOUTH);
     }
 
-    // EL MÉTODO MAIN: Esto es lo que hace que se abra tu ventana y no el login
+    
+    private JPanel createTransactionRow(String dateText, String amountText) {
+        JPanel rowPanel = new JPanel(new BorderLayout());
+        rowPanel.setBackground(Color.WHITE);
+        rowPanel.setMaximumSize(new Dimension(600, 50));
+        rowPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(240, 240, 240)));
+
+        JLabel dateLabel = new JLabel(dateText);
+        dateLabel.setBorder(BorderFactory.createEmptyBorder(0, 25, 0, 0));
+        dateLabel.setForeground(Color.DARK_GRAY);
+        
+        JLabel amountLabel = new JLabel(amountText);
+        amountLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 25));
+        amountLabel.setFont(new Font("Arial", Font.BOLD, 14));
+
+        rowPanel.add(dateLabel, BorderLayout.WEST);
+        rowPanel.add(amountLabel, BorderLayout.EAST);
+        return rowPanel;
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            BilleteraView vista = new BilleteraView();
-            vista.setVisible(true); // Hace que la ventana aparezca
+            new BilleteraView().setVisible(true);
         });
     }
 }
