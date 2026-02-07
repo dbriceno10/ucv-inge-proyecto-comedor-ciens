@@ -60,7 +60,7 @@ $CCB = [(CF + CV) / NB] * (1 + \%Merma)$
 mvn clean install
 mvn exec:java
 ```
-hello word
+
 ## 👥 Equipo de Trabajo
 * **Docentes:** Profa. Yosly Hernández B. / Prof. Marcel Castro.
 * **Desarrolladores:**
