@@ -1,14 +1,11 @@
-import Controllers.RegFormController;
-import View.RegFormView;
-import javax.swing.SwingUtilities; //to ensure that the graphical interface is handled on its own dedicated thread.
+import javax.swing.SwingUtilities;
+import View.MenuEditorView;
 
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            RegFormView view = new RegFormView();
-            
-            new RegFormController(view);
-
-        }); 
+            // Solo una línea para evitar conflictos
+            new MenuEditorView(); 
+        });
     }
 }
