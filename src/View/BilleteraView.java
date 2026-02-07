@@ -2,26 +2,28 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.JFrame;
 
 public class BilleteraView extends JPanel {
     private JLabel lblSaldoMonto;
     private JButton btnRecargar;
 
     public BilleteraView() {
-        // Configuración básica del panel
+     
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-        // Título estilizado
+       
         JLabel lblTitulo = new JLabel("Monedero Digital");
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 22));
         lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Espacio
+        
         add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Etiqueta de Saldo
+        
         JLabel lblInfo = new JLabel("Saldo disponible:");
         lblInfo.setFont(new Font("Arial", Font.PLAIN, 14));
         lblInfo.setForeground(Color.GRAY);
@@ -53,5 +55,18 @@ public class BilleteraView extends JPanel {
     
     public void setSaldo(double monto) {
         lblSaldoMonto.setText(String.format("Bs. %.2f", monto));
+    }
+
+  
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Prueba de Billetera");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 500); 
+        frame.setLocationRelativeTo(null); 
+        
+        BilleteraView vista = new BilleteraView();
+        frame.add(vista);
+        
+        frame.setVisible(true); 
     }
 }
