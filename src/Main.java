@@ -1,11 +1,10 @@
 import javax.swing.SwingUtilities;
-import View.MenuEditorView;
+import View.IngredientEditorView; 
 
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            // Solo una línea para evitar conflictos
-            new MenuEditorView(); 
+            new IngredientEditorView(); 
         });
     }
 }
