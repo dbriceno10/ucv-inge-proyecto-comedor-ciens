@@ -1,12 +1,12 @@
-package View;
+package WALLET;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class BilleteraView extends JFrame {
+public class MyWalletView extends JFrame {
 
-    public BilleteraView() {
-        
+    public MyWalletView() {
+        // Configuración de la ventana
         setTitle("Billetera Digital");
         setSize(500, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -14,7 +14,7 @@ public class BilleteraView extends JFrame {
         getContentPane().setBackground(new Color(245, 245, 245)); 
         setLayout(new BorderLayout(15, 15));
 
-        
+        // --- HEADER: Balance ---
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         headerPanel.setBackground(new Color(245, 245, 245));
         
@@ -33,19 +33,17 @@ public class BilleteraView extends JFrame {
         headerPanel.add(balanceContainer);
         add(headerPanel, BorderLayout.NORTH);
 
-       
+        // --- CENTER: Navegación e Historial ---
         JPanel mainContentPanel = new JPanel(new BorderLayout());
         mainContentPanel.setBackground(Color.WHITE);
         mainContentPanel.setBorder(BorderFactory.createLineBorder(new Color(230, 230, 230)));
 
-        
         JPanel navigationMenu = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         navigationMenu.setBackground(Color.WHITE);
         
         JButton payButton = new JButton("Pagos");
         JButton topUpButton = new JButton("Recarga");
         JButton historyButton = new JButton("Historial");
-        
         
         Dimension navBtnSize = new Dimension(110, 30);
         payButton.setPreferredSize(navBtnSize);
@@ -58,7 +56,6 @@ public class BilleteraView extends JFrame {
         
         mainContentPanel.add(navigationMenu, BorderLayout.NORTH);
 
-        
         JPanel transactionListPanel = new JPanel();
         transactionListPanel.setLayout(new BoxLayout(transactionListPanel, BoxLayout.Y_AXIS));
         transactionListPanel.setBackground(Color.WHITE);
@@ -74,7 +71,7 @@ public class BilleteraView extends JFrame {
         
         add(mainContentPanel, BorderLayout.CENTER);
 
-      
+        // --- FOOTER: Acciones ---
         JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 20));
         footerPanel.setBackground(new Color(245, 245, 245));
 
@@ -94,7 +91,6 @@ public class BilleteraView extends JFrame {
         add(footerPanel, BorderLayout.SOUTH);
     }
 
-    
     private JPanel createTransactionRow(String dateText, String amountText) {
         JPanel rowPanel = new JPanel(new BorderLayout());
         rowPanel.setBackground(Color.WHITE);
@@ -116,7 +112,8 @@ public class BilleteraView extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new BilleteraView().setVisible(true);
+            // Se inicia con el nombre de clase correcto
+            new MyWalletView().setVisible(true); 
         });
     }
 }
