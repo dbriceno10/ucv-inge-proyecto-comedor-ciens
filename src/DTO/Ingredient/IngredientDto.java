@@ -7,6 +7,8 @@ public class IngredientDto {
   private Boolean isActive;
   private String createdAt = null;
   private String updatedAt = null;
+  private String unit = null;
+  private Double quantity = null;
 
   public IngredientDto(
       Integer id,
@@ -14,13 +16,15 @@ public class IngredientDto {
       Double price,
       Boolean isActive,
       String createdAt,
-      String updatedAt) {
+      String updatedAt, String unit, Double quantity) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.isActive = isActive;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+    this.unit = unit;
+    this.quantity = quantity;
   }
 
   // getters
@@ -46,5 +50,13 @@ public class IngredientDto {
 
   public String getUpdatedAt() {
     return updatedAt;
+  }
+
+  public String getUnit() {
+    return unit;
+  }
+
+  public Double getQuantity() {
+    return quantity;
   }
 }

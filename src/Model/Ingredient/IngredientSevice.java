@@ -7,19 +7,22 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import DTO.Ingredient.CreateIngredientDto;
+import DTO.Ingredient.IngredientDto;
+import DTO.Ingredient.UpdateIngredientDto;
 import Model.Common.CommonServices;
 // import Model.Ingredient.IngredientModel;
 import Utils.Dates;
 import Utils.Formatters;
 
 public class IngredientSevice {
-  String FILE_PATH = "src/Database/Ingredient/ingredients.json";
+  private String FILE_PATH = "src/Database/Ingredient/ingredients.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private Formatters formatters = new Formatters();
 
-  public List<IngredientModel> getAllIngredients() {
-    List<IngredientModel> ingredients = new ArrayList<>();
+  public List<IngredientDto> getAllIngredients() {
+    List<IngredientDto> ingredients = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
@@ -28,7 +31,7 @@ public class IngredientSevice {
             mapper.getTypeFactory().constructCollectionType(List.class, IngredientModel.class));
         for (IngredientModel ingredientModel : ingredientModels) {
           if (ingredientModel.getDeletedAt() == null) { // Filtrar ingredientes con deletedAt como null
-            ingredients.add(ingredientModel);
+            ingredients.add(this.mapToDto(ingredientModel));
           }
         }
       }
@@ -38,51 +41,55 @@ public class IngredientSevice {
     return ingredients;
   }
 
-  public IngredientModel getIngredientById(Integer id) {
-    List<IngredientModel> ingredients = this.getAllIngredients();
-    IngredientModel found = null;
-    for (IngredientModel ingredient : ingredients) {
-      if (ingredient.getId().equals(id)) {
-        found = ingredient;
-        break;
-      }
+  public IngredientDto getIngredientById(Integer id) {
+    IngredientModel ingredientModel = this.getById(id);
+    if (ingredientModel == null) {
+      return null;
     }
-    return found;
+    return this.mapToDto(ingredientModel);
   }
 
-  public IngredientModel create(IngredientModel ingredient) {
+  public IngredientDto create(CreateIngredientDto ingredientDto) {
     Integer nextId = this.commonServices.getLastIndex(FILE_PATH, IngredientModel.class);
     String date = this.datesUtil.getCurrentDateTime();
-    String name = this.formatters.toUpperCase(ingredient.getName());
+    String name = this.formatters.toUpperCase(ingredientDto.getName());
     IngredientModel newIngredient = new IngredientModel(
-        nextId, name, ingredient.getUnit(), ingredient.getQuantity(), ingredient.getPrice(), true, null,
+        nextId, name, ingredientDto.getUnit(), ingredientDto.getQuantity(), ingredientDto.getPrice(), true, null,
         date, date, null);
-    return this.save(newIngredient);
+    IngredientModel ingredient = this.save(newIngredient);
+    if (ingredient == null) {
+      return null;
+    }
+    return this.mapToDto(ingredient);
   }
 
-  public IngredientModel update(IngredientModel ingredient) {
-    IngredientModel existing = getIngredientById(ingredient.getId());
+  public IngredientDto update(UpdateIngredientDto ingredientDto) {
+    IngredientModel existing = getById(ingredientDto.getId());
     if (existing == null) {
-      throw new IllegalArgumentException("Ingredient not found with id: " + ingredient.getId());
+      throw new IllegalArgumentException("Ingredient not found with id: " + ingredientDto.getId());
     }
-    String name = this.formatters.toUpperCase(ingredient.getName());
+    String name = this.formatters.toUpperCase(ingredientDto.getName());
     String date = this.datesUtil.getCurrentDateTime();
     IngredientModel updatedIngredient = new IngredientModel(
         existing.getId(),
         name,
-        ingredient.getUnit(),
-        ingredient.getQuantity(),
-        ingredient.getPrice(),
+        ingredientDto.getUnit(),
+        ingredientDto.getQuantity(),
+        ingredientDto.getPrice(),
         existing.getIsActive(),
         existing.getCreatedAt(),
         existing.getCreatedAt(),
         date,
         null);
-    return this.edit(updatedIngredient);
+    IngredientModel ingredient = this.edit(updatedIngredient);
+    if (ingredient == null) {
+      return null;
+    }
+    return this.mapToDto(ingredient);
   }
 
   public Boolean delete(Integer id) {
-    IngredientModel existing = this.getIngredientById(id);
+    IngredientModel existing = this.getById(id);
     if (existing != null) {
       existing.setDeletedAt(this.datesUtil.getCurrentDateTime());
       this.edit(existing);
@@ -91,9 +98,9 @@ public class IngredientSevice {
     return false;
   }
 
-  public IngredientModel getByName(String name) {
+  public IngredientDto getByName(String name) {
     String formattedName = this.formatters.toUpperCase(name);
-    List<IngredientModel> ingredients = this.getAllIngredients();
+    List<IngredientModel> ingredients = this.getAll();
     IngredientModel found = null;
     for (IngredientModel ingredient : ingredients) {
       if (ingredient.getName().equalsIgnoreCase(formattedName)) {
@@ -101,7 +108,10 @@ public class IngredientSevice {
         break;
       }
     }
-    return found;
+    if (found == null) {
+      return null;
+    }
+    return this.mapToDto(found);
   }
 
   // metodos privados
@@ -142,4 +152,47 @@ public class IngredientSevice {
     return ingredient;
   }
 
+  private IngredientDto mapToDto(IngredientModel ingredient) {
+    return new IngredientDto(
+        ingredient.getId(),
+        ingredient.getName(),
+        ingredient.getPrice(),
+        ingredient.getIsActive(),
+        ingredient.getCreatedAt(),
+        ingredient.getUpdatedAt(),
+        ingredient.getUnit(),
+        ingredient.getQuantity());
+  }
+
+  private List<IngredientModel> getAll() {
+    List<IngredientModel> ingredients = new ArrayList<>();
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      File file = new File(FILE_PATH);
+      if (file.exists()) {
+        List<IngredientModel> ingredientModels = mapper.readValue(file,
+            mapper.getTypeFactory().constructCollectionType(List.class, IngredientModel.class));
+        for (IngredientModel ingredientModel : ingredientModels) {
+          if (ingredientModel.getDeletedAt() == null) { // Filtrar ingredientes con deletedAt como null
+            ingredients.add(ingredientModel);
+          }
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return ingredients;
+  }
+
+  private IngredientModel getById(Integer id) {
+    List<IngredientModel> ingredients = this.getAll();
+    IngredientModel found = null;
+    for (IngredientModel ingredient : ingredients) {
+      if (ingredient.getId().equals(id)) {
+        found = ingredient;
+        break;
+      }
+    }
+    return found;
+  }
 }
