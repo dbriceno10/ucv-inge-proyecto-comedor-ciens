@@ -9,8 +9,8 @@ public class IngredientModel {
   private String updatedAt = null;
   private String deletedAt = null;
   // *Estos atributos son para luego */
-  private String unit;
-  private Double quantity;
+  private String unit = null;
+  private Double quantity = null;
   private String expirationDate = null;
 
   public IngredientModel() {
