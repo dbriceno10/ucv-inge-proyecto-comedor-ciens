@@ -66,6 +66,7 @@ public class Main {
           "Ensalada con lechuga, pollo, crutones y aderezo César.",
           0.05,
           5.0,
+          10.0,
           new Integer[] { 4, 5, 6 });
       FoodDto result = foodService.update(updatedFood);
       System.out.println("Food updated: " + result.getName() + ", New Description: " + result.getDescription());
