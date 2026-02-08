@@ -43,6 +43,7 @@ public class CommonServices {
       }
     } catch (IOException e) {
       e.printStackTrace();
+      //throw new RuntimeException("Error reading file: " + filePath, e);
     }
     return elements;
   }
