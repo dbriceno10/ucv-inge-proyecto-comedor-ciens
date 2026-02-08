@@ -16,7 +16,7 @@ import Model.Ingredient.IngredientSevice;
 import DTO.Ingredient.IngredientDto;
 
 public class FoodService {
-  private String FILE_PATH = "src/Database/Food/foods.json";
+  private static final String FILE_PATH = "src/Database/Food/foods.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private IngredientSevice ingredientSevice = new IngredientSevice();
