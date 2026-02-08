@@ -6,6 +6,10 @@ import Model.Ingredient.IngredientSevice;
 
 import java.util.List;
 
+import DTO.Ingredient.CreateIngredientDto;
+import DTO.Ingredient.IngredientDto;
+import DTO.Ingredient.UpdateIngredientDto;
+
 public class Main {
   public static void main(String[] args) {
     IngredientSevice ingredientService = new IngredientSevice();
@@ -16,10 +20,10 @@ public class Main {
     // Test 1: Obtener todos los ingredientes
     System.out.println("Test 1: Get all ingredients");
     try {
-      List<IngredientModel> ingredients = ingredientService.getAllIngredients();
+      List<IngredientDto> ingredients = ingredientService.getAllIngredients();
       if (ingredients != null && !ingredients.isEmpty()) {
         System.out.println("Total ingredients: " + ingredients.size());
-        for (IngredientModel ingredient : ingredients) {
+        for (IngredientDto ingredient : ingredients) {
           System.out.println("Ingredient: " + ingredient.getName() + ", Quantity: " + ingredient.getQuantity());
         }
       } else {
@@ -42,7 +46,7 @@ public class Main {
     // Test 3: Buscar un ingrediente por ID
     System.out.println("Test 3: Get ingredient by ID");
     try {
-      IngredientModel ingredient = ingredientService.getIngredientById(1);
+      IngredientDto ingredient = ingredientService.getIngredientById(1);
       if (ingredient != null) {
         System.out.println("Ingredient found: " + ingredient.getName() + ", Quantity: " + ingredient.getQuantity());
       } else {
@@ -55,16 +59,12 @@ public class Main {
     // Test 4: Crear un nuevo ingrediente
     System.out.println("Test 4: Create a new ingredient");
     try {
-      IngredientModel newIngredient = new IngredientModel(
-          0,
+      CreateIngredientDto newIngredient = new CreateIngredientDto(
           "LEMON",
           "kg",
           5.0,
-          3.0,
-          null,
-          null, null, null,
-          null);
-      IngredientModel createdIngredient = ingredientService.create(newIngredient);
+          3.0);
+      IngredientDto createdIngredient = ingredientService.create(newIngredient);
       System.out.println("Ingredient created: " + createdIngredient.getName());
     } catch (Exception e) {
       System.out.println("Failed to create ingredient: " + e.getMessage());
@@ -73,18 +73,13 @@ public class Main {
     // Test 5: Actualizar un ingrediente
     System.out.println("Test 5: Update an ingredient");
     try {
-      IngredientModel updatedIngredient = new IngredientModel(
+      UpdateIngredientDto updatedIngredient = new UpdateIngredientDto(
           1,
           "TOMATO",
           "kg",
           15.0, // Actualizamos la cantidad
-          2.5,
-          true,
-          "2026-03-01",
-          "2026-02-01",
-          "2026-02-03", // Actualizamos la fecha de actualización
-          null);
-      IngredientModel result = ingredientService.update(updatedIngredient);
+          2.5);
+      IngredientDto result = ingredientService.update(updatedIngredient);
       System.out.println("Ingredient updated: " + result.getName() + ", New Quantity: " + result.getQuantity());
     } catch (Exception e) {
       System.out.println("Failed to update ingredient: " + e.getMessage());
