@@ -9,9 +9,9 @@ import javax.swing.SwingUtilities; //to ensure that the graphical interface is h
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            DashboardView view = new DashboardView();
+            LoginView view = new LoginView();      
             
-            new DashboardController(view);
+            new LoginController(view);
 
         });
     }

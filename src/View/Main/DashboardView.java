@@ -3,6 +3,7 @@ package View.Main;
 import Enums.MenuOptions;
 import View.CustomComponents.RoundedButton;
 import View.CustomComponents.RoundedComboBox;
+import Utils.ImageUtils;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,7 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class DashboardView extends JFrame {
-    private JButton btnProfile;
+    private JButton btnProfile, btnWallet;
     private JComboBox<String> selectMenu_type; // for the user type drop-down list.
     private JLabel lblSectionTitle;
     private JPanel cardsPanel;
@@ -29,21 +30,19 @@ public class DashboardView extends JFrame {
         // BorderLayout is used to easily push components to the edges.
         JPanel headerPanel = new JPanel(new BorderLayout()); 
         headerPanel.setBackground(new Color(245, 245, 245));
-        headerPanel.setBorder(new EmptyBorder(20, 40, 10, 40));
 
         // A. profile button (left)
         // HTML is used to give the desired formatting to the text within a Swing component.
         String profileText = "<html><b>User</b><br><i style='font-size:10px'>User_type</i></html>";
         btnProfile = new RoundedButton(profileText);
-        btnProfile.setBackground(new Color(245, 245, 245));
-
+        btnProfile.setBackground(new Color(213, 213, 213));
         btnProfile.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
         ImageIcon defaultUser = new ImageIcon("assets/images/defaultUser.png");
-        Image imgUser = defaultUser.getImage().getScaledInstance(50, 45, Image.SCALE_SMOOTH);
+        Image imgUser = defaultUser.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         btnProfile.setIcon(new ImageIcon(imgUser));
         btnProfile.setHorizontalAlignment(SwingConstants.LEFT);
-        btnProfile.setPreferredSize(new Dimension(200, 60));
+        btnProfile.setPreferredSize(new Dimension(180, 70));
         
         // B. drop-down list. (right)
         String[] menu_options = {MenuOptions.DAILY, MenuOptions.WEEKLY};
@@ -75,20 +74,28 @@ public class DashboardView extends JFrame {
         // the components are organized within the header container.
         headerPanel.add(btnProfile, BorderLayout.WEST);
         headerPanel.add(rightHeader, BorderLayout.EAST);
+        headerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         // body section: title and cards with the menus.
         JPanel bodyPanel = new JPanel(new BorderLayout());
         bodyPanel.setBackground(new Color(245,245,245));
-        bodyPanel.setBorder(new EmptyBorder(10, 50, 50, 50)); 
+        bodyPanel.setBorder(new EmptyBorder(40, 50, 50, 50)); 
 
         // section title.
+        JPanel titlePanel = new JPanel();
+        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
+        titlePanel.setBackground(new Color(245, 245, 245));
+
         lblSectionTitle = new JLabel("Menú del día");
         lblSectionTitle.setFont(new Font("SansSerif", Font.BOLD, 28));
         lblSectionTitle.setForeground(new Color(0, 33, 71));
-        lblSectionTitle.setBorder(new EmptyBorder(0, 0, 20, 0));
+        lblSectionTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        titlePanel.add(lblSectionTitle);
+        titlePanel.add(Box.createRigidArea(new Dimension(0, 30)));
 
         // card panel: where the available menus are inserted.
-        cardsPanel = new JPanel(new GridLayout(0, 4, 20, 20));
+        cardsPanel = new JPanel(new GridLayout(0, 4, 50, 30));
         cardsPanel.setBackground(new Color(245, 245, 245));
 
         // ScrollPane in case there are many menus.
@@ -101,12 +108,28 @@ public class DashboardView extends JFrame {
         scrollPane.getViewport().setBackground(new Color(245, 245, 245));
         scrollPane.getVerticalScrollBar().setUnitIncrement(16); // scroll speed.
 
-        bodyPanel.add(lblSectionTitle, BorderLayout.NORTH);
+        bodyPanel.add(titlePanel, BorderLayout.NORTH);
+        bodyPanel.add(Box.createRigidArea(new Dimension(20, 0))); 
         bodyPanel.add(scrollPane, BorderLayout.CENTER);
+
+        // footerPanel for the wallet button.
+        JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        footerPanel.setBackground(new Color(245, 245, 245));
+        footerPanel.setBorder(new EmptyBorder(0, 0, 15, 15));
+
+        btnWallet = new RoundedButton();
+        btnWallet.setPreferredSize(new Dimension(80, 80));
+        btnWallet.setBackground(new Color(0, 51, 102));
+        btnWallet.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnWallet.setIcon(Utils.ImageUtils.getRoundedIcon("assets/images/wallet.png", 45, 45, 0));
+        //btnWallet.addActionListener(e -> openWalletInterface());
+        footerPanel.add(btnWallet);
 
         // final assembly
         mainPanel.add(headerPanel, BorderLayout.NORTH);
         mainPanel.add(bodyPanel, BorderLayout.CENTER);
+        mainPanel.setBorder(new EmptyBorder(20, 40, 10, 40));
+        mainPanel.add(footerPanel, BorderLayout.SOUTH);
 
         this.add(mainPanel);
         
@@ -123,10 +146,12 @@ public class DashboardView extends JFrame {
 
         if (viewType.equals(MenuOptions.DAILY)) {
             lblSectionTitle.setText("Menú del día");
-            cardsPanel.add(new MenuCard("Pabellón Criollo", "img/plato1.jpg"));
-            cardsPanel.add(new MenuCard("Opción Veggie", "img/plato2.jpg"));
-            cardsPanel.add(new MenuCard("Sopa del Día", "img/sopa.jpg"));
-            cardsPanel.add(new MenuCard("Pasta Boloñesa", "img/lunes.jpg"));
+            cardsPanel.add(new MenuCard("Pabellón Criollo", ""));
+            cardsPanel.add(new MenuCard("Opción Veggie", ""));
+            cardsPanel.add(new MenuCard("Sopa del Día", ""));
+            cardsPanel.add(new MenuCard("Pasta Boloñesa", ""));
+            cardsPanel.add(new MenuCard("Cachapa", ""));
+            cardsPanel.add(new MenuCard("Arepa", ""));
         
         } else {
             lblSectionTitle.setText("Menú de la Semana");
@@ -141,44 +166,43 @@ public class DashboardView extends JFrame {
     }
 
     private class MenuCard extends JPanel {
-    private boolean isSelected = false;
-    private Color defaultColor = new Color(255, 160, 80); 
-    private Color selectedColor = new Color(100, 100, 100); 
-    
-    public MenuCard(String title, String imgPath) {
-        setLayout(new BorderLayout());
-        setBackground(defaultColor); 
-        setCursor(new Cursor(Cursor.HAND_CURSOR)); // cursor hovering over.
-        setBorder(new EmptyBorder(15, 15, 15, 15)); // border to improve image visibility.
-
-        JLabel lblImg = new JLabel();
-        lblImg.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon icon = new ImageIcon(imgPath);
-  
-        //default image in case of incorrect path or no image for the menu.
-        if (icon.getIconWidth() == -1) { icon = new ImageIcon("assets/images/Menu/default.png"); } 
-
-        Image img = icon.getImage().getScaledInstance(180, 120, Image.SCALE_SMOOTH);
-        lblImg.setIcon(new ImageIcon(img));
+        private boolean isSelected = false;
+        private Color defaultColor = new Color(255, 160, 80); 
+        private Color selectedColor = new Color(100, 100, 100); 
         
-        // title
-        JLabel lblTitle = new JLabel(title);
-        lblTitle.setFont(new Font("SansSerif", Font.BOLD, 14));
-        lblTitle.setForeground(Color.WHITE);
-        lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTitle.setBorder(new EmptyBorder(10, 0, 0, 0)); // space between image and text
+        public MenuCard(String title, String imgPath) {
+            setLayout(new BorderLayout());
+            setBackground(defaultColor); 
+            setCursor(new Cursor(Cursor.HAND_CURSOR)); // cursor hovering over.
+            setBorder(new EmptyBorder(15, 15, 15, 15)); // border to improve image visibility.
 
-        add(lblImg, BorderLayout.CENTER);
-        add(lblTitle, BorderLayout.SOUTH);
+            JLabel lblImg = new JLabel();
+            lblImg.setHorizontalAlignment(SwingConstants.CENTER);
+            ImageIcon checkIcon = new ImageIcon(imgPath);
+    
+            //default image in case of incorrect path or no image for the menu.
+            if (checkIcon.getIconWidth() == -1) { checkIcon = new ImageIcon("assets/images/Menu/default.png"); } 
 
-        // the listener: what enables button-like behavior
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                // to be implemented: intermediate screen to display shifts ***
-                toggleSelection(); 
-            }
-        });
+            lblImg.setIcon(Utils.ImageUtils.getRoundedIcon(imgPath, 180, 120, 30));
+            
+            // title
+            JLabel lblTitle = new JLabel(title);
+            lblTitle.setFont(new Font("SansSerif", Font.BOLD, 14));
+            lblTitle.setForeground(Color.WHITE);
+            lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+            lblTitle.setBorder(new EmptyBorder(10, 0, 0, 0)); // space between image and text
+
+            add(lblImg, BorderLayout.CENTER);
+            add(lblTitle, BorderLayout.SOUTH);
+
+            // the listener: what enables button-like behavior
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    // to be implemented: intermediate screen to display shifts ***
+                    toggleSelection(); 
+                }
+            });
     }
 
     //change color when selecting

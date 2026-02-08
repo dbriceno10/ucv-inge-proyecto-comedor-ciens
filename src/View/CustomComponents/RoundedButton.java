@@ -17,6 +17,15 @@ public class RoundedButton extends JButton {
         setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
+    public RoundedButton() {
+        setContentAreaFilled(false); // Evita que se pinte el cuadrado por defecto
+        setFocusPainted(false); // Quita el recuadro punteado al hacer click
+        setBorderPainted(false); // Quitamos el borde lineal por defecto
+        
+        // Un cursor de mano siempre queda bien en botones redondeados
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
