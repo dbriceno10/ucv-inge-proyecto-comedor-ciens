@@ -95,6 +95,16 @@ public class WalletService {
     return this.mapToDto(wallet);
   }
 
+  public Boolean delete(Integer id) {
+    WalletModel existing = getById(id);
+    if (existing != null) {
+      existing.setDeletedAt(this.datesUtil.getCurrentDateTime());
+      this.edit(existing);
+      return true;
+    }
+    return false;
+  }
+
   // metodos privados
   private WalletDto mapToDto(WalletModel walletModel) {
     return new WalletDto(
