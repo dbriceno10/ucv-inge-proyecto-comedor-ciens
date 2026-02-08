@@ -1,4 +1,4 @@
-package View;
+package View.Food;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
