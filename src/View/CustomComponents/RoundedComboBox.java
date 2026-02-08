@@ -1,10 +1,8 @@
-package View;
+package View.CustomComponents;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicComboBoxUI;
-import javax.swing.plaf.basic.BasicComboPopup;
-import javax.swing.plaf.basic.ComboPopup;
 import java.awt.*;
 
 // Usamos <E> para que sea genérico (soporte Strings, objetos, etc.)

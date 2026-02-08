@@ -15,7 +15,7 @@ public class UserModel extends BaseUserModel {
 
   public UserModel(Integer id, String firstName, String lastName, String email, String password, String role,
       String type,
-      Boolean isActive, String createdAt, String updatedAt, String deletedAt) {
+      Boolean isActive, String createdAt, String updatedAt, String deletedAt, Integer documentId) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -27,6 +27,7 @@ public class UserModel extends BaseUserModel {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.deletedAt = deletedAt;
+    this.documentId = documentId;
   }
 
   public UserModel(UserModel user) {
@@ -41,17 +42,18 @@ public class UserModel extends BaseUserModel {
     this.createdAt = user.createdAt;
     this.updatedAt = user.updatedAt;
     this.deletedAt = user.deletedAt;
+    this.documentId = user.documentId;
   }
 
   public UserModel(String firstName, String lastName, String email, String password, String role,
-      String type) {
+      String type, Integer documentId) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.password = password;
     this.role = role;
     this.type = type;
-
+    this.documentId = documentId;
   }
 
   // getters

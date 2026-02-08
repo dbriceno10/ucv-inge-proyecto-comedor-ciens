@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class CommonServises {
+public class CommonServices {
   public <T> Integer countAllElements(String filePath, Class<T> modelClass) {
     ObjectMapper mapper = new ObjectMapper();
     Integer count = 0;

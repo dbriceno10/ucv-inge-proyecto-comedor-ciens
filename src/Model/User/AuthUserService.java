@@ -16,18 +16,16 @@ import Enums.UserRoles;
 import Enums.UserTypes;
 
 public class AuthUserService {
-  UserService userService = new UserService();
-  UserRoles userRoles = new UserRoles();
-  UserTypes userTypes = new UserTypes();
+  private UserService userService = new UserService();
   private static final String FILE_USER = "src/Database/User/users.json";
 
   public AuthUserModel register(String email, String role, String firstName, String lastName, String password,
-      String repeatPassword) {
+      String repeatPassword, Integer documentId) {
 
     if (email == null || role == null || firstName == null || lastName == null || password == null
-        || repeatPassword == null ||
+        || repeatPassword == null || documentId == null ||
         email.isEmpty() || role.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || password.isEmpty()
-        || repeatPassword.isEmpty()) {
+        || repeatPassword.isEmpty() || documentId <= 0) {
       throw new IllegalArgumentException("All fields are required for registration.");
     }
 
@@ -49,12 +47,12 @@ public class AuthUserService {
 
     // Crear nuevo usuario
     UserModel newUser = new UserModel(
-        firstName, lastName, email, password, role, type);
+        firstName, lastName, email, password, role, type, documentId);
 
     newUser = userService.create(newUser);
 
     return new AuthUserModel(newUser.getId(), newUser.getFirstName(), newUser.getLastName(), newUser.getEmail(),
-        newUser.getRole(), newUser.getType(), "token", newUser.getIsActive());
+        newUser.getRole(), newUser.getType(), "token", newUser.getIsActive(), newUser.getDocumentId());
   }
 
   public AuthUserModel login(String email, String password) {
@@ -66,7 +64,7 @@ public class AuthUserService {
       throw new IllegalArgumentException("Invalid email or password.");
     }
     return new AuthUserModel(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
-        user.getRole(), user.getType(), "token", user.getIsActive());
+        user.getRole(), user.getType(), "token", user.getIsActive(), user.getDocumentId());
   }
 
   private List<UserModel> getAllUsers() {
