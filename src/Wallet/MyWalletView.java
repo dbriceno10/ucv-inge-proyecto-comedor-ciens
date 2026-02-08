@@ -1,4 +1,4 @@
-package WALLET;
+package Wallet;
 
 import javax.swing.*;
 import java.awt.*;
