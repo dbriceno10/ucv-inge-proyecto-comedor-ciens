@@ -4,6 +4,8 @@ package Model.User;
 // import Model.User.BaseUserModel;
 import Model.Common.CommonServices;
 import Utils.Dates;
+import DTO.Wallet.CreateWalletDto;
+import Model.Wallet.WalletService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
@@ -16,6 +18,7 @@ public class UserService {
   private static final String FILE_UCV_USERS = "src/Database/User/ucvUsers.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
+  private WalletService walletService = new WalletService();
 
   // Métodos para manejar usuarios (crear, leer, actualizar, eliminar)
   // TODO: manejar excepciones, se debe manejar que el email sea unico en crear y
@@ -84,7 +87,14 @@ public class UserService {
         date,
         null,
         user.getDocumentId());
-    return this.save(newUser);
+    UserModel createdUser = this.save(newUser);
+    if (createdUser != null) {
+      // Crear wallet para el nuevo usuario
+      CreateWalletDto newWallet = new CreateWalletDto(
+          0.0, createdUser.getId());
+      walletService.create(newWallet);
+    }
+    return createdUser;
   }
 
   public UserModel update(UserModel user) {

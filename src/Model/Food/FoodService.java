@@ -13,11 +13,10 @@ import DTO.Food.CreateFoodDto;
 import DTO.Food.UpdateFoodDto;
 import DTO.Food.FoodDto;
 import Model.Ingredient.IngredientSevice;
-import Model.Ingredient.IngredientModel;
 import DTO.Ingredient.IngredientDto;
 
 public class FoodService {
-  String FILE_PATH = "src/Database/Food/foods.json";
+  private static final String FILE_PATH = "src/Database/Food/foods.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private IngredientSevice ingredientSevice = new IngredientSevice();
@@ -141,16 +140,9 @@ public class FoodService {
   private FoodDto mapToDto(FoodModel food) {
     ArrayList<IngredientDto> ingredientDtos = new ArrayList<>();
     for (Integer ingredientId : food.getIngredientIds()) {
-      IngredientModel ingredientModel = this.ingredientSevice.getIngredientById(ingredientId);
-      if (ingredientModel != null) {
-        IngredientDto ingredientDto = new IngredientDto(
-            ingredientModel.getId(),
-            ingredientModel.getName(),
-            ingredientModel.getPrice(),
-            ingredientModel.getIsActive(),
-            ingredientModel.getCreatedAt(),
-            ingredientModel.getUpdatedAt());
-        ingredientDtos.add(ingredientDto);
+      IngredientDto ingredient = this.ingredientSevice.getIngredientById(ingredientId);
+      if (ingredient != null) {
+        ingredientDtos.add(ingredient);
       }
     }
     return new FoodDto(

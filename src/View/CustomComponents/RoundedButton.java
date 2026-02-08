@@ -1,4 +1,4 @@
-package View;
+package View.CustomComponents;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +9,15 @@ public class RoundedButton extends JButton {
 
     public RoundedButton(String text) {
         super(text);
+        setContentAreaFilled(false); // Evita que se pinte el cuadrado por defecto
+        setFocusPainted(false); // Quita el recuadro punteado al hacer click
+        setBorderPainted(false); // Quitamos el borde lineal por defecto
+        
+        // Un cursor de mano siempre queda bien en botones redondeados
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    public RoundedButton() {
         setContentAreaFilled(false); // Evita que se pinte el cuadrado por defecto
         setFocusPainted(false); // Quita el recuadro punteado al hacer click
         setBorderPainted(false); // Quitamos el borde lineal por defecto

@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
+import View.CustomComponents.*;
 
 public class MenuEditorView extends JFrame {
 
