@@ -49,6 +49,14 @@ public class MenuService {
     return this.mapToDto(menuModel);
   }
 
+   public MenuDto getMenuDay() {
+    MenuModel menuModel = this.getByDay(datesUtil.getDayOfWeek(datesUtil.getCurrentDateTime()));
+    if (menuModel == null) {
+      return null;
+    }
+    return this.mapToDto(menuModel);
+  }
+
   public MenuDto create(CreateMenuDto menuDto) {
     if (menuDto.getDay() == null || menuDto.getDay().isEmpty()) {
       throw new IllegalArgumentException("Menu day cannot be null or empty");
@@ -160,6 +168,19 @@ public class MenuService {
     }
     return found;
   }
+
+    private MenuModel getByDay(String day) {
+    List<MenuModel> menus = this.getAll();
+    MenuModel found = null;
+    for (MenuModel menu : menus) {
+      if (menu.getDay().equals(day)) {
+        found = menu;
+        break;
+      }
+    }
+    return found;
+  }
+
 
   private MenuModel save(MenuModel menu) {
     List<MenuModel> menus = this.commonServices.getAllElements(FILE_PATH, MenuModel.class);
