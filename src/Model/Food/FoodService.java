@@ -50,6 +50,18 @@ public class FoodService {
   }
 
   public FoodDto create(CreateFoodDto foodDto) {
+    if (foodDto.getName() == null || foodDto.getName().isEmpty()) {
+      throw new IllegalArgumentException("Food name is required.");
+    }
+    if (foodDto.getDecrease() == null || foodDto.getDecrease() < 0) {
+      throw new IllegalArgumentException("Food decrease must be a non-negative number.");
+    }
+    if (foodDto.getValueCF() == null || foodDto.getValueCF() < 0) {
+      throw new IllegalArgumentException("Food valueCF must be a non-negative number.");
+    }
+    if (foodDto.getIngredientIds() == null || foodDto.getIngredientIds().length == 0) {
+      throw new IllegalArgumentException("At least one ingredient is required.");
+    }
     Integer nextId = this.commonServices.getLastIndex(FILE_PATH, FoodModel.class);
     String date = this.datesUtil.getCurrentDateTime();
     FoodModel newFood = new FoodModel(foodDto, nextId, date);
@@ -64,6 +76,18 @@ public class FoodService {
   }
 
   public FoodDto update(UpdateFoodDto foodDto) {
+    if (foodDto.getName() == null || foodDto.getName().isEmpty()) {
+      throw new IllegalArgumentException("Food name is required.");
+    }
+    if (foodDto.getDecrease() == null || foodDto.getDecrease() < 0) {
+      throw new IllegalArgumentException("Food decrease must be a non-negative number.");
+    }
+    if (foodDto.getValueCF() == null || foodDto.getValueCF() < 0) {
+      throw new IllegalArgumentException("Food valueCF must be a non-negative number.");
+    }
+    if (foodDto.getIngredientIds() == null || foodDto.getIngredientIds().length == 0) {
+      throw new IllegalArgumentException("At least one ingredient is required.");
+    }
     FoodModel existingFood = this.getById(foodDto.getId());
     if (existingFood == null) {
       throw new IllegalArgumentException("Food not found with id: " + foodDto.getId());

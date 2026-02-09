@@ -50,6 +50,12 @@ public class IngredientSevice {
   }
 
   public IngredientDto create(CreateIngredientDto ingredientDto) {
+    if (ingredientDto.getName() == null || ingredientDto.getName().isEmpty()) {
+      throw new IllegalArgumentException("Ingredient name cannot be null or empty");
+    }
+    if (ingredientDto.getPrice() == null || ingredientDto.getPrice() < 0) {
+      throw new IllegalArgumentException("Ingredient price cannot be null or negative");
+    }
     Integer nextId = this.commonServices.getLastIndex(FILE_PATH, IngredientModel.class);
     String date = this.datesUtil.getCurrentDateTime();
     String name = this.formatters.toUpperCase(ingredientDto.getName());
@@ -64,6 +70,12 @@ public class IngredientSevice {
   }
 
   public IngredientDto update(UpdateIngredientDto ingredientDto) {
+    if (ingredientDto.getName() == null || ingredientDto.getName().isEmpty()) {
+      throw new IllegalArgumentException("Ingredient name cannot be null or empty");
+    }
+    if (ingredientDto.getPrice() == null || ingredientDto.getPrice() < 0) {
+      throw new IllegalArgumentException("Ingredient price cannot be null or negative");
+    }
     IngredientModel existing = getById(ingredientDto.getId());
     if (existing == null) {
       throw new IllegalArgumentException("Ingredient not found with id: " + ingredientDto.getId());

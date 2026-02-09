@@ -50,6 +50,15 @@ public class MenuService {
   }
 
   public MenuDto create(CreateMenuDto menuDto) {
+    if (menuDto.getDay() == null || menuDto.getDay().isEmpty()) {
+      throw new IllegalArgumentException("Menu day cannot be null or empty");
+    }
+    if (menuDto.getFoodIds() == null || menuDto.getFoodIds().length == 0) {
+      throw new IllegalArgumentException("Menu must have at least one food item");
+    }
+    if (menuDto.getDate() == null || menuDto.getDate().isEmpty()) {
+      throw new IllegalArgumentException("Menu date cannot be null or empty");
+    }
     Integer nextId = this.commonServices.getLastIndex(FILE_PATH, MenuModel.class);
     String date = this.datesUtil.getCurrentDateTime();
     MenuModel newMenu = new MenuModel(menuDto, nextId, date);
@@ -61,6 +70,15 @@ public class MenuService {
   }
 
   public MenuDto update(UpdateMenuDto menuDto) {
+    if (menuDto.getDay() == null || menuDto.getDay().isEmpty()) {
+      throw new IllegalArgumentException("Menu day cannot be null or empty");
+    }
+    if (menuDto.getFoodIds() == null || menuDto.getFoodIds().length == 0) {
+      throw new IllegalArgumentException("Menu must have at least one food item");
+    }
+    if (menuDto.getDate() == null || menuDto.getDate().isEmpty()) {
+      throw new IllegalArgumentException("Menu date cannot be null or empty");
+    }
     MenuModel existing = this.getById(menuDto.getId());
     if (existing == null) {
       throw new IllegalArgumentException("Menu not found with id: " + menuDto.getId());
