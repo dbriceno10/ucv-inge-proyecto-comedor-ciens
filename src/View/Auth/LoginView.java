@@ -18,6 +18,10 @@ public class LoginView extends JFrame {
         // objects are initialized to avoid null references.
         txtEmail = new RoundedTextField();
         txtPwd = new RoundedTextField();
+
+        // *Inicializamos con un usuario los campos para hacer pruebas */
+        txtEmail.setText("maria.gomez@example.com");
+        txtPwd.setText("securepass");
         
         btnLogin = new RoundedButton("Iniciar sesión");
         btnRegister = new RoundedButton("Registrarse");

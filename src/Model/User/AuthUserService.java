@@ -1,9 +1,6 @@
 package Model.User;
 
-// import Model.User.UserModel;
-// import Model.User.UserService;
-// import Model.User.AuthUserModel;
-// import Model.User.BaseUserModel;
+import DTO.User.AuthUserDto;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +16,7 @@ public class AuthUserService {
   private UserService userService = new UserService();
   private static final String FILE_USER = "src/Database/User/users.json";
 
-  public AuthUserModel register(String email, String role, String firstName, String lastName, String password,
+  public AuthUserDto register(String email, String role, String firstName, String lastName, String password,
       String repeatPassword, Integer documentId) {
 
     if (email == null || role == null || firstName == null || lastName == null || password == null
@@ -51,11 +48,11 @@ public class AuthUserService {
 
     newUser = userService.create(newUser);
 
-    return new AuthUserModel(newUser.getId(), newUser.getFirstName(), newUser.getLastName(), newUser.getEmail(),
+    return new AuthUserDto(newUser.getId(), newUser.getFirstName(), newUser.getLastName(), newUser.getEmail(),
         newUser.getRole(), newUser.getType(), "token", newUser.getIsActive(), newUser.getDocumentId());
   }
 
-  public AuthUserModel login(String email, String password) {
+  public AuthUserDto login(String email, String password) {
     if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
       throw new IllegalArgumentException("Email and password are required for login.");
     }
@@ -63,7 +60,7 @@ public class AuthUserService {
     if (user == null || !user.getPassword().equals(password)) {
       throw new IllegalArgumentException("Invalid email or password.");
     }
-    return new AuthUserModel(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
+    return new AuthUserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
         user.getRole(), user.getType(), "token", user.getIsActive(), user.getDocumentId());
   }
 

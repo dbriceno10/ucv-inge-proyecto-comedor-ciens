@@ -1,16 +1,20 @@
-package Model.User;
+package DTO.User;
 
-// import Model.User.BaseUserModel;
-
-public class AuthUserModel extends BaseUserModel {
+public class AuthUserDto {
+  protected Integer id;
+  protected String firstName;
+  protected String lastName;
+  protected String email;
+  protected String type; // 'STUDENT' | 'PROFESSOR' | 'WORKER' | 'ADMIN'
+  protected Integer documentId;
   private String accessToken;
   private String role; // 'ADMIN' | 'COMMENSAL'
   private Boolean isActive;
 
-  public AuthUserModel() {
+  public AuthUserDto() {
   }
 
-  public AuthUserModel(Integer id, String firstName, String lastName, String email, String role, String type,
+  public AuthUserDto(Integer id, String firstName, String lastName, String email, String role, String type,
       String accessToken, Boolean isActive, Integer documentId) {
     this.id = id;
     this.firstName = firstName;
@@ -21,6 +25,18 @@ public class AuthUserModel extends BaseUserModel {
     this.role = role;
     this.isActive = isActive;
     this.documentId = documentId;
+  }
+
+  public AuthUserDto(AuthUserDto user) {
+    this.id = user.getId();
+    this.firstName = user.getFirstName();
+    this.lastName = user.getLastName();
+    this.email = user.getEmail();
+    this.type = user.getType();
+    this.documentId = user.getDocumentId();
+    this.accessToken = user.getAccessToken();
+    this.role = user.getRole();
+    this.isActive = user.getIsActive();
   }
 
   // getters
@@ -56,9 +72,7 @@ public class AuthUserModel extends BaseUserModel {
     return type;
   }
 
-  // setters
-  public void setAccessToken(String accessToken) {
-    this.accessToken = accessToken;
+  public Integer getDocumentId() {
+    return documentId;
   }
-
 }

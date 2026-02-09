@@ -2,13 +2,16 @@ package Controllers.AuthControllers;
 
 import View.Auth.*;
 import View.Main.DashboardView;
-import Model.User.AuthUserModel;
+import DTO.User.AuthUserDto;
 import Model.User.AuthUserService;
 import Controllers.MainControllers.DashboardController;
 import Utils.InputValidator;
 
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+
+import Context.User.UserSession;
+
 import java.awt.event.ActionEvent;
 
 public class LoginController implements ActionListener {
@@ -51,7 +54,11 @@ public class LoginController implements ActionListener {
 
         try {
             AuthUserService user = new AuthUserService();
-            AuthUserModel auth_user = user.login(txtEmail, txtPwd);
+            AuthUserDto auth_user = user.login(txtEmail, txtPwd);
+                  System.out
+          .println("Usuario en autenticado: " + auth_user.getFirstName() + " " + auth_user.getLastName() + " ("
+              + auth_user.getEmail() + ")");
+      UserSession.getInstance().setUser(auth_user);
             showMessageView.showMsg(view, "¡Inicio de sesión exitoso!", JOptionPane.INFORMATION_MESSAGE);
 
             //redirigir al dashboard, pasar data del user
