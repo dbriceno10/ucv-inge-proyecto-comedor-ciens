@@ -3,16 +3,13 @@ package View.Wallet;
 import javax.swing.*;
 import java.awt.*;
 
-public class WalletView extends JDialog {
-
-    // --- COMPONENTES PÚBLICOS (Para que el Controlador los use) ---
+public class WalletView extends JDialog { // a modal window is used as an intermediary to display the wallet.
     public JLabel lblBalance;
     public JButton btnPay, btnTopUp, btnHistory;
     public JButton btnSave, btnCancel;
     public JPanel transactionListPanel; 
 
     public WalletView(JFrame parent) {
-        // Configuración de la ventana MODAL
         super(parent, "Mi Billetera", true);
         setTitle("Billetera Digital");
         setSize(500, 650);
@@ -20,12 +17,9 @@ public class WalletView extends JDialog {
         setLocationRelativeTo(parent);
         getContentPane().setBackground(new Color(245, 245, 245)); 
         
-        // --- AQUÍ ESTABA EL ERROR ---
-        // this.setVisible(true);  <-- ¡NO LO PONGAS AQUÍ! Bloquea la construcción.
-        
         setLayout(new BorderLayout(15, 15));
 
-        // --- HEADER: Balance ---
+        // header
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         headerPanel.setBackground(new Color(245, 245, 245));
         
@@ -45,7 +39,7 @@ public class WalletView extends JDialog {
         headerPanel.add(balanceContainer);
         add(headerPanel, BorderLayout.NORTH);
 
-        // --- CENTER: Navegación e Historial ---
+        // center: navigation and record. Buttons: pay, top-up and history
         JPanel mainContentPanel = new JPanel(new BorderLayout());
         mainContentPanel.setBackground(Color.WHITE);
         mainContentPanel.setBorder(BorderFactory.createLineBorder(new Color(230, 230, 230)));
@@ -82,7 +76,7 @@ public class WalletView extends JDialog {
         
         add(mainContentPanel, BorderLayout.CENTER);
 
-        // --- FOOTER: Acciones ---
+        // footer: actions
         JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 20));
         footerPanel.setBackground(new Color(245, 245, 245));
 
@@ -100,11 +94,6 @@ public class WalletView extends JDialog {
         footerPanel.add(btnSave);
         footerPanel.add(btnCancel);
         add(footerPanel, BorderLayout.SOUTH);
-
-        // --- CORRECCIÓN FINAL ---
-        // Si vas a probar SOLO la vista, descomenta la línea de abajo.
-        // PERO: Si usas el WalletController, ¡COMENTA O BORRA ESTA LÍNEA!
-        // El controlador es quien debe decidir cuándo mostrar la ventana.
         
         this.setVisible(true); 
     }
