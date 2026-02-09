@@ -1,6 +1,6 @@
 package Testing.Auth;
 
-import Model.User.AuthUserModel;
+import DTO.User.AuthUserDto;
 import Model.User.AuthUserService;
 import Enums.UserRoles;
 
@@ -45,7 +45,7 @@ public class Main {
 
     System.out.println("Starting login test 4...");
     try {
-      AuthUserModel logged = authUserService.login("juan.perez@example.com", "password123");
+      AuthUserDto logged = authUserService.login("juan.perez@example.com", "password123");
       if (logged != null) {
         System.out.println("Login successful for user: " + logged.getEmail());
       } else {
