@@ -3,15 +3,26 @@ package View.Wallet;
 import javax.swing.*;
 import java.awt.*;
 
-public class MyWalletView extends JFrame {
+public class WalletView extends JDialog {
 
-    public MyWalletView() {
-        // Configuración de la ventana
+    // --- COMPONENTES PÚBLICOS (Para que el Controlador los use) ---
+    public JLabel lblBalance;
+    public JButton btnPay, btnTopUp, btnHistory;
+    public JButton btnSave, btnCancel;
+    public JPanel transactionListPanel; 
+
+    public WalletView(JFrame parent) {
+        // Configuración de la ventana MODAL
+        super(parent, "Mi Billetera", true);
         setTitle("Billetera Digital");
         setSize(500, 650);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); 
+        setLocationRelativeTo(parent);
         getContentPane().setBackground(new Color(245, 245, 245)); 
+        
+        // --- AQUÍ ESTABA EL ERROR ---
+        // this.setVisible(true);  <-- ¡NO LO PONGAS AQUÍ! Bloquea la construcción.
+        
         setLayout(new BorderLayout(15, 15));
 
         // --- HEADER: Balance ---
@@ -25,11 +36,12 @@ public class MyWalletView extends JFrame {
         JLabel balanceTitleLabel = new JLabel("Balance Total", SwingConstants.RIGHT);
         balanceTitleLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         
-        JLabel balanceValueLabel = new JLabel("$7,783.00");
-        balanceValueLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        lblBalance = new JLabel("$ 0.00"); 
+        lblBalance.setFont(new Font("Arial", Font.BOLD, 18));
+        lblBalance.setHorizontalAlignment(SwingConstants.RIGHT);
         
         balanceContainer.add(balanceTitleLabel);
-        balanceContainer.add(balanceValueLabel);
+        balanceContainer.add(lblBalance);
         headerPanel.add(balanceContainer);
         add(headerPanel, BorderLayout.NORTH);
 
@@ -41,29 +53,28 @@ public class MyWalletView extends JFrame {
         JPanel navigationMenu = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         navigationMenu.setBackground(Color.WHITE);
         
-        JButton payButton = new JButton("Pagos");
-        JButton topUpButton = new JButton("Recarga");
-        JButton historyButton = new JButton("Historial");
+        btnPay = new JButton("Pagos");
+        btnTopUp = new JButton("Recarga");
+        btnHistory = new JButton("Historial");
         
         Dimension navBtnSize = new Dimension(110, 30);
-        payButton.setPreferredSize(navBtnSize);
-        topUpButton.setPreferredSize(navBtnSize);
-        historyButton.setPreferredSize(navBtnSize);
+        btnPay.setPreferredSize(navBtnSize);
+        btnTopUp.setPreferredSize(navBtnSize);
+        btnHistory.setPreferredSize(navBtnSize);
 
-        navigationMenu.add(payButton);
-        navigationMenu.add(topUpButton);
-        navigationMenu.add(historyButton);
+        navigationMenu.add(btnPay);
+        navigationMenu.add(btnTopUp);
+        navigationMenu.add(btnHistory);
         
         mainContentPanel.add(navigationMenu, BorderLayout.NORTH);
 
-        JPanel transactionListPanel = new JPanel();
+        transactionListPanel = new JPanel();
         transactionListPanel.setLayout(new BoxLayout(transactionListPanel, BoxLayout.Y_AXIS));
         transactionListPanel.setBackground(Color.WHITE);
 
         transactionListPanel.add(createTransactionRow("07/02/2026", "$100.00"));
         transactionListPanel.add(createTransactionRow("06/02/2026", "$250.00"));
         transactionListPanel.add(createTransactionRow("05/02/2026", "$50.00"));
-        transactionListPanel.add(createTransactionRow("04/02/2026", "$1,200.00"));
 
         JScrollPane scrollPane = new JScrollPane(transactionListPanel);
         scrollPane.setBorder(null);
@@ -75,23 +86,30 @@ public class MyWalletView extends JFrame {
         JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 20));
         footerPanel.setBackground(new Color(245, 245, 245));
 
-        JButton saveButton = new JButton("Guardar");
-        saveButton.setPreferredSize(new Dimension(120, 40));
-        saveButton.setBackground(new Color(0, 102, 204));
-        saveButton.setForeground(Color.WHITE);
-        saveButton.setFocusPainted(false);
+        btnSave = new JButton("Guardar");
+        btnSave.setPreferredSize(new Dimension(120, 40));
+        btnSave.setBackground(new Color(0, 102, 204));
+        btnSave.setForeground(Color.WHITE);
+        btnSave.setFocusPainted(false);
 
-        JButton cancelButton = new JButton("Cancelar");
-        cancelButton.setPreferredSize(new Dimension(120, 40));
-        cancelButton.setBackground(new Color(255, 204, 153)); 
-        cancelButton.setFocusPainted(false);
+        btnCancel = new JButton("Cancelar");
+        btnCancel.setPreferredSize(new Dimension(120, 40));
+        btnCancel.setBackground(new Color(255, 204, 153)); 
+        btnCancel.setFocusPainted(false);
 
-        footerPanel.add(saveButton);
-        footerPanel.add(cancelButton);
+        footerPanel.add(btnSave);
+        footerPanel.add(btnCancel);
         add(footerPanel, BorderLayout.SOUTH);
+
+        // --- CORRECCIÓN FINAL ---
+        // Si vas a probar SOLO la vista, descomenta la línea de abajo.
+        // PERO: Si usas el WalletController, ¡COMENTA O BORRA ESTA LÍNEA!
+        // El controlador es quien debe decidir cuándo mostrar la ventana.
+        
+        this.setVisible(true); 
     }
 
-    private JPanel createTransactionRow(String dateText, String amountText) {
+    public JPanel createTransactionRow(String dateText, String amountText) {
         JPanel rowPanel = new JPanel(new BorderLayout());
         rowPanel.setBackground(Color.WHITE);
         rowPanel.setMaximumSize(new Dimension(600, 50));
@@ -108,12 +126,5 @@ public class MyWalletView extends JFrame {
         rowPanel.add(dateLabel, BorderLayout.WEST);
         rowPanel.add(amountLabel, BorderLayout.EAST);
         return rowPanel;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            // Se inicia con el nombre de clase correcto
-            new MyWalletView().setVisible(true); 
-        });
     }
 }
