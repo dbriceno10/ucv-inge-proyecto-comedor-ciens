@@ -18,7 +18,7 @@ public class DashboardController {
     }
 
     private void loadData() {
-        MenuDto dailyMenu = menuService.getMenuDay();
+        MenuDto dailyMenu = menuService.getMenuOfDay();
         view.showDailyMenu(dailyMenu);
     }
 }

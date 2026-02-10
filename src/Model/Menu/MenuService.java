@@ -49,7 +49,7 @@ public class MenuService {
     return this.mapToDto(menuModel);
   }
 
-   public MenuDto getMenuDay() {
+   public MenuDto getMenuOfDay() {
     MenuModel menuModel = this.getByDay(datesUtil.getDayOfWeek(datesUtil.getCurrentDateTime()));
     if (menuModel == null) {
       return null;

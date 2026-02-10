@@ -172,7 +172,7 @@ public class DashboardView extends JFrame {
             cardsPanel.add(emptyLabel);
 
         } else {
-            lblSectionTitle.setText("Menú del día");
+            lblSectionTitle.setText("Menú del día: " + menuDay.getDay());
 
             for (FoodDto food : menuDay.getFoods()) {
                 String imgPath = "assets/images/Menu/" + food.getId() + ".png";
