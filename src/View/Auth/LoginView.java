@@ -22,8 +22,8 @@ public class LoginView extends JFrame {
         // *Inicializamos con un usuario los campos para hacer pruebas */
         // txtEmail.setText("maria.gomez@example.com");
         // txtPwd.setText("securepass");
-        txtEmail.setText("juan.perez@example.com");
-        txtPwd.setText("password123");
+        // txtEmail.setText("juan.perez@example.com");
+        // txtPwd.setText("password123");
         
         btnLogin = new RoundedButton("Iniciar sesión");
         btnRegister = new RoundedButton("Registrarse");
