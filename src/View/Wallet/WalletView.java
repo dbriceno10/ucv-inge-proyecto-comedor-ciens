@@ -94,8 +94,7 @@ public class WalletView extends JDialog { // a modal window is used as an interm
         footerPanel.add(btnSave);
         footerPanel.add(btnCancel);
         add(footerPanel, BorderLayout.SOUTH);
-        
-        this.setVisible(true); 
+
     }
 
     public JPanel createTransactionRow(String dateText, String amountText) {
