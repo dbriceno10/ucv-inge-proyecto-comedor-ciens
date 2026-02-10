@@ -32,6 +32,5 @@ out/
 build/
 dist/
 
-
-# Ignorar .Zone.Identifier para WSL
+# .Zone.Identifier for WSL
 *Zone.Identifier

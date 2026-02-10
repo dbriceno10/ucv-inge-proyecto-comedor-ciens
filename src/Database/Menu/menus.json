@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "day": "LUNES",
+    "foodIds": [1, 2, 3],
+    "date": "2026-02-08",
+    "isActive": true,
+    "createdAt": null,
+    "updatedAt": null,
+    "deletedAt": null
+  },
+  {
+    "id": 2,
+    "day": "MARTES",
+    "foodIds": [4, 5, 6],
+    "date": "2026-02-09",
+    "isActive": true,
+    "createdAt": null,
+    "updatedAt": null,
+    "deletedAt": null
+  },
+  {
+    "id": 3,
+    "day": "MIÉRCOLES",
+    "foodIds": [7, 8, 9],
+    "date": "2026-02-10",
+    "isActive": true,
+    "createdAt": null,
+    "updatedAt": null,
+    "deletedAt": null
+  },
+  {
+    "id": 4,
+    "day": "JUEVES",
+    "foodIds": [10, 1, 2],
+    "date": "2026-02-11",
+    "isActive": true,
+    "createdAt": null,
+    "updatedAt": null,
+    "deletedAt": null
+  },
+  {
+    "id": 5,
+    "day": "VIERNES",
+    "foodIds": [3, 4, 5],
+    "date": "2026-02-12",
+    "isActive": true,
+    "createdAt": null,
+    "updatedAt": null,
+    "deletedAt": null
+  },
+  {
+    "id": 6,
+    "day": "LUNES",
+    "foodIds": [6, 7, 8],
+    "date": "2026-02-15",
+    "isActive": true,
+    "createdAt": null,
+    "updatedAt": null,
+    "deletedAt": null
+  },
+  {
+    "id": 7,
+    "day": "MARTES",
+    "foodIds": [9, 10, 1],
+    "date": "2026-02-16",
+    "isActive": true,
+    "createdAt": null,
+    "updatedAt": null,
+    "deletedAt": null
+  },
+  {
+    "id": 8,
+    "day": "MIÉRCOLES",
+    "foodIds": [2, 3, 4],
+    "date": "2026-02-17",
+    "isActive": true,
+    "createdAt": null,
+    "updatedAt": null,
+    "deletedAt": null
+  },
+  {
+    "id": 9,
+    "day": "JUEVES",
+    "foodIds": [5, 6, 7],
+    "date": "2026-02-18",
+    "isActive": true,
+    "createdAt": null,
+    "updatedAt": null,
+    "deletedAt": null
+  },
+  {
+    "id": 10,
+    "day": "VIERNES",
+    "foodIds": [8, 9, 10],
+    "date": "2026-02-19",
+    "isActive": true,
+    "createdAt": null,
+    "updatedAt": null,
+    "deletedAt": null
+  }
+]

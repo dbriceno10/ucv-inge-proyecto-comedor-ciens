@@ -1,0 +1,101 @@
+package Testing.Ingredients;
+
+import Model.Common.CommonServices;
+import Model.Ingredient.IngredientModel;
+import Model.Ingredient.IngredientSevice;
+
+import java.util.List;
+
+import DTO.Ingredient.CreateIngredientDto;
+import DTO.Ingredient.IngredientDto;
+import DTO.Ingredient.UpdateIngredientDto;
+
+public class Main {
+  public static void main(String[] args) {
+    IngredientSevice ingredientService = new IngredientSevice();
+    CommonServices commonServices = new CommonServices();
+
+    System.out.println("Starting ingredient tests...");
+
+    // Test 1: Obtener todos los ingredientes
+    System.out.println("Test 1: Get all ingredients");
+    try {
+      List<IngredientDto> ingredients = ingredientService.getAllIngredients();
+      if (ingredients != null && !ingredients.isEmpty()) {
+        System.out.println("Total ingredients: " + ingredients.size());
+        for (IngredientDto ingredient : ingredients) {
+          System.out.println("Ingredient: " + ingredient.getName() + ", Quantity: " + ingredient.getQuantity());
+        }
+      } else {
+        System.out.println("No ingredients found.");
+      }
+    } catch (Exception e) {
+      System.out.println("Failed to get ingredients: " + e.getMessage());
+    }
+
+    // Test 2: Contar todos los ingredientes
+    System.out.println("Test 2: Count all ingredients");
+    try {
+      int totalIngredients = commonServices.countAllElements("src/Database/Ingredient/ingredients.json",
+          IngredientModel.class);
+      System.out.println("Total ingredients (including deleted): " + totalIngredients);
+    } catch (Exception e) {
+      System.out.println("Failed to count ingredients: " + e.getMessage());
+    }
+
+    // Test 3: Buscar un ingrediente por ID
+    System.out.println("Test 3: Get ingredient by ID");
+    try {
+      IngredientDto ingredient = ingredientService.getIngredientById(1);
+      if (ingredient != null) {
+        System.out.println("Ingredient found: " + ingredient.getName() + ", Quantity: " + ingredient.getQuantity());
+      } else {
+        System.out.println("Ingredient not found.");
+      }
+    } catch (Exception e) {
+      System.out.println("Failed to get ingredient by ID: " + e.getMessage());
+    }
+
+    // Test 4: Crear un nuevo ingrediente
+    System.out.println("Test 4: Create a new ingredient");
+    try {
+      CreateIngredientDto newIngredient = new CreateIngredientDto(
+          "LEMON",
+          "kg",
+          5.0,
+          3.0);
+      IngredientDto createdIngredient = ingredientService.create(newIngredient);
+      System.out.println("Ingredient created: " + createdIngredient.getName());
+    } catch (Exception e) {
+      System.out.println("Failed to create ingredient: " + e.getMessage());
+    }
+
+    // Test 5: Actualizar un ingrediente
+    System.out.println("Test 5: Update an ingredient");
+    try {
+      UpdateIngredientDto updatedIngredient = new UpdateIngredientDto(
+          1,
+          "TOMATO",
+          "kg",
+          15.0, // Actualizamos la cantidad
+          2.5);
+      IngredientDto result = ingredientService.update(updatedIngredient);
+      System.out.println("Ingredient updated: " + result.getName() + ", New Quantity: " + result.getQuantity());
+    } catch (Exception e) {
+      System.out.println("Failed to update ingredient: " + e.getMessage());
+    }
+
+    // Test 6: Eliminar un ingrediente
+    System.out.println("Test 6: Delete an ingredient");
+    try {
+      Boolean isDeleted = ingredientService.delete(1);
+      if (isDeleted) {
+        System.out.println("Ingredient deleted successfully.");
+      } else {
+        System.out.println("Failed to delete ingredient.");
+      }
+    } catch (Exception e) {
+      System.out.println("Failed to delete ingredient: " + e.getMessage());
+    }
+  }
+}
