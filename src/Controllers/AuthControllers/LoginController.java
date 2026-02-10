@@ -2,17 +2,17 @@ package Controllers.AuthControllers;
 
 import View.Auth.*;
 import View.Main.DashboardView;
+import View.Menu.MenuListView; // Importamos tu vista de Menús
 import DTO.User.AuthUserDto;
 import Model.User.AuthUserService;
 import Controllers.MainControllers.DashboardController;
 import Utils.InputValidator;
-
-import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
-
+import Enums.UserRoles; // Importamos los roles para el IF
 import Context.User.UserSession;
 
+import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
 
 public class LoginController implements ActionListener {
     private LoginView view;
@@ -24,8 +24,8 @@ public class LoginController implements ActionListener {
         this.view.registerListener(this);
         this.view.forgotPwdListener(this);
 
-        InputValidator.addInputRestriction(this.view.getComponentEmail(), "ONLY_LETTERS", 30);
-        InputValidator.addInputRestriction(this.view.getComponentPwd(), "ONLY_LETTERS", 30);
+        InputValidator.addInputRestriction(this.view.getComponentEmail(), "DEFAULT", 40);
+        InputValidator.addInputRestriction(this.view.getComponentPwd(), "DEFAULT", 30);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class LoginController implements ActionListener {
                 new RegisterController(regView);
                 break;
             case "¿Olvidó su contraseña?":
-                //pantalla para reiniciar contraseña, no implementado
+                // pantalla para reiniciar contraseña, no implementado
                 break;
             default:
                 break;
@@ -55,20 +55,30 @@ public class LoginController implements ActionListener {
         try {
             AuthUserService user = new AuthUserService();
             AuthUserDto auth_user = user.login(txtEmail, txtPwd);
-                  System.out
-          .println("Usuario en autenticado: " + auth_user.getFirstName() + " " + auth_user.getLastName() + " ("
-              + auth_user.getEmail() + ")");
-      UserSession.getInstance().setUser(auth_user);
+            
+            System.out.println("Usuario autenticado: " + auth_user.getFirstName() + " (" + auth_user.getRole() + ")");
+            
+            UserSession.getInstance().setUser(auth_user);
+            
             showMessageView.showMsg(view, "¡Inicio de sesión exitoso!", JOptionPane.INFORMATION_MESSAGE);
-
-            //redirigir al dashboard, pasar data del user
             view.dispose();
-            DashboardView dashboardView = new DashboardView();
-            new DashboardController(dashboardView);
-        
+
+            // --- AQUÍ ESTÁ EL IF SIMPLE QUE PEDISTE ---
+            if (UserRoles.ADMIN.equals(auth_user.getRole())) {
+                // Si es ADMIN, solo abrimos la vista y ya
+                MenuListView adminView = new MenuListView();
+                adminView.setVisible(true); 
+            } else {
+                // Si NO es admin, abrimos el Dashboard normal
+                DashboardView dashboardView = new DashboardView();
+                new DashboardController(dashboardView);
+            }
+            // ------------------------------------------
+
         } catch (IllegalArgumentException e) {
             showMessageView.showMsg(view, e.getMessage(), JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
+            e.printStackTrace();
             showMessageView.showMsg(view, "Error crítico: " + e.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
     }
