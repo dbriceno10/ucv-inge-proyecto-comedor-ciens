@@ -4,6 +4,7 @@ import Enums.MenuOptions;
 import View.CustomComponents.RoundedButton;
 import View.CustomComponents.RoundedComboBox;
 import View.Wallet.WalletView;
+import Model.Menu.*;
 import Utils.ImageUtils;
 
 import javax.swing.*;
@@ -11,6 +12,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.html.HTML;
 
 import Controllers.WalletControllers.WalletController;
+import DTO.Food.FoodDto;
+import DTO.Menu.MenuDto;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -55,7 +58,7 @@ public class DashboardView extends JFrame {
         // listener to change the view when selecting
         selectMenu_type.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                updateContent((String) e.getItem());
+                updateTitles((String) e.getItem());
             }
         });
 
@@ -141,35 +144,46 @@ public class DashboardView extends JFrame {
         this.add(mainPanel);
         
         // INITIAL VIEW.
-        updateContent(MenuOptions.DAILY);
+        updateTitles(MenuOptions.DAILY);
+        //
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
         this.setVisible(true);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH); //to display the interface in full screen mode.
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH); // to display the interface in full screen mode.
     }
 
-    private void updateContent(String viewType) {
-        cardsPanel.removeAll(); 
-
+    private void updateTitles(String viewType) { // it updates the titles based on the daily or weekly menu selection.
         if (viewType.equals(MenuOptions.DAILY)) {
             lblSectionTitle.setText("Menú del día");
-            cardsPanel.add(new MenuCard("Pabellón Criollo", ""));
-            cardsPanel.add(new MenuCard("Opción Veggie", ""));
-            cardsPanel.add(new MenuCard("Sopa del Día", ""));
-            cardsPanel.add(new MenuCard("Pasta Boloñesa", ""));
-            cardsPanel.add(new MenuCard("Cachapa", ""));
-            cardsPanel.add(new MenuCard("Arepa", ""));
-        
         } else {
             lblSectionTitle.setText("Menú de la Semana");
-            cardsPanel.add(new MenuCard("Lunes: Pasta", "img/lunes.jpg"));
-            cardsPanel.add(new MenuCard("Martes: Pollo", "img/martes.jpg"));
-            cardsPanel.add(new MenuCard("Miércoles: Lentejas", "img/miercoles.jpg"));
-            cardsPanel.add(new MenuCard("Jueves: Pescado", "img/jueves.jpg"));
         }
+    }
 
-        cardsPanel.revalidate();
-        cardsPanel.repaint();
+    public void showDailyMenu(MenuDto menuDay) {
+        cardsPanel.removeAll();
+
+        if (menuDay == null || menuDay.getFoods() == null || menuDay.getFoods().isEmpty()) {
+            lblSectionTitle.setText("Menú del día (No disponible)");
+
+            JLabel emptyLabel = new JLabel("No hay menú registrado para hoy.");
+            emptyLabel.setFont(new Font("SansSerif", Font.ITALIC, 16));
+            emptyLabel.setForeground(Color.GRAY);
+            cardsPanel.add(emptyLabel);
+
+        } else {
+            lblSectionTitle.setText("Menú del día");
+
+            for (FoodDto food : menuDay.getFoods()) {
+                String imgPath = "assets/images/Menu/" + food.getId() + ".png";
+                MenuCard card = new MenuCard(food.getName(), imgPath);
+                
+                cardsPanel.add(card);
+            }
+
+            cardsPanel.revalidate();
+            cardsPanel.repaint();
+        }
     }
 
     private class MenuCard extends JPanel {

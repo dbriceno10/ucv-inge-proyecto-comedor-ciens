@@ -55,10 +55,10 @@ public class LoginController implements ActionListener {
         try {
             AuthUserService user = new AuthUserService();
             AuthUserDto auth_user = user.login(txtEmail, txtPwd);
-                  System.out
-          .println("Usuario en autenticado: " + auth_user.getFirstName() + " " + auth_user.getLastName() + " ("
-              + auth_user.getEmail() + ")");
-      UserSession.getInstance().setUser(auth_user);
+            System.out.println("Usuario autenticado: " + auth_user.getFirstName() + " " + 
+            auth_user.getLastName() + " ("+ auth_user.getEmail() + ")");
+
+            UserSession.getInstance().setUser(auth_user);
             showMessageView.showMsg(view, "¡Inicio de sesión exitoso!", JOptionPane.INFORMATION_MESSAGE);
 
             //redirigir al dashboard, pasar data del user
