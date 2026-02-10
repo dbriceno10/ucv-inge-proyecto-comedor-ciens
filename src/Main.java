@@ -1,18 +1,18 @@
-import View.Auth.*;
-import View.Admin.*;
-import View.Main.*;
-import Controllers.AuthControllers.*;
-import Controllers.MainControllers.*;
-
-import javax.swing.SwingUtilities; //to ensure that the graphical interface is handled on its own dedicated thread.
+import View.Auth.LoginView;
+import Controllers.AuthControllers.LoginController;
+import javax.swing.SwingUtilities;
 
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            LoginView view = new LoginView();      
-            
-            new LoginController(view);
-
+            // Aseguramos que la interfaz inicie limpia
+            try {
+                LoginView view = new LoginView();      
+                new LoginController(view);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error al iniciar la aplicación: " + e.getMessage());
+            }
         });
     }
 }
