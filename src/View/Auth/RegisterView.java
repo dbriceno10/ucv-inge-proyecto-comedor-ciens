@@ -1,5 +1,6 @@
 package View.Auth;
 import Enums.UserRoles;
+import View.CustomComponents.Colors;
 import View.CustomComponents.RoundedButton;
 import View.CustomComponents.RoundedComboBox;
 import View.CustomComponents.RoundedTextField;
@@ -13,6 +14,7 @@ public class RegisterView extends JFrame {
     private JTextField txtFirstName, txtLastName, txt_documentId, txtEmail, txtPwd, txtPwd_repeat;
     private JComboBox<String> cmbFaculty, cmbType; // for the user type and faculty drop-down list.
     private JButton btnRegister, btnLogin, btnUpload;
+    private Colors color = new Colors();
 
     public RegisterView() {
         setTitle("UCV - SGCU");
@@ -32,7 +34,7 @@ public class RegisterView extends JFrame {
         "Facultad de Odontología", "Facultad de Veterinaria"};
         cmbFaculty = new RoundedComboBox<>(facultys);
 
-        String[] role_type = {UserRoles.COMMENSAL, UserRoles.ADMIN, };
+        String[] role_type = {UserRoles.COMMENSAL, UserRoles.ADMIN };
         cmbType = new RoundedComboBox<>(role_type);
         
         btnRegister = new RoundedButton("Registrarse");
@@ -43,26 +45,26 @@ public class RegisterView extends JFrame {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
-        mainPanel.setBackground(new Color(225, 225, 225));
+        mainPanel.setBackground(color.LIGHT_GRAY);
 
         // 2. header panel: contains the logo, the main title, and the title of the form.
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
-        headerPanel.setBackground(new Color(225, 225, 225));
+        headerPanel.setBackground(color.LIGHT_GRAY);
 
-        ImageIcon logo = new ImageIcon("assets/images/UCVlogo.png");
+        ImageIcon logo = new ImageIcon("assets/images/Icons/UCVlogo.png");
         Image scaledLogo = logo.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         JLabel lblLogo = new JLabel(new ImageIcon(scaledLogo));
         lblLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel lblTitle = new JLabel("COMEDOR");
         lblTitle.setFont(new Font("SansSerif", Font.BOLD, 24)); 
-        lblTitle.setForeground(new Color(0, 33, 71));
+        lblTitle.setForeground(color.OXFORD_BLUE);
         lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel lblSubtitle = new JLabel("Registrarse");
         lblSubtitle.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        lblSubtitle.setForeground(Color.GRAY);
+        lblSubtitle.setForeground(Color.DARK_GRAY);
         lblSubtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         headerPanel.add(lblLogo);
@@ -73,7 +75,7 @@ public class RegisterView extends JFrame {
 
         // 3. form panel: it has two columns to organize the fields.
         JPanel formPanel = new JPanel(new GridLayout(0, 2, 20, 15)); // rows - columns - horizontal space - vertical space.
-        formPanel.setBackground(new Color(225, 225, 225));
+        formPanel.setBackground(color.LIGHT_GRAY);
 
         formPanel.add(newField("NOMBRE", txtFirstName));
         formPanel.add(newField("APELLIDO", txtLastName));
@@ -86,30 +88,30 @@ public class RegisterView extends JFrame {
 
         // 4. section for the upload document button.
         JPanel uploadDocPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        uploadDocPanel.setBackground(new Color(225, 225, 225));
+        uploadDocPanel.setBackground(color.LIGHT_GRAY);
         uploadDocPanel.add(btnUpload); 
         // configuration details for btnUpload
-        btnUpload.setBackground(new Color(225, 225, 225));
-        btnUpload.setForeground(new Color(30, 80, 150));
+        btnUpload.setBackground(color.LIGHT_GRAY);
+        btnUpload.setForeground(color.OXFORD_BLUE);
         btnUpload.setFont(new Font("SansSerif", Font.BOLD, 12));
         btnUpload.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnUpload.setHorizontalTextPosition(SwingConstants.CENTER);
 
-        ImageIcon iconUpload = new ImageIcon("assets/images/upload_doc.png");
+        ImageIcon iconUpload = new ImageIcon("assets/images/Icons/upload_doc.png");
         Image imgScaled = iconUpload.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         btnUpload.setIcon(new ImageIcon(imgScaled));
 
         // 5. section for the register button.
         JPanel registerBtnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        registerBtnPanel.setBackground(new Color(225, 225, 225));
+        registerBtnPanel.setBackground(color.LIGHT_GRAY);
         btnRegister.setPreferredSize(new Dimension(200, 40));
-        btnRegister.setBackground(new Color(0, 33, 71)); //color: dark blue
-        btnRegister.setForeground(new Color(225, 225, 225));
+        btnRegister.setBackground(color.OXFORD_BLUE); 
+        btnRegister.setForeground(color.LIGHT_GRAY);
         registerBtnPanel.add(btnRegister);
 
         // 6. section to link to the login screen.
         JPanel loginBtnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        loginBtnPanel.setBackground(new Color(225, 225, 225));
+        loginBtnPanel.setBackground(color.LIGHT_GRAY);
         loginBtnPanel.add(btnLogin);
 
         // Final assembly.
@@ -125,12 +127,12 @@ public class RegisterView extends JFrame {
         // SPLIT SCREEN
         // A. left container -> header, form, buttons.
         JPanel leftContainer = new JPanel(new GridBagLayout());
-        leftContainer.setBackground(new Color(225, 225, 225));
+        leftContainer.setBackground(color.LIGHT_GRAY);
         leftContainer.add(mainPanel);
 
         // B. right container -> representative image.
         JPanel rightContainer = new JPanel(new BorderLayout());
-        rightContainer.setBackground(new Color(225, 225, 225));
+        rightContainer.setBackground(color.LIGHT_GRAY);
         ImageIcon UCVdining = new ImageIcon("assets/images/UCVdining.png");
         Image repImg = UCVdining.getImage().getScaledInstance(-1, 650, Image.SCALE_SMOOTH);
         JLabel lbl_repImg = new JLabel(new ImageIcon(repImg));
@@ -143,11 +145,8 @@ public class RegisterView extends JFrame {
         splitPanel.add(rightContainer);
 
         this.add(splitPanel);
-        // important! The window is instructed to “pack” the components. This forces the Layout to calculate 
-        // the size and position of each text and button in order to display it correctly.
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
-        this.setVisible(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH); //to display the interface in full screen mode.
     }
 
@@ -155,11 +154,11 @@ public class RegisterView extends JFrame {
         //a small "container" is created, which will be returned as a result.
         //'BorderLayout' is used to easily configure the container's position.
         JPanel panel = new JPanel(new BorderLayout(0, 5));
-        panel.setBackground(new Color(225, 225, 225));
+        panel.setBackground(color.LIGHT_GRAY);
         
         JLabel lbl = new JLabel(title);
         lbl.setFont(new Font("SansSerif", Font.BOLD, 10));
-        lbl.setForeground(Color.GRAY);
+        lbl.setForeground(color.DARK_GRAY);
 
         panel.add(lbl, BorderLayout.NORTH); //the title (or label) is placed above the field.
         panel.add(component, BorderLayout.CENTER);
@@ -207,5 +206,4 @@ public class RegisterView extends JFrame {
     public void registerListener(ActionListener listener) { btnRegister.addActionListener(listener);}
     public void loginListener(ActionListener listener) { btnLogin.addActionListener(listener);}
     public void uploadListener(ActionListener listener) { btnUpload.addActionListener(listener);}   
-
 }

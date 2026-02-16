@@ -1,8 +1,5 @@
-import View.Auth.*;
-import View.Admin.*;
-import View.Main.*;
-import Controllers.AuthControllers.*;
-import Controllers.MainControllers.*;
+import View.Auth.LoginView;
+import Controllers.AuthControllers.LoginController;
 
 import javax.swing.SwingUtilities; //to ensure that the graphical interface is handled on its own dedicated thread.
 
