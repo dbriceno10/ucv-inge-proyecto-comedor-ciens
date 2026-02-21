@@ -1,26 +1,18 @@
 package View.Menu;
 
+import View.CustomComponents.*;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
-import View.CustomComponents.*;
+import java.awt.event.*;
 
 public class MenuEditorView extends JFrame {
-
-    // Componentes públicos para que el controlador los use después
-    public RoundedButton btnGuardar, btnCancelar, btnAddPlato;
-    public RoundedTextField txtFecha;
-    
+    private RoundedButton btnSave, btnCancel, btnAddDish;
+    private RoundedTextField txtDate;
     private JPanel listPanel;
-
-    // Colores exactos del diseño
-    private final Color COLOR_FONDO = new Color(242, 244, 247);
-    private final Color COLOR_BLANCO = Color.WHITE;
-    private final Color COLOR_AZUL_UCV = new Color(30, 80, 150);
-    private final Color COLOR_AZUL_CLARO = new Color(37, 132, 255);
-    private final Color COLOR_NARANJA = new Color(255, 180, 120);
-    private final Color COLOR_AMARILLO = new Color(255, 210, 100);
+    private Colors color = new Colors();
 
     public MenuEditorView() {
         setTitle("SGCU - Crear/Editar Menú");
@@ -28,42 +20,42 @@ public class MenuEditorView extends JFrame {
         
         // 1. CONFIGURACIÓN DEL PANEL PRINCIPAL (Fondo Gris)
         JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(COLOR_FONDO);
+        mainPanel.setBackground(color.BACKGROUND);
         // Margen grande para centrar la tarjeta blanca
         mainPanel.setBorder(new EmptyBorder(20, 80, 40, 80)); 
 
         // 2. HEADER SUPERIOR (Perfil fuera de la tarjeta)
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        headerPanel.setBackground(COLOR_FONDO);
+        headerPanel.setBackground(color.BACKGROUND);
         headerPanel.setBorder(new EmptyBorder(0, 0, 10, 0));
         headerPanel.add(createProfileBadge("Daniel Briceño (Administrador)"));
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
         // 3. TARJETA BLANCA (Contenido)
         JPanel whiteCard = new JPanel(new BorderLayout());
-        whiteCard.setBackground(COLOR_BLANCO);
+        whiteCard.setBackground(color.WHITE);
         // Sombra simulada con borde compuesto
         whiteCard.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(230, 230, 230), 1),
+            BorderFactory.createLineBorder(color.LIGHT_GRAY, 1),
             new EmptyBorder(30, 40, 30, 40)
         ));
 
         // --- A. CABECERA DE LA TARJETA (Fecha) ---
         JPanel cardHeader = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        cardHeader.setBackground(COLOR_BLANCO);
+        cardHeader.setBackground(color.WHITE);
         
         JLabel lblFecha = new JLabel("FECHA");
         lblFecha.setFont(new Font("SansSerif", Font.BOLD, 10));
-        lblFecha.setForeground(Color.GRAY);
+        lblFecha.setForeground(color.DARK_GRAY);
         
-        txtFecha = new RoundedTextField();
-        txtFecha.setText("08/12/2025");
-        txtFecha.setPreferredSize(new Dimension(150, 35));
+        txtDate = new RoundedTextField();
+        txtDate.setText("08/12/2025");
+        txtDate.setPreferredSize(new Dimension(150, 35));
         
         JPanel dateBox = new JPanel(new BorderLayout());
-        dateBox.setBackground(COLOR_BLANCO);
+        dateBox.setBackground(color.WHITE);
         dateBox.add(lblFecha, BorderLayout.NORTH);
-        dateBox.add(txtFecha, BorderLayout.CENTER);
+        dateBox.add(txtDate, BorderLayout.CENTER);
         
         cardHeader.add(dateBox);
         whiteCard.add(cardHeader, BorderLayout.NORTH);
@@ -71,7 +63,7 @@ public class MenuEditorView extends JFrame {
         // --- B. LISTA DE PLATOS (Centro) ---
         listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
-        listPanel.setBackground(COLOR_BLANCO);
+        listPanel.setBackground(color.WHITE);
 
         // Espacio inicial y platos de ejemplo
         listPanel.add(Box.createVerticalStrut(20));
@@ -81,63 +73,62 @@ public class MenuEditorView extends JFrame {
 
         JScrollPane scroll = new JScrollPane(listPanel);
         scroll.setBorder(null); // Sin borde feo
-        scroll.getViewport().setBackground(COLOR_BLANCO);
+        scroll.getViewport().setBackground(color.WHITE);
         whiteCard.add(scroll, BorderLayout.CENTER);
 
         // --- C. FOOTER (Botones) ---
         JPanel footerPanel = new JPanel(new BorderLayout());
-        footerPanel.setBackground(COLOR_BLANCO);
+        footerPanel.setBackground(color.WHITE);
         footerPanel.setBorder(new EmptyBorder(30, 0, 0, 0));
 
         // Botón Izquierdo: Añadir
-        btnAddPlato = new RoundedButton("Añadir Plato");
-        btnAddPlato.setBackground(COLOR_AZUL_CLARO);
-        btnAddPlato.setForeground(Color.WHITE);
-        btnAddPlato.setFont(new Font("SansSerif", Font.BOLD, 12));
-        btnAddPlato.setPreferredSize(new Dimension(140, 40));
+        btnAddDish = new RoundedButton("Añadir Plato");
+        btnAddDish.setBackground(color.LIGHT_BLUE);
+        btnAddDish.setForeground(Color.WHITE);
+        btnAddDish.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnAddDish.setPreferredSize(new Dimension(140, 40));
         
         JPanel leftBtnBox = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        leftBtnBox.setBackground(COLOR_BLANCO);
-        leftBtnBox.add(btnAddPlato);
+        leftBtnBox.setBackground(color.WHITE);
+        leftBtnBox.add(btnAddDish);
 
         // Botones Derechos: Guardar/Cancelar
         JPanel rightBtnBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
-        rightBtnBox.setBackground(COLOR_BLANCO);
+        rightBtnBox.setBackground(color.WHITE);
 
-        btnGuardar = new RoundedButton("Guardar");
-        btnGuardar.setBackground(COLOR_AZUL_UCV);
-        btnGuardar.setForeground(Color.WHITE);
-        btnGuardar.setPreferredSize(new Dimension(120, 40));
+        btnSave = new RoundedButton("Guardar");
+        btnSave.setBackground(color.OXFORD_BLUE);
+        btnSave.setForeground(color.WHITE);
+        btnSave.setPreferredSize(new Dimension(120, 40));
 
-        btnCancelar = new RoundedButton("Cancelar");
-        btnCancelar.setBackground(COLOR_AMARILLO);
-        btnCancelar.setForeground(Color.DARK_GRAY);
-        btnCancelar.setPreferredSize(new Dimension(120, 40));
+        btnCancel = new RoundedButton("Cancelar");
+        btnCancel.setBackground(color.YELLOW);
+        btnCancel.setForeground(color.BLACK);
+        btnCancel.setPreferredSize(new Dimension(120, 40));
 
-        rightBtnBox.add(btnGuardar);
-        rightBtnBox.add(btnCancelar);
+        rightBtnBox.add(btnSave);
+        rightBtnBox.add(btnCancel);
 
         footerPanel.add(leftBtnBox, BorderLayout.WEST);
         footerPanel.add(rightBtnBox, BorderLayout.EAST);
 
         whiteCard.add(footerPanel, BorderLayout.SOUTH);
 
-        // AÑADIR TODO AL FRAME
+        // AÑADIR AL FRAME
         mainPanel.add(whiteCard, BorderLayout.CENTER);
         this.setContentPane(mainPanel); // Asegura que el fondo gris se vea
         
         // Finalizar
         this.pack();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setVisible(true);
     }
 
     // --- MÉTODOS AUXILIARES ---
 
     private JPanel createProfileBadge(String text) {
         JPanel badge = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        badge.setBackground(COLOR_BLANCO);
-        badge.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1));
+        badge.setBackground(color.WHITE);
+        badge.setBorder(BorderFactory.createLineBorder(color.LIGHT_GRAY, 1));
         
         // Cargar foto de perfil (admin_profile.png)
         JLabel iconLbl = new JLabel();
@@ -147,12 +138,12 @@ public class MenuEditorView extends JFrame {
             iconLbl.setIcon(icon);
         } else {
             iconLbl.setText("●"); // Fallback si no hay imagen
-            iconLbl.setForeground(Color.GRAY);
+            iconLbl.setForeground(color.DARK_GRAY);
         }
         
         JLabel nameLbl = new JLabel(text);
         nameLbl.setFont(new Font("SansSerif", Font.BOLD, 12));
-        nameLbl.setForeground(COLOR_AZUL_UCV);
+        nameLbl.setForeground(color.OXFORD_BLUE);
 
         badge.add(iconLbl);
         badge.add(nameLbl);
@@ -161,7 +152,7 @@ public class MenuEditorView extends JFrame {
 
     private void addPlatoRow(String nombrePlato) {
         JPanel row = new JPanel(new GridBagLayout());
-        row.setBackground(COLOR_BLANCO);
+        row.setBackground(color.WHITE);
         row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
         
         GridBagConstraints gbc = new GridBagConstraints();
@@ -172,8 +163,8 @@ public class MenuEditorView extends JFrame {
         gbc.gridx = 0; gbc.weightx = 0.4; gbc.anchor = GridBagConstraints.WEST;
         
         RoundedButton dishCard = new RoundedButton(nombrePlato);
-        dishCard.setBackground(COLOR_NARANJA);
-        dishCard.setForeground(Color.WHITE);
+        dishCard.setBackground(color.ORANGE);
+        dishCard.setForeground(color.WHITE);
         dishCard.setFont(new Font("SansSerif", Font.BOLD, 14));
         dishCard.setPreferredSize(new Dimension(240, 75));
         dishCard.setHorizontalAlignment(SwingConstants.LEFT);
@@ -192,15 +183,15 @@ public class MenuEditorView extends JFrame {
         gbc.gridx = 1; gbc.weightx = 0.4; gbc.anchor = GridBagConstraints.CENTER;
         
         JPanel ctrlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
-        ctrlPanel.setBackground(COLOR_BLANCO);
+        ctrlPanel.setBackground(color.WHITE);
 
         RoundedButton btnMinus = createCircularButton("-");
         
         JPanel inputStack = new JPanel(new BorderLayout());
-        inputStack.setBackground(COLOR_BLANCO);
+        inputStack.setBackground(color.WHITE);
         JLabel lblQty = new JLabel("CANTIDAD DISPONIBLE");
         lblQty.setFont(new Font("SansSerif", Font.BOLD, 9));
-        lblQty.setForeground(Color.GRAY);
+        lblQty.setForeground(color.DARK_GRAY);
         
         RoundedTextField txtQty = new RoundedTextField();
         txtQty.setText("0");
@@ -234,8 +225,8 @@ public class MenuEditorView extends JFrame {
 
     private RoundedButton createCircularButton(String symbol) {
         RoundedButton btn = new RoundedButton(symbol);
-        btn.setBackground(COLOR_NARANJA);
-        btn.setForeground(Color.WHITE);
+        btn.setBackground(color.ORANGE);
+        btn.setForeground(color.WHITE);
         btn.setFont(new Font("SansSerif", Font.BOLD, 20));
         btn.setPreferredSize(new Dimension(45, 45));
         btn.setMargin(new Insets(0,0,0,0)); // Quita márgenes internos
@@ -254,11 +245,12 @@ public class MenuEditorView extends JFrame {
 
     // CLASE INTERNA PARA DIBUJAR LA PAPELERA ROJA
     private static class TrashIcon implements Icon {
+        private Colors color = new Colors();
         @Override
         public void paintIcon(Component c, Graphics g, int x, int y) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(Color.RED);
+            g2.setColor(color.RED);
             
             // Tapa
             g2.fillRoundRect(x, y, 20, 4, 2, 2);
@@ -266,7 +258,7 @@ public class MenuEditorView extends JFrame {
             // Cuerpo
             g2.fillRoundRect(x + 2, y + 6, 16, 20, 5, 5);
             // Rayas blancas
-            g2.setColor(Color.WHITE);
+            g2.setColor(color.WHITE);
             g2.fillRect(x + 6, y + 10, 2, 12);
             g2.fillRect(x + 12, y + 10, 2, 12);
             
@@ -278,4 +270,10 @@ public class MenuEditorView extends JFrame {
         @Override
         public int getIconHeight() { return 28; }
     }
+
+    public String getTxtDate() { return txtDate.getText(); }
+
+    public void saveListener(ActionListener listener) { btnSave.addActionListener(listener);}
+    public void cancelListener(ActionListener listener) { btnCancel.addActionListener(listener);}
+    public void addDishListener(ActionListener listener) { btnAddDish.addActionListener(listener);} 
 }

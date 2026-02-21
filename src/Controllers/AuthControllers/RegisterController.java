@@ -1,7 +1,6 @@
 package Controllers.AuthControllers;
 
 import View.Auth.*;
-import Controllers.AuthControllers.LoginController;
 import Model.User.AuthUserService;
 import Utils.InputValidator;
 
@@ -25,6 +24,8 @@ public class RegisterController implements ActionListener {
         InputValidator.addInputRestriction(this.view.getComponentEmail(), "DEFAULT", 40);
         InputValidator.addInputRestriction(this.view.getComponentPwd(), "DEFAULT", 12);
         InputValidator.addInputRestriction(this.view.getComponentPwd_repeat(), "DEFAULT", 12);
+
+        this.view.setVisible(true);
     }
 
     @Override

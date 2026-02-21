@@ -1,23 +1,52 @@
 package Controllers.MainControllers;
 
+import DTO.Menu.MenuDto;
+import Enums.MenuOptions;
+import Model.Menu.MenuService;
+//import Context.User.UserSession;
 import View.Main.DashboardView;
 import View.Wallet.WalletView;
 import Controllers.WalletControllers.WalletController;
 
-public class DashboardController {
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class DashboardController implements ActionListener {
     private DashboardView view;
+    private MenuService menuService;
 
     public DashboardController(DashboardView view) {
         this.view = view;
+        this.menuService = new MenuService();
 
-        // AQUÍ CONECTAMOS: Cuando se pulse el botón de la billetera en la vista principal
-        if (this.view.btnWallet != null) {
-            this.view.btnWallet.addActionListener(e -> {
-                // Creamos la vista del monedero, pasándole el Dashboard como ventana padre
+        this.view.menuTypeListener(this);
+        this.view.walletBtnListener(this);
+
+        loadData();
+        this.view.setVisible(true);
+    }
+
+    private void loadData() {
+        MenuDto dailyMenu = menuService.getMenuOfDay();
+        view.showDailyMenu(dailyMenu);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+        switch (command) {
+            case MenuOptions.DAILY:
+                view.updateTitles(MenuOptions.DAILY);
+                break;
+            case MenuOptions.WEEKLY:
+                view.updateTitles(MenuOptions.WEEKLY);
+                break;
+            case "OPEN_WALLET":
                 WalletView walletView = new WalletView(this.view);
-                // Iniciamos el controlador (él cargará los datos y mostrará la ventana)
                 new WalletController(walletView);
-            });
+                break;
+            default:
+                break;
         }
     }
 }

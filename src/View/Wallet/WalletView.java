@@ -1,13 +1,17 @@
 package View.Wallet;
 
 import javax.swing.*;
+
+import View.CustomComponents.Colors;
+
 import java.awt.*;
 
 public class WalletView extends JDialog { // a modal window is used as an intermediary to display the wallet.
     public JLabel lblBalance;
     public JButton btnPay, btnTopUp, btnHistory;
     public JButton btnSave, btnCancel;
-    public JPanel transactionListPanel; 
+    public JPanel transactionListPanel;
+    private Colors color = new Colors();
 
     public WalletView(JFrame parent) {
         super(parent, "Mi Billetera", true);
@@ -15,16 +19,16 @@ public class WalletView extends JDialog { // a modal window is used as an interm
         setSize(500, 650);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); 
         setLocationRelativeTo(parent);
-        getContentPane().setBackground(new Color(245, 245, 245)); 
+        getContentPane().setBackground(color.BACKGROUND); 
         
         setLayout(new BorderLayout(15, 15));
 
         // header
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        headerPanel.setBackground(new Color(245, 245, 245));
+        headerPanel.setBackground(color.BACKGROUND);
         
         JPanel balanceContainer = new JPanel(new GridLayout(2, 1));
-        balanceContainer.setBackground(new Color(210, 230, 235)); 
+        balanceContainer.setBackground(color.LIGHT_GRAY); 
         balanceContainer.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         
         JLabel balanceTitleLabel = new JLabel("Balance Total", SwingConstants.RIGHT);
@@ -41,11 +45,11 @@ public class WalletView extends JDialog { // a modal window is used as an interm
 
         // center: navigation and record. Buttons: pay, top-up and history
         JPanel mainContentPanel = new JPanel(new BorderLayout());
-        mainContentPanel.setBackground(Color.WHITE);
+        mainContentPanel.setBackground(color.WHITE);
         mainContentPanel.setBorder(BorderFactory.createLineBorder(new Color(230, 230, 230)));
 
         JPanel navigationMenu = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        navigationMenu.setBackground(Color.WHITE);
+        navigationMenu.setBackground(color.WHITE);
         
         btnPay = new JButton("Pagos");
         btnTopUp = new JButton("Recarga");
@@ -64,7 +68,7 @@ public class WalletView extends JDialog { // a modal window is used as an interm
 
         transactionListPanel = new JPanel();
         transactionListPanel.setLayout(new BoxLayout(transactionListPanel, BoxLayout.Y_AXIS));
-        transactionListPanel.setBackground(Color.WHITE);
+        transactionListPanel.setBackground(color.WHITE);
 
         transactionListPanel.add(createTransactionRow("07/02/2026", "$100.00"));
         transactionListPanel.add(createTransactionRow("06/02/2026", "$250.00"));
@@ -78,34 +82,33 @@ public class WalletView extends JDialog { // a modal window is used as an interm
 
         // footer: actions
         JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 20));
-        footerPanel.setBackground(new Color(245, 245, 245));
+        footerPanel.setBackground(color.BACKGROUND);
 
         btnSave = new JButton("Guardar");
         btnSave.setPreferredSize(new Dimension(120, 40));
-        btnSave.setBackground(new Color(0, 102, 204));
-        btnSave.setForeground(Color.WHITE);
+        btnSave.setBackground(color.OXFORD_BLUE);
+        btnSave.setForeground(color.WHITE);
         btnSave.setFocusPainted(false);
 
         btnCancel = new JButton("Cancelar");
         btnCancel.setPreferredSize(new Dimension(120, 40));
-        btnCancel.setBackground(new Color(255, 204, 153)); 
+        btnCancel.setBackground(color.ORANGE); 
         btnCancel.setFocusPainted(false);
 
         footerPanel.add(btnSave);
         footerPanel.add(btnCancel);
         add(footerPanel, BorderLayout.SOUTH);
-
     }
 
     public JPanel createTransactionRow(String dateText, String amountText) {
         JPanel rowPanel = new JPanel(new BorderLayout());
-        rowPanel.setBackground(Color.WHITE);
+        rowPanel.setBackground(color.WHITE);
         rowPanel.setMaximumSize(new Dimension(600, 50));
-        rowPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(240, 240, 240)));
+        rowPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, color.LIGHT_GRAY));
 
         JLabel dateLabel = new JLabel(dateText);
         dateLabel.setBorder(BorderFactory.createEmptyBorder(0, 25, 0, 0));
-        dateLabel.setForeground(Color.DARK_GRAY);
+        dateLabel.setForeground(color.BLACK);
         
         JLabel amountLabel = new JLabel(amountText);
         amountLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 25));

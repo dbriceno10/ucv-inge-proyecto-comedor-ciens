@@ -2,12 +2,13 @@ package Controllers.AuthControllers;
 
 import View.Auth.*;
 import View.Main.DashboardView;
-import View.Menu.MenuListView; // Importamos tu vista de Menús
+import View.Menu.MenuManagementView; 
 import DTO.User.AuthUserDto;
 import Model.User.AuthUserService;
 import Controllers.MainControllers.DashboardController;
+import Controllers.MenuControllers.MenuManagementController;
 import Utils.InputValidator;
-import Enums.UserRoles; // Importamos los roles para el IF
+import Enums.UserRoles;
 import Context.User.UserSession;
 
 import java.awt.event.ActionListener;
@@ -26,6 +27,8 @@ public class LoginController implements ActionListener {
 
         InputValidator.addInputRestriction(this.view.getComponentEmail(), "DEFAULT", 40);
         InputValidator.addInputRestriction(this.view.getComponentPwd(), "DEFAULT", 30);
+
+        this.view.setVisible(true);
     }
 
     @Override
@@ -41,10 +44,9 @@ public class LoginController implements ActionListener {
                 new RegisterController(regView);
                 break;
             case "¿Olvidó su contraseña?":
-                // pantalla para reiniciar contraseña, no implementado
+                //
                 break;
-            default:
-                break;
+            default: break;
         }
     }
 
@@ -55,26 +57,19 @@ public class LoginController implements ActionListener {
         try {
             AuthUserService user = new AuthUserService();
             AuthUserDto auth_user = user.login(txtEmail, txtPwd);
-            
-            System.out.println("Usuario autenticado: " + auth_user.getFirstName() + " (" + auth_user.getRole() + ")");
-            
+
             UserSession.getInstance().setUser(auth_user);
-            
             showMessageView.showMsg(view, "¡Inicio de sesión exitoso!", JOptionPane.INFORMATION_MESSAGE);
             view.dispose();
 
-            // --- AQUÍ ESTÁ EL IF SIMPLE QUE PEDISTE ---
             if (UserRoles.ADMIN.equals(auth_user.getRole())) {
-                // Si es ADMIN, solo abrimos la vista y ya
-                MenuListView adminView = new MenuListView();
-                adminView.setVisible(true); 
+                MenuManagementView adminView = new MenuManagementView();
+                new MenuManagementController(adminView);
             } else {
-                // Si NO es admin, abrimos el Dashboard normal
                 DashboardView dashboardView = new DashboardView();
                 new DashboardController(dashboardView);
             }
-            // ------------------------------------------
-
+            
         } catch (IllegalArgumentException e) {
             showMessageView.showMsg(view, e.getMessage(), JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {

@@ -1,27 +1,20 @@
 package View.Food;
 
+import View.CustomComponents.*;
+import View.Ingredient.IngredientListView;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Path2D;
 import java.io.File;
-import View.CustomComponents.*;
-import View.Menu.MenuListView;
-import View.Ingredient.IngredientListView;
 
 public class DishListView extends JFrame {
-
-  // --- Componentes Públicos ---
-  public RoundedButton btnCrearPlato, btnMenu, btnInventory;
-  public RoundedTextField txtBuscar;
-  public JPanel gridPanel; // Aquí se agregan las tarjetas
-
-  // --- Colores Figma ---
-  private final Color COLOR_FONDO = new Color(242, 244, 247);
-  private final Color COLOR_BLANCO = Color.WHITE;
-  private final Color COLOR_AZUL_UCV = new Color(30, 80, 150);
-  private final Color COLOR_NARANJA = new Color(255, 180, 120);
+  private RoundedButton btnCreateDish, btnMenu, btnIngredients;
+  private RoundedTextField txtSearch;
+  private JPanel gridPanel; // Aquí se agregan las tarjetas
+  private Colors color = new Colors();
 
   public DishListView() {
     setTitle("SGCU - Listado de Platos");
@@ -29,71 +22,71 @@ public class DishListView extends JFrame {
 
     // panel de navegacion
     JPanel navPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-    navPanel.setBackground(COLOR_FONDO);
+    navPanel.setBackground(color.BACKGROUND);
     navPanel.setBorder(new EmptyBorder(10, 0, 10, 0)); // Un poco de aire arriba y abajo
 
     // 1. PANEL PRINCIPAL (Fondo Gris)
     JPanel mainPanel = new JPanel(new BorderLayout());
-    mainPanel.setBackground(COLOR_FONDO);
+    mainPanel.setBackground(color.BACKGROUND);
     mainPanel.setBorder(new EmptyBorder(20, 60, 20, 60)); // Márgenes laterales
 
     // 2. HEADER SUPERIOR (Perfil)
     JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    headerPanel.setBackground(COLOR_FONDO);
+    headerPanel.setBackground(color.BACKGROUND);
     headerPanel.add(createProfileBadge("Daniel Briceño (Administrador)"));
     mainPanel.add(headerPanel, BorderLayout.NORTH);
 
     // navegacion a otros modulos
 
-    btnMenu = new RoundedButton("Menú");
-    getStyleBtn(btnMenu, COLOR_AZUL_UCV);
+    btnMenu = new RoundedButton("Volver");
+    getStyleBtn(btnMenu, color.OXFORD_BLUE);
     navPanel.add(btnMenu);
-    btnMenu.addActionListener(e -> new MenuListView().setVisible(true));
+    
 
-    btnInventory = new RoundedButton("Ingredientes");
-    getStyleBtn(btnInventory, COLOR_AZUL_UCV);
-    navPanel.add(btnInventory);
-    btnInventory.addActionListener(e -> new IngredientListView().setVisible(true));
+    btnIngredients = new RoundedButton("Ingredientes");
+    getStyleBtn(btnIngredients, color.OXFORD_BLUE);
+    navPanel.add(btnIngredients);
+    btnIngredients.addActionListener(e -> new IngredientListView().setVisible(true));
 
     mainPanel.add(navPanel, BorderLayout.NORTH);
 
     // 3. TARJETA BLANCA (Contenedor Principal)
     JPanel whiteCard = new JPanel(new BorderLayout());
-    whiteCard.setBackground(COLOR_BLANCO);
+    whiteCard.setBackground(color.WHITE);
     whiteCard.setBorder(BorderFactory.createCompoundBorder(
-        BorderFactory.createLineBorder(new Color(230, 230, 230), 1),
+        BorderFactory.createLineBorder(color.LIGHT_GRAY, 1),
         new EmptyBorder(30, 40, 30, 40)));
 
     // --- A. BARRA DE HERRAMIENTAS ---
     JPanel toolbar = new JPanel(new BorderLayout());
-    toolbar.setBackground(COLOR_BLANCO);
+    toolbar.setBackground(color.WHITE);
     toolbar.setBorder(new EmptyBorder(0, 0, 25, 0));
 
     // Izquierda: Título y Botón Crear
     JPanel leftTool = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 0));
-    leftTool.setBackground(COLOR_BLANCO);
+    leftTool.setBackground(color.WHITE);
 
     JLabel lblTitle = new JLabel("Lista de Platos");
     lblTitle.setFont(new Font("SansSerif", Font.BOLD, 20));
-    lblTitle.setForeground(COLOR_AZUL_UCV);
+    lblTitle.setForeground(color.OXFORD_BLUE);
 
-    btnCrearPlato = new RoundedButton("Crear Plato");
-    btnCrearPlato.setBackground(COLOR_AZUL_UCV);
-    btnCrearPlato.setForeground(Color.WHITE);
-    btnCrearPlato.setPreferredSize(new Dimension(130, 38));
-    btnCrearPlato.setFont(new Font("SansSerif", Font.BOLD, 12));
+    btnCreateDish = new RoundedButton("Crear Plato");
+    btnCreateDish.setBackground(color.OXFORD_BLUE);
+    btnCreateDish.setForeground(color.WHITE);
+    btnCreateDish.setPreferredSize(new Dimension(130, 38));
+    btnCreateDish.setFont(new Font("SansSerif", Font.BOLD, 12));
 
     leftTool.add(lblTitle);
-    leftTool.add(btnCrearPlato);
+    leftTool.add(btnCreateDish);
 
     // Derecha: Buscador con Lupa
     JPanel searchBox = new JPanel(new BorderLayout());
-    searchBox.setBackground(COLOR_BLANCO);
+    searchBox.setBackground(color.WHITE);
 
-    txtBuscar = new RoundedTextField();
-    txtBuscar.setText(" Buscar Plato..."); // Placeholder simple
-    txtBuscar.setForeground(Color.GRAY);
-    txtBuscar.setPreferredSize(new Dimension(220, 38));
+    txtSearch = new RoundedTextField();
+    txtSearch.setText(" Buscar Plato..."); // Placeholder simple
+    txtSearch.setForeground(color.DARK_GRAY);
+    txtSearch.setPreferredSize(new Dimension(220, 38));
 
     // Icono Lupa a la derecha del campo
     JLabel searchIcon = new JLabel(new SearchIcon());
@@ -101,7 +94,7 @@ public class DishListView extends JFrame {
 
     JPanel searchWrapper = new JPanel(new BorderLayout());
     searchWrapper.setOpaque(false);
-    searchWrapper.add(txtBuscar, BorderLayout.CENTER);
+    searchWrapper.add(txtSearch, BorderLayout.CENTER);
     searchWrapper.add(searchIcon, BorderLayout.EAST);
 
     toolbar.add(leftTool, BorderLayout.WEST);
@@ -111,7 +104,7 @@ public class DishListView extends JFrame {
 
     // --- B. GRILLA DE PLATOS (Tarjetas Naranjas) ---
     gridPanel = new JPanel(new GridLayout(0, 4, 25, 25)); // 4 Columnas, espacio de 25px
-    gridPanel.setBackground(COLOR_BLANCO);
+    gridPanel.setBackground(color.WHITE);
 
     // Añadimos tarjetas de ejemplo
     addDishCard("Pasta con Vegetales");
@@ -123,7 +116,7 @@ public class DishListView extends JFrame {
     // ScrollPane limpio
     JScrollPane scroll = new JScrollPane(gridPanel);
     scroll.setBorder(null);
-    scroll.getViewport().setBackground(COLOR_BLANCO);
+    scroll.getViewport().setBackground(color.WHITE);
     scroll.getVerticalScrollBar().setUnitIncrement(16); // Scroll más suave
 
     whiteCard.add(scroll, BorderLayout.CENTER);
@@ -134,7 +127,6 @@ public class DishListView extends JFrame {
     this.setContentPane(mainPanel);
     this.pack();
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    this.setVisible(true);
   }
 
   // --- MÉTODO PARA CREAR TARJETA NARANJA ---
@@ -146,7 +138,7 @@ public class DishListView extends JFrame {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(COLOR_NARANJA);
+        g2.setColor(color.ORANGE);
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25);
       }
     };
@@ -169,19 +161,19 @@ public class DishListView extends JFrame {
     JLabel imgLabel = new JLabel();
     imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
     // Carga la imagen 'pasta.jpg'
-    ImageIcon pastaImg = loadScaledImage("assets/images/pasta.jpg", 90, 65);
+    ImageIcon pastaImg = loadScaledImage("assets/images/Ingredients/pasta.jpg", 90, 65);
     if (pastaImg != null) {
       imgLabel.setIcon(pastaImg);
     } else {
       // Fallback si no hay imagen
       imgLabel.setText("Sin Foto");
-      imgLabel.setForeground(Color.WHITE);
+      imgLabel.setForeground(color.WHITE);
     }
 
     // 3. Nombre del Plato (Abajo)
     JLabel nameLabel = new JLabel(name);
     nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    nameLabel.setForeground(Color.WHITE);
+    nameLabel.setForeground(color.WHITE);
     nameLabel.setFont(new Font("SansSerif", Font.BOLD, 13));
     nameLabel.setBorder(new EmptyBorder(5, 0, 5, 0));
 
@@ -206,8 +198,8 @@ public class DishListView extends JFrame {
 
   private JPanel createProfileBadge(String text) {
     JPanel badge = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-    badge.setBackground(COLOR_BLANCO);
-    badge.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1));
+    badge.setBackground(color.WHITE);
+    badge.setBorder(BorderFactory.createLineBorder(color.LIGHT_GRAY, 1));
 
     JLabel iconLbl = new JLabel();
     ImageIcon icon = loadScaledImage("assets/images/admin_profile.png", 35, 35);
@@ -218,7 +210,7 @@ public class DishListView extends JFrame {
 
     JLabel nameLbl = new JLabel(text);
     nameLbl.setFont(new Font("SansSerif", Font.BOLD, 12));
-    nameLbl.setForeground(COLOR_AZUL_UCV);
+    nameLbl.setForeground(color.OXFORD_BLUE);
 
     badge.add(iconLbl);
     badge.add(nameLbl);
@@ -237,13 +229,14 @@ public class DishListView extends JFrame {
 
   // 1. Icono Lápiz Mejorado (Azul, Rotado, Geométrico)
   private static class EditIcon implements Icon {
+    private Colors color = new Colors();
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y) {
       Graphics2D g2 = (Graphics2D) g.create();
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
       // Color Azul UCV o Blanco si quieres contraste
-      g2.setColor(new Color(30, 80, 150));
+      g2.setColor(color.OXFORD_BLUE);
 
       // Trasladar al centro y rotar 45 grados
       int cx = x + 8;
@@ -260,7 +253,7 @@ public class DishListView extends JFrame {
       g2.fillPolygon(px, py, 3);
 
       // Dibujar goma (Rectángulo superior)
-      g2.setColor(new Color(100, 180, 255)); // Azul más claro para la goma
+      g2.setColor(color.LIGHT_BLUE); // Azul más claro para la goma
       g2.fillRect(cx - 3, cy - 9, 6, 2);
 
       g2.setTransform(old);
@@ -280,11 +273,12 @@ public class DishListView extends JFrame {
 
   // 2. Icono Papelera (Rojo)
   private static class TrashIcon implements Icon {
+    private Colors color = new Colors();
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y) {
       Graphics2D g2 = (Graphics2D) g.create();
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-      g2.setColor(Color.RED);
+      g2.setColor(color.RED);
 
       // Tapa
       g2.fillRoundRect(x, y, 14, 3, 2, 2);
@@ -294,7 +288,7 @@ public class DishListView extends JFrame {
       g2.fillRoundRect(x + 2, y + 4, 10, 12, 3, 3);
 
       // Líneas
-      g2.setColor(Color.WHITE);
+      g2.setColor(color.WHITE);
       g2.fillRect(x + 4, y + 6, 1, 8);
       g2.fillRect(x + 9, y + 6, 1, 8); // Ajustado para centrar mejor
 
@@ -314,11 +308,12 @@ public class DishListView extends JFrame {
 
   // 3. Icono Lupa (Gris)
   private static class SearchIcon implements Icon {
+    private Colors color = new Colors();
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y) {
       Graphics2D g2 = (Graphics2D) g.create();
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-      g2.setColor(Color.GRAY);
+      g2.setColor(color.BLACK);
       g2.setStroke(new BasicStroke(2f));
 
       int size = 10;
@@ -341,11 +336,19 @@ public class DishListView extends JFrame {
   }
 
   // métodos privados
-  private void getStyleBtn(RoundedButton btn, Color color) {
-    btn.setBackground(color);
-    btn.setForeground(Color.WHITE);
+  private void getStyleBtn(RoundedButton btn, Color btnColor) {
+    Colors color = new Colors();
+    btn.setBackground(btnColor);
+    btn.setForeground(color.WHITE);
     btn.setPreferredSize(new Dimension(130, 38));
     btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
     btn.setFont(new Font("SansSerif", Font.BOLD, 12));
   }
+
+    public void createDishListener(ActionListener listener) { btnCreateDish.addActionListener(listener);}
+    public void menuListener(ActionListener listener) { btnMenu.addActionListener(listener);}
+    public void inventoryListener(ActionListener listener) { btnIngredients.addActionListener(listener);}
+
+    public JPanel getComponent_gridPanel() { return gridPanel; }
+
 }
