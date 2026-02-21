@@ -120,11 +120,22 @@ public class UserService {
   }
 
   public BaseUserModel getUCVUserByEmail(String email) {
-    System.out.println("Searching UCV user by email: " + email);
     List<BaseUserModel> users = getAllUCVUsers();
     BaseUserModel foundUser = null;
     for (BaseUserModel user : users) {
       if (user.getEmail().equalsIgnoreCase(email)) {
+        foundUser = user;
+        break;
+      }
+    }
+    return foundUser;
+  }
+
+  public BaseUserModel getUCVUserByDocumentId(Integer documentId) {
+    List<BaseUserModel> users = getAllUCVUsers();
+    BaseUserModel foundUser = null;
+    for (BaseUserModel user : users) {
+      if (user.getDocumentId().equals(documentId)) {
         foundUser = user;
         break;
       }

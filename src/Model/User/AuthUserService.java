@@ -26,7 +26,7 @@ public class AuthUserService {
       throw new IllegalArgumentException("All fields are required for registration.");
     }
 
-    BaseUserModel existingUCV = userService.getUCVUserByEmail(email);
+    BaseUserModel existingUCV = userService.getUCVUserByDocumentId(documentId);
 
     if (existingUCV == null) { // No se encontró el usuario en la base de datos UCV
       throw new IllegalArgumentException("User not found with the provided email: " + email);
@@ -44,7 +44,8 @@ public class AuthUserService {
 
     // Crear nuevo usuario
     UserModel newUser = new UserModel(
-        firstName, lastName, email, password, role, type, documentId);
+        existingUCV.getFirstName(), existingUCV.getLastName(), existingUCV.getLastName(), password, role, type,
+        existingUCV.getDocumentId());
 
     newUser = userService.create(newUser);
 

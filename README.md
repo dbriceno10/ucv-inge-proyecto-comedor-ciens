@@ -69,7 +69,6 @@ mvn exec:java -Dexec.mainClass="com.edu.ucv.comedor.Main"
   * José Dos Reis
   * Daniel Briceño
   * Jean Cheng
-  * Diego Gutierrez
 
 ---
 *Facultad de Ciencias - Escuela de Computación - UCV (2025)*
