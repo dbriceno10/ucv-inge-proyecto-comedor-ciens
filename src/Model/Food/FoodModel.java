@@ -24,8 +24,9 @@ public class FoodModel {
       Boolean isActive,
       String createdAt,
       String updatedAt,
-      String deletedAt,
-      Integer[] ingredientIds) {
+      String deletedAt
+  // Integer[] ingredientIds
+  ) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -34,7 +35,8 @@ public class FoodModel {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.deletedAt = deletedAt;
-    this.ingredientIds = ingredientIds;
+    // this.ingredientIds = ingredientIds;
+    this.ingredientIds = new Integer[] {};
     this.valueCF = valueCF;
     this.valueCV = null;
   }
@@ -49,8 +51,9 @@ public class FoodModel {
       Boolean isActive,
       String createdAt,
       String updatedAt,
-      String deletedAt,
-      Integer[] ingredientIds) {
+      String deletedAt
+  // Integer[] ingredientIds
+  ) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -59,7 +62,8 @@ public class FoodModel {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.deletedAt = deletedAt;
-    this.ingredientIds = ingredientIds;
+    // this.ingredientIds = ingredientIds;
+    this.ingredientIds = new Integer[] {};
     this.valueCF = valueCF;
     this.valueCV = valueCV;
   }
@@ -72,7 +76,8 @@ public class FoodModel {
     this.isActive = true;
     this.createdAt = createdAt;
     this.updatedAt = createdAt;
-    this.ingredientIds = foodDto.getIngredientIds();
+    // this.ingredientIds = foodDto.getIngredientIds();
+    this.ingredientIds = new Integer[] {};
     this.valueCF = foodDto.getValueCF();
     this.valueCV = 0.0;
   }

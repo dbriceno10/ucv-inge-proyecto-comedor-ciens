@@ -59,9 +59,10 @@ public class FoodService {
     if (foodDto.getValueCF() == null || foodDto.getValueCF() < 0) {
       throw new IllegalArgumentException("Food valueCF must be a non-negative number.");
     }
-    if (foodDto.getIngredientIds() == null || foodDto.getIngredientIds().length == 0) {
-      throw new IllegalArgumentException("At least one ingredient is required.");
-    }
+    // if (foodDto.getIngredientIds() == null || foodDto.getIngredientIds().length
+    // == 0) {
+    // throw new IllegalArgumentException("At least one ingredient is required.");
+    // }
     Integer nextId = this.commonServices.getLastIndex(FILE_PATH, FoodModel.class);
     String date = this.datesUtil.getCurrentDateTime();
     FoodModel newFood = new FoodModel(foodDto, nextId, date);
@@ -85,9 +86,10 @@ public class FoodService {
     if (foodDto.getValueCF() == null || foodDto.getValueCF() < 0) {
       throw new IllegalArgumentException("Food valueCF must be a non-negative number.");
     }
-    if (foodDto.getIngredientIds() == null || foodDto.getIngredientIds().length == 0) {
-      throw new IllegalArgumentException("At least one ingredient is required.");
-    }
+    // if (foodDto.getIngredientIds() == null || foodDto.getIngredientIds().length
+    // == 0) {
+    // throw new IllegalArgumentException("At least one ingredient is required.");
+    // }
     FoodModel existingFood = this.getById(foodDto.getId());
     if (existingFood == null) {
       throw new IllegalArgumentException("Food not found with id: " + foodDto.getId());
@@ -101,8 +103,9 @@ public class FoodService {
         existingFood.getIsActive(),
         existingFood.getCreatedAt(),
         this.datesUtil.getCurrentDateTime(),
-        existingFood.getDeletedAt(),
-        foodDto.getIngredientIds());
+        existingFood.getDeletedAt()
+    // foodDto.getIngredientIds()
+    );
     FoodDto auxFood = this.mapToDto(updatedFood);
     Double variableCV = this.calculateVariableCost(auxFood);
     updatedFood.setValueCV(variableCV);
