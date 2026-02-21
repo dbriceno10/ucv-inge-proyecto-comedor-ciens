@@ -6,21 +6,14 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
+import java.awt.event.ActionListener;
 
 public class IngredientEditorView extends JFrame {
-
-    // Componentes Públicos
-    public RoundedButton btnGuardar, btnCancelar, btnUploadImage;
-    public RoundedTextField txtNombre, txtStock;
-    public RoundedComboBox<String> cmbUnidad;
-    public JLabel lblImagePreview; // Para mostrar la foto si la suben
-
-    // Colores Figma
-    private final Color COLOR_FONDO = new Color(242, 244, 247);
-    private final Color COLOR_BLANCO = Color.WHITE;
-    private final Color COLOR_AZUL_UCV = new Color(30, 80, 150);
-    private final Color COLOR_AZUL_CLARO = new Color(37, 132, 255);
-    private final Color COLOR_AMARILLO = new Color(255, 210, 100);
+    private RoundedButton btnSave, btnCancel, btnUploadImage;
+    private RoundedTextField txtName, txtStock;
+    private RoundedComboBox<String> cmbUnitMeasurement;
+    //private JLabel lblImagePreview; 
+    private Colors color = new Colors();
 
     public IngredientEditorView() {
         setTitle("SGCU - Nuevo Ingrediente");
@@ -28,36 +21,36 @@ public class IngredientEditorView extends JFrame {
         
         // 1. PANEL PRINCIPAL
         JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(COLOR_FONDO);
+        mainPanel.setBackground(color.BACKGROUND);
         mainPanel.setBorder(new EmptyBorder(20, 60, 40, 60)); 
 
         // 2. HEADER (Perfil)
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        headerPanel.setBackground(COLOR_FONDO);
+        headerPanel.setBackground(color.BACKGROUND);
         headerPanel.setBorder(new EmptyBorder(0, 0, 15, 0));
         headerPanel.add(createProfileBadge("Daniel Briceño (Administrador)"));
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
         // 3. TARJETA BLANCA DIVIDIDA (Igual que Crear Plato)
         JPanel whiteCard = new JPanel(new GridLayout(1, 2, 40, 0)); // 2 Columnas
-        whiteCard.setBackground(COLOR_BLANCO);
+        whiteCard.setBackground(color.WHITE);
         whiteCard.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(230, 230, 230), 1),
+            BorderFactory.createLineBorder(color.LIGHT_GRAY, 1),
             new EmptyBorder(40, 50, 40, 50)
         ));
 
         // --- IZQUIERDA: FOTO DEL INGREDIENTE ---
         JPanel leftPanel = new JPanel(new BorderLayout());
-        leftPanel.setBackground(COLOR_BLANCO);
+        leftPanel.setBackground(color.WHITE);
         
         // Contenedor del botón "+"
         JPanel imageContainer = new JPanel(new GridBagLayout());
-        imageContainer.setBackground(new Color(250, 250, 252));
-        imageContainer.setBorder(BorderFactory.createDashedBorder(Color.LIGHT_GRAY, 2, 5));
+        imageContainer.setBackground(color.WHITE);
+        imageContainer.setBorder(BorderFactory.createDashedBorder(color.LIGHT_GRAY, 2, 5));
         
         btnUploadImage = new RoundedButton("+");
-        btnUploadImage.setBackground(COLOR_AZUL_CLARO);
-        btnUploadImage.setForeground(Color.WHITE);
+        btnUploadImage.setBackground(color.LIGHT_BLUE);
+        btnUploadImage.setForeground(color.WHITE);
         btnUploadImage.setFont(new Font("SansSerif", Font.BOLD, 50));
         btnUploadImage.setPreferredSize(new Dimension(80, 80));
         btnUploadImage.setMargin(new Insets(0,0,0,0));
@@ -69,38 +62,38 @@ public class IngredientEditorView extends JFrame {
         JLabel lblFoto = new JLabel("Foto del Ingrediente");
         lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
         lblFoto.setFont(new Font("SansSerif", Font.BOLD, 12));
-        lblFoto.setForeground(Color.GRAY);
+        lblFoto.setForeground(color.DARK_GRAY);
         lblFoto.setBorder(new EmptyBorder(10, 0, 0, 0));
         leftPanel.add(lblFoto, BorderLayout.SOUTH);
 
         // --- DERECHA: FORMULARIO ---
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
-        rightPanel.setBackground(COLOR_BLANCO);
+        rightPanel.setBackground(color.WHITE);
 
         // Título del Formulario
         JLabel lblFormTitle = new JLabel("Datos del Ingrediente");
         lblFormTitle.setFont(new Font("SansSerif", Font.BOLD, 18));
-        lblFormTitle.setForeground(COLOR_AZUL_UCV);
+        lblFormTitle.setForeground(color.OXFORD_BLUE);
         lblFormTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
         rightPanel.add(lblFormTitle);
         rightPanel.add(Box.createVerticalStrut(30));
 
         // Campo: Nombre
         rightPanel.add(createLabel("NOMBRE"));
-        txtNombre = new RoundedTextField();
-        txtNombre.setPreferredSize(new Dimension(300, 40));
-        txtNombre.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        rightPanel.add(txtNombre);
+        txtName = new RoundedTextField();
+        txtName.setPreferredSize(new Dimension(300, 40));
+        txtName.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        rightPanel.add(txtName);
         rightPanel.add(Box.createVerticalStrut(20));
 
         // Campo: Unidad
         rightPanel.add(createLabel("UNIDAD DE MEDIDA"));
         String[] unidades = {"Kilogramos (kg)", "Gramos (g)", "Litros (L)", "Mililitros (ml)", "Unidades (und)", "Paquetes"};
-        cmbUnidad = new RoundedComboBox<>(unidades);
-        cmbUnidad.setPreferredSize(new Dimension(300, 40));
-        cmbUnidad.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        rightPanel.add(cmbUnidad);
+        cmbUnitMeasurement = new RoundedComboBox<>(unidades);
+        cmbUnitMeasurement.setPreferredSize(new Dimension(300, 40));
+        cmbUnitMeasurement.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        rightPanel.add(cmbUnitMeasurement);
         rightPanel.add(Box.createVerticalStrut(20));
 
         // Campo: Stock
@@ -114,21 +107,21 @@ public class IngredientEditorView extends JFrame {
 
         // Botones
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
-        btnPanel.setBackground(COLOR_BLANCO);
+        btnPanel.setBackground(color.WHITE);
         btnPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        btnGuardar = new RoundedButton("Guardar");
-        btnGuardar.setBackground(COLOR_AZUL_UCV);
-        btnGuardar.setForeground(Color.WHITE);
-        btnGuardar.setPreferredSize(new Dimension(120, 40));
+        btnSave = new RoundedButton("Guardar");
+        btnSave.setBackground(color.OXFORD_BLUE);
+        btnSave.setForeground(color.WHITE);
+        btnSave.setPreferredSize(new Dimension(120, 40));
 
-        btnCancelar = new RoundedButton("Cancelar");
-        btnCancelar.setBackground(COLOR_AMARILLO);
-        btnCancelar.setForeground(Color.DARK_GRAY);
-        btnCancelar.setPreferredSize(new Dimension(120, 40));
+        btnCancel = new RoundedButton("Cancelar");
+        btnCancel.setBackground(color.YELLOW);
+        btnCancel.setForeground(color.BLACK);
+        btnCancel.setPreferredSize(new Dimension(120, 40));
 
-        btnPanel.add(btnGuardar);
-        btnPanel.add(btnCancelar);
+        btnPanel.add(btnSave);
+        btnPanel.add(btnCancel);
         rightPanel.add(btnPanel);
 
         // UNIÓN
@@ -140,14 +133,13 @@ public class IngredientEditorView extends JFrame {
         this.setContentPane(mainPanel);
         this.pack();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setVisible(true);
     }
 
     // --- UTILS ---
     private JLabel createLabel(String text) {
         JLabel lbl = new JLabel(text);
         lbl.setFont(new Font("SansSerif", Font.BOLD, 10));
-        lbl.setForeground(Color.GRAY);
+        lbl.setForeground(color.DARK_GRAY);
         lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
         lbl.setBorder(new EmptyBorder(0, 0, 5, 0));
         return lbl;
@@ -155,8 +147,8 @@ public class IngredientEditorView extends JFrame {
 
     private JPanel createProfileBadge(String text) {
         JPanel badge = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        badge.setBackground(COLOR_BLANCO);
-        badge.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1));
+        badge.setBackground(color.WHITE);
+        badge.setBorder(BorderFactory.createLineBorder(color.LIGHT_GRAY, 1));
         
         JLabel iconLbl = new JLabel();
         ImageIcon icon = loadScaledImage("assets/images/admin_profile.png", 30, 30);
@@ -165,7 +157,7 @@ public class IngredientEditorView extends JFrame {
         
         JLabel nameLbl = new JLabel(text);
         nameLbl.setFont(new Font("SansSerif", Font.BOLD, 12));
-        nameLbl.setForeground(COLOR_AZUL_UCV);
+        nameLbl.setForeground(color.OXFORD_BLUE);
         badge.add(iconLbl); badge.add(nameLbl);
         return badge;
     }
@@ -177,4 +169,12 @@ public class IngredientEditorView extends JFrame {
         }
         return null;
     }
+
+    public void saveListener(ActionListener listener) { btnSave.addActionListener(listener);}
+    public void cancelListener(ActionListener listener) { btnCancel.addActionListener(listener);}
+    public void uploadImgListener(ActionListener listener) { btnUploadImage.addActionListener(listener);}
+
+    public String getTxtName() { return txtName.getText(); }
+    public String getTextStock() { return txtStock.getText(); }
+    public String getUnitMeasurement() { return (String) cmbUnitMeasurement.getSelectedItem(); }
 }

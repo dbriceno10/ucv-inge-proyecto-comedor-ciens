@@ -1,19 +1,19 @@
 package View.Food;
 
 import View.CustomComponents.*;
-import View.Menu.MenuManagementView;
 import View.Ingredient.IngredientListView;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 
 public class DishListView extends JFrame {
-  public RoundedButton btnCrearPlato, btnMenu, btnInventory;
-  public RoundedTextField txtBuscar;
-  public JPanel gridPanel; // Aquí se agregan las tarjetas
+  private RoundedButton btnCreateDish, btnMenu, btnIngredients;
+  private RoundedTextField txtSearch;
+  private JPanel gridPanel; // Aquí se agregan las tarjetas
   private Colors color = new Colors();
 
   public DishListView() {
@@ -38,15 +38,15 @@ public class DishListView extends JFrame {
 
     // navegacion a otros modulos
 
-    btnMenu = new RoundedButton("Menú");
+    btnMenu = new RoundedButton("Volver");
     getStyleBtn(btnMenu, color.OXFORD_BLUE);
     navPanel.add(btnMenu);
-    btnMenu.addActionListener(e -> new MenuManagementView().setVisible(true));
+    
 
-    btnInventory = new RoundedButton("Ingredientes");
-    getStyleBtn(btnInventory, color.OXFORD_BLUE);
-    navPanel.add(btnInventory);
-    btnInventory.addActionListener(e -> new IngredientListView().setVisible(true));
+    btnIngredients = new RoundedButton("Ingredientes");
+    getStyleBtn(btnIngredients, color.OXFORD_BLUE);
+    navPanel.add(btnIngredients);
+    btnIngredients.addActionListener(e -> new IngredientListView().setVisible(true));
 
     mainPanel.add(navPanel, BorderLayout.NORTH);
 
@@ -70,23 +70,23 @@ public class DishListView extends JFrame {
     lblTitle.setFont(new Font("SansSerif", Font.BOLD, 20));
     lblTitle.setForeground(color.OXFORD_BLUE);
 
-    btnCrearPlato = new RoundedButton("Crear Plato");
-    btnCrearPlato.setBackground(color.OXFORD_BLUE);
-    btnCrearPlato.setForeground(color.WHITE);
-    btnCrearPlato.setPreferredSize(new Dimension(130, 38));
-    btnCrearPlato.setFont(new Font("SansSerif", Font.BOLD, 12));
+    btnCreateDish = new RoundedButton("Crear Plato");
+    btnCreateDish.setBackground(color.OXFORD_BLUE);
+    btnCreateDish.setForeground(color.WHITE);
+    btnCreateDish.setPreferredSize(new Dimension(130, 38));
+    btnCreateDish.setFont(new Font("SansSerif", Font.BOLD, 12));
 
     leftTool.add(lblTitle);
-    leftTool.add(btnCrearPlato);
+    leftTool.add(btnCreateDish);
 
     // Derecha: Buscador con Lupa
     JPanel searchBox = new JPanel(new BorderLayout());
     searchBox.setBackground(color.WHITE);
 
-    txtBuscar = new RoundedTextField();
-    txtBuscar.setText(" Buscar Plato..."); // Placeholder simple
-    txtBuscar.setForeground(color.DARK_GRAY);
-    txtBuscar.setPreferredSize(new Dimension(220, 38));
+    txtSearch = new RoundedTextField();
+    txtSearch.setText(" Buscar Plato..."); // Placeholder simple
+    txtSearch.setForeground(color.DARK_GRAY);
+    txtSearch.setPreferredSize(new Dimension(220, 38));
 
     // Icono Lupa a la derecha del campo
     JLabel searchIcon = new JLabel(new SearchIcon());
@@ -94,7 +94,7 @@ public class DishListView extends JFrame {
 
     JPanel searchWrapper = new JPanel(new BorderLayout());
     searchWrapper.setOpaque(false);
-    searchWrapper.add(txtBuscar, BorderLayout.CENTER);
+    searchWrapper.add(txtSearch, BorderLayout.CENTER);
     searchWrapper.add(searchIcon, BorderLayout.EAST);
 
     toolbar.add(leftTool, BorderLayout.WEST);
@@ -127,7 +127,6 @@ public class DishListView extends JFrame {
     this.setContentPane(mainPanel);
     this.pack();
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    this.setVisible(true);
   }
 
   // --- MÉTODO PARA CREAR TARJETA NARANJA ---
@@ -162,7 +161,7 @@ public class DishListView extends JFrame {
     JLabel imgLabel = new JLabel();
     imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
     // Carga la imagen 'pasta.jpg'
-    ImageIcon pastaImg = loadScaledImage("assets/images/pasta.jpg", 90, 65);
+    ImageIcon pastaImg = loadScaledImage("assets/images/Ingredients/pasta.jpg", 90, 65);
     if (pastaImg != null) {
       imgLabel.setIcon(pastaImg);
     } else {
@@ -345,4 +344,11 @@ public class DishListView extends JFrame {
     btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
     btn.setFont(new Font("SansSerif", Font.BOLD, 12));
   }
+
+    public void createDishListener(ActionListener listener) { btnCreateDish.addActionListener(listener);}
+    public void menuListener(ActionListener listener) { btnMenu.addActionListener(listener);}
+    public void inventoryListener(ActionListener listener) { btnIngredients.addActionListener(listener);}
+
+    public JPanel getComponent_gridPanel() { return gridPanel; }
+
 }

@@ -8,20 +8,13 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
+import java.awt.event.ActionListener;
 
 public class IngredientListView extends JFrame {
-
-  public RoundedButton btnNuevoIngrediente;
-  public RoundedTextField txtBuscar;
-  public RoundedButton btnMenu, btnPlatos;
-  public JPanel gridPanel;
-
-  // Colores Figma
-  private final Color COLOR_FONDO = new Color(242, 244, 247);
-  private final Color COLOR_BLANCO = Color.WHITE;
-  private final Color COLOR_AZUL_UCV = new Color(30, 80, 150);
-  // CAMBIO: Usamos el mismo naranja que en Platos y Menús
-  private final Color COLOR_NARANJA = new Color(255, 180, 120);
+  private RoundedButton btnNewIngredient, btnMenu, btnDishes;
+  private RoundedTextField txtSearch;
+  private JPanel gridPanel;
+  private Colors color = new Colors();
 
   public IngredientListView() {
     setTitle("SGCU - Inventario de Ingredientes");
@@ -29,76 +22,71 @@ public class IngredientListView extends JFrame {
 
     // panel de navegacion
     JPanel navPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-    navPanel.setBackground(COLOR_FONDO);
+    navPanel.setBackground(color.BACKGROUND);
     navPanel.setBorder(new EmptyBorder(10, 0, 10, 0)); // Un poco de aire arriba y abajo
 
     // 1. PANEL PRINCIPAL
     JPanel mainPanel = new JPanel(new BorderLayout());
-    mainPanel.setBackground(COLOR_FONDO);
+    mainPanel.setBackground(color.BACKGROUND);
     mainPanel.setBorder(new EmptyBorder(20, 60, 20, 60));
 
     // 2. HEADER
     JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    headerPanel.setBackground(COLOR_FONDO);
+    headerPanel.setBackground(color.BACKGROUND);
     headerPanel.add(createProfileBadge("Daniel Briceño (Administrador)"));
     mainPanel.add(headerPanel, BorderLayout.NORTH);
 
     btnMenu = new RoundedButton("Menú");
-    getStyleBtn(btnMenu, COLOR_AZUL_UCV);
+    getStyleBtn(btnMenu, color.OXFORD_BLUE);
     navPanel.add(btnMenu);
-    btnMenu.addActionListener(e -> new MenuManagementView().setVisible(true));
 
-    btnPlatos = new RoundedButton("Platos");
-    getStyleBtn(btnPlatos, COLOR_AZUL_UCV);
-    navPanel.add(btnPlatos);
-    btnPlatos.addActionListener(e -> new DishListView().setVisible(true));
+    btnDishes = new RoundedButton("Platos");
+    getStyleBtn(btnDishes, color.OXFORD_BLUE);
+    navPanel.add(btnDishes);
 
     mainPanel.add(navPanel, BorderLayout.NORTH);
 
     // 3. TARJETA BLANCA
     JPanel whiteCard = new JPanel(new BorderLayout());
-    whiteCard.setBackground(COLOR_BLANCO);
+    whiteCard.setBackground(color.WHITE);
     whiteCard.setBorder(BorderFactory.createCompoundBorder(
-        BorderFactory.createLineBorder(new Color(230, 230, 230), 1),
+        BorderFactory.createLineBorder(color.LIGHT_GRAY, 1),
         new EmptyBorder(30, 40, 30, 40)));
 
     // --- TOOLBAR ---
     JPanel toolbar = new JPanel(new BorderLayout());
-    toolbar.setBackground(COLOR_BLANCO);
+    toolbar.setBackground(color.WHITE);
     toolbar.setBorder(new EmptyBorder(0, 0, 25, 0));
 
     JPanel leftTool = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 0));
-    leftTool.setBackground(COLOR_BLANCO);
+    leftTool.setBackground(color.WHITE);
 
     JLabel lblTitle = new JLabel("Inventario");
     lblTitle.setFont(new Font("SansSerif", Font.BOLD, 20));
-    lblTitle.setForeground(COLOR_AZUL_UCV);
+    lblTitle.setForeground(color.OXFORD_BLUE);
 
     // Botón ancho para que quepa el texto
-    btnNuevoIngrediente = new RoundedButton("Nuevo Ingrediente");
-    btnNuevoIngrediente.setBackground(COLOR_AZUL_UCV);
-    btnNuevoIngrediente.setForeground(Color.WHITE);
-    btnNuevoIngrediente.setPreferredSize(new Dimension(200, 38));
-    // btnNuevoIngrediente.addActionListener(e -> new
-    // IngredientListView().setVisible(rootPaneCheckingEnabled));
-    btnNuevoIngrediente.addActionListener(e -> new IngredientEditorView().setVisible(true));
+    btnNewIngredient = new RoundedButton("Nuevo Ingrediente");
+    btnNewIngredient.setBackground(color.OXFORD_BLUE);
+    btnNewIngredient.setForeground(color.WHITE);
+    btnNewIngredient.setPreferredSize(new Dimension(200, 38));
 
     leftTool.add(lblTitle);
-    leftTool.add(btnNuevoIngrediente);
+    leftTool.add(btnNewIngredient);
 
     // Buscador
     JPanel searchBox = new JPanel(new BorderLayout());
-    searchBox.setBackground(COLOR_BLANCO);
-    txtBuscar = new RoundedTextField();
-    txtBuscar.setText(" Buscar ingrediente...");
-    txtBuscar.setPreferredSize(new Dimension(220, 38));
+    searchBox.setBackground(color.WHITE);
+    txtSearch = new RoundedTextField();
+    txtSearch.setText(" Buscar ingrediente...");
+    txtSearch.setPreferredSize(new Dimension(220, 38));
 
     JLabel searchIcon = new JLabel(new SearchIcon());
     searchIcon.setBorder(new EmptyBorder(0, 8, 0, 0));
 
     JPanel searchWrapper = new JPanel(new BorderLayout());
     searchWrapper.setOpaque(false);
-    searchWrapper.add(txtBuscar, BorderLayout.CENTER);
+    searchWrapper.add(txtSearch, BorderLayout.CENTER);
     searchWrapper.add(searchIcon, BorderLayout.EAST);
 
     toolbar.add(leftTool, BorderLayout.WEST);
@@ -107,7 +95,7 @@ public class IngredientListView extends JFrame {
 
     // --- GRILLA DE INGREDIENTES ---
     gridPanel = new JPanel(new GridLayout(0, 5, 20, 20));
-    gridPanel.setBackground(COLOR_BLANCO);
+    gridPanel.setBackground(color.WHITE);
 
     // Añadimos tarjetas (Recuerda tener las fotos en assets/images/)
     addIngredientCard("Tomates", "50 kg", "tomates");
@@ -118,7 +106,7 @@ public class IngredientListView extends JFrame {
 
     JScrollPane scroll = new JScrollPane(gridPanel);
     scroll.setBorder(null);
-    scroll.getViewport().setBackground(COLOR_BLANCO);
+    scroll.getViewport().setBackground(color.WHITE);
 
     whiteCard.add(scroll, BorderLayout.CENTER);
     mainPanel.add(whiteCard, BorderLayout.CENTER);
@@ -126,7 +114,6 @@ public class IngredientListView extends JFrame {
     this.setContentPane(mainPanel);
     this.pack();
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    this.setVisible(true);
   }
 
   private void addIngredientCard(String name, String stock, String imageName) {
@@ -137,7 +124,7 @@ public class IngredientListView extends JFrame {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         // CAMBIO: Ahora pinta Naranja
-        g2.setColor(COLOR_NARANJA);
+        g2.setColor(color.ORANGE);
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
       }
     };
@@ -174,12 +161,12 @@ public class IngredientListView extends JFrame {
     info.setBorder(new EmptyBorder(5, 0, 0, 0));
 
     JLabel lblName = new JLabel(name);
-    lblName.setForeground(Color.WHITE);
+    lblName.setForeground(color.WHITE);
     lblName.setFont(new Font("SansSerif", Font.BOLD, 13));
     lblName.setHorizontalAlignment(SwingConstants.LEFT);
 
     JLabel lblStock = new JLabel(stock);
-    lblStock.setForeground(new Color(255, 245, 230)); // Blanco un poco cálido para el texto secundario
+    lblStock.setForeground(color.WHITE);
     lblStock.setFont(new Font("SansSerif", Font.PLAIN, 11));
     lblStock.setHorizontalAlignment(SwingConstants.LEFT);
 
@@ -214,8 +201,8 @@ public class IngredientListView extends JFrame {
 
   private JPanel createProfileBadge(String text) {
     JPanel badge = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-    badge.setBackground(COLOR_BLANCO);
-    badge.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1));
+    badge.setBackground(color.WHITE);
+    badge.setBorder(BorderFactory.createLineBorder(color.LIGHT_GRAY, 1));
 
     JLabel iconLbl = new JLabel();
     ImageIcon icon = loadScaledImage("assets/images/admin_profile.png", 30, 30);
@@ -226,7 +213,7 @@ public class IngredientListView extends JFrame {
 
     JLabel nameLbl = new JLabel(text);
     nameLbl.setFont(new Font("SansSerif", Font.BOLD, 12));
-    nameLbl.setForeground(COLOR_AZUL_UCV);
+    nameLbl.setForeground(color.OXFORD_BLUE);
     badge.add(iconLbl);
     badge.add(nameLbl);
     return badge;
@@ -253,7 +240,8 @@ public class IngredientListView extends JFrame {
 
   private static class TrashIcon implements Icon {
     public void paintIcon(Component c, Graphics g, int x, int y) {
-      g.setColor(Color.WHITE);
+      Colors color = new Colors();
+      g.setColor(color.WHITE);
       g.fillRect(x + 2, y, 8, 2);
       g.fillRect(x + 3, y + 3, 6, 7);
     }
@@ -269,7 +257,8 @@ public class IngredientListView extends JFrame {
 
   private static class EditIcon implements Icon {
     public void paintIcon(Component c, Graphics g, int x, int y) {
-      g.setColor(Color.WHITE);
+      Colors color = new Colors();
+      g.setColor(color.WHITE);
       int[] xs = { x, x + 8, x + 10, x + 2 };
       int[] ys = { x + 10, x + 2, x + 4, x + 12 };
       g.fillPolygon(xs, ys, 4);
@@ -286,9 +275,10 @@ public class IngredientListView extends JFrame {
 
   private static class SearchIcon implements Icon {
     public void paintIcon(Component c, Graphics g, int x, int y) {
+      Colors color = new Colors();
       Graphics2D g2 = (Graphics2D) g;
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-      g2.setColor(Color.GRAY);
+      g2.setColor(color.DARK_GRAY);
       g2.setStroke(new BasicStroke(2));
       g2.drawOval(x, y, 8, 8);
       g2.drawLine(x + 7, y + 7, x + 11, y + 11);
@@ -305,11 +295,18 @@ public class IngredientListView extends JFrame {
 
   // métodos privados
 
-  private void getStyleBtn(RoundedButton btn, Color color) {
-    btn.setBackground(color);
-    btn.setForeground(Color.WHITE);
+  private void getStyleBtn(RoundedButton btn, Color color_) {
+    Colors color = new Colors();
+    btn.setBackground(color_);
+    btn.setForeground(color.WHITE);
     btn.setPreferredSize(new Dimension(130, 38));
     btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
     btn.setFont(new Font("SansSerif", Font.BOLD, 12));
   }
+
+  public void newIngredientListener(ActionListener listener) { btnNewIngredient.addActionListener(listener);}
+  public void menuListener(ActionListener listener) { btnMenu.addActionListener(listener);}
+  public void dishesListener(ActionListener listener) { btnDishes.addActionListener(listener);}
+
+  public JPanel getComponent_gridPanel() { return gridPanel; }
 }

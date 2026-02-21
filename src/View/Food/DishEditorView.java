@@ -78,8 +78,9 @@ public class DishEditorView extends JFrame {
 
         // -- Campo Estado --
         rightPanel.add(createLabel("ESTADO"));
-        String[] estados = {"Disponible", "Agotado", "Fuera de Temporada"};
-        cmbStatus = new RoundedComboBox<>(estados);
+        String[] states = {"Disponible", "Agotado", "Fuera de Temporada"};
+        cmbStatus = new RoundedComboBox<>(states);
+        cmbStatus.setActionCommand("STATUS_CHANGED");
         cmbStatus.setPreferredSize(new Dimension(300, 40));
         cmbStatus.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
         rightPanel.add(cmbStatus);
@@ -128,7 +129,6 @@ public class DishEditorView extends JFrame {
         this.setContentPane(mainPanel);
         this.pack();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setVisible(true);
     }
 
     // --- MÉTODOS AUXILIARES ---
@@ -177,8 +177,10 @@ public class DishEditorView extends JFrame {
         return null;
     }
 
+    public String getTxtName() { return txtName.getText(); }
+    public String getTxtDesc() { return txtDesc.getText(); }
+
     public void saveBtnListener(ActionListener listener) { btnSave.addActionListener(listener);} 
     public void cancelBtnListener(ActionListener listener) { btnCancel.addActionListener(listener);} 
     public void uploadBtnListener(ActionListener listener) { btnUploadImage.addActionListener(listener);} 
-    public void cmbStatusListener(ActionListener listener) { cmbStatus.addActionListener(listener);} 
 }

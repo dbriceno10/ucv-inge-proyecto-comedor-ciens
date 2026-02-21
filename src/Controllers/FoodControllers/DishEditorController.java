@@ -1,67 +1,56 @@
 package Controllers.FoodControllers;
 
-import View.Food.DishListView;
-import View.Wallet.WalletView;
 import View.Food.DishEditorView;
-import Model.Food.FoodService;
 import DTO.Food.CreateFoodDto;
-import DTO.Food.FoodDto;
-import Enums.MenuOptions;
+import Model.Food.FoodService;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import Controllers.WalletControllers.WalletController;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.util.List;
-
 public class DishEditorController implements ActionListener {
-    private DishListView view;
+    private DishEditorView view;
     private FoodService service;
+    private DishListController dishController;
 
-    public DishEditorController(DishListView view) {
+    public DishEditorController (DishEditorView view) {
         this.view = view;
-        this.service = new FoodService();
-        
-        
-        this.view.btnCrearPlato.addActionListener(e -> openEditor());
-        loadDishes();
+        service = new FoodService();
+
+        this.view.saveBtnListener(this);
+        this.view.cancelBtnListener(this);
+        this.view.uploadBtnListener(this);
+
         this.view.setVisible(true);
     }
-
-    private void loadDishes() { // esto es parte del modelo***
-        view.gridPanel.removeAll();
-        List<FoodDto> list = service.getAllFoods();
-        for(FoodDto f : list) {
-            try {
-                java.lang.reflect.Method m = view.getClass().getDeclaredMethod("addDishCard", String.class);
-                m.setAccessible(true);
-                m.invoke(view, f.getName());
-            } catch (Exception e) {}
-        }
-        view.gridPanel.revalidate();
-        view.gridPanel.repaint();
-    }
-
-    private void openEditor() {
-        DishEditorView editor = new DishEditorView();
-        editor.btnGuardar.addActionListener(e -> {
-            try {
-                service.create(new CreateFoodDto(
-                    editor.txtNombre.getText(), 
-                    editor.txtDescripcion.getText(), 
-                    0.0, 0.0, new Integer[]{1}));
-                JOptionPane.showMessageDialog(editor, "Guardado");
-                editor.dispose();
-                loadDishes();
-            } catch(Exception ex) { JOptionPane.showMessageDialog(editor, "Error: " + ex.getMessage()); }
-        });
-        editor.btnCancelar.addActionListener(e -> editor.dispose());
-        editor.setVisible(true);
-    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-        //***
+        String command = e.getActionCommand();
+        switch (command) {
+            case "Guardar":
+            processDishSave();
+                break;
+            case "Cancelar":
+                view.dispose();
+                break;
+            case "+": // btnUploadImage 
+                //lógica para añadir y guardar una imagen
+                break;
+            default: break;
+        }
+    }
+
+    void processDishSave() {
+        dishController = new DishListController();
+        try {
+            service.create(new CreateFoodDto(
+                view.getTxtName(), 
+                view.getTxtDesc(), 
+                0.0, 0.0, new Integer[]{1}));
+                JOptionPane.showMessageDialog(view, "Guardado");
+
+                dishController.loadDishes();
+        } catch (Exception e) {JOptionPane.showMessageDialog(view, "Error: " + e.getMessage());}
     }
 }

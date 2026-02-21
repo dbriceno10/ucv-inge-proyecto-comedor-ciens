@@ -10,8 +10,8 @@ import Model.Food.*;
 
 import javax.swing.*;
 
-import Controllers.FoodControllers.DishEditorController;
-import Controllers.IngredientControllers.IngredientController;
+import Controllers.FoodControllers.DishListController;
+import Controllers.IngredientControllers.IngredientListController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +35,6 @@ public class MenuManagementController implements ActionListener {
         this.view.DishesListener(this);
 
         loadMenus();
-        
         this.view.setVisible(true);
     }
 
@@ -48,11 +47,11 @@ public class MenuManagementController implements ActionListener {
                 break;
             case "Inventario":
                 IngredientListView ingredientView = new IngredientListView();
-                new IngredientController(ingredientView);
+                new IngredientListController(ingredientView);
                 break;
             case "Platos":
                 DishListView dishView = new DishListView();
-                new DishEditorController(dishView);
+                new DishListController(dishView);
                 break;
             default: break;
         }
