@@ -5,50 +5,58 @@ import Model.Wallet.WalletService;
 import DTO.Wallet.WalletDto;
 import DTO.User.AuthUserDto; 
 import Context.User.UserSession;
-import javax.swing.*;
 
-public class WalletController {
+import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class WalletController implements ActionListener {
     private WalletView view;
     private WalletService service;
 
     public WalletController(WalletView view) {
         this.view = view;
-        this.service = new WalletService();
+        service = new WalletService();
+
+        this.view.topUpListener(this);
+        this.view.cancelListener(this);
 
         loadWalletInfo();
-
-        if (this.view.btnCancel != null) {
-            this.view.btnCancel.addActionListener(e -> view.dispose());
-        }
-
-        if (this.view.btnTopUp != null) {
-            this.view.btnTopUp.addActionListener(e -> {
-                JOptionPane.showMessageDialog(view, "Funcionalidad de recarga simulada.");
-            });
-        }
-
         this.view.setVisible(true);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+        switch (command) {
+            case "Recarga":
+                JOptionPane.showMessageDialog(view, "Funcionalidad de recarga simulada.");
+                //integración recarga
+            case "CLOSE_WALLET":
+                view.dispose();
+                break;
+            default:
+                break;
+        }
+    }
+
     private void loadWalletInfo() {
-        // A. Obtener usuario de la sesión (Usando AuthUserDto)
         AuthUserDto currentUser = UserSession.getInstance().getUser();
 
         if (currentUser != null) {
+            JLabel balanceCmp = view.getComponentBlc();
             try {
-                // B. Llamar al servicio
                 WalletDto wallet = service.getWalletByUserId(currentUser.getId());
 
-                // C. Inyectar en la vista
                 if (wallet != null) {
                     String saldoFormateado = String.format("%.2f", wallet.getBalance());
-                    this.view.lblBalance.setText("$ " + saldoFormateado);
+                    balanceCmp.setText("$ " + saldoFormateado);
                 } else {
-                    this.view.lblBalance.setText("$ 0.00");
+                    balanceCmp.setText("$ 0.00");
                 }
             } catch (Exception e) {
                 System.out.println("Error cargando billetera: " + e.getMessage());
-                this.view.lblBalance.setText("$ Error");
+                balanceCmp.setText("N/A.");
             }
         }
     }

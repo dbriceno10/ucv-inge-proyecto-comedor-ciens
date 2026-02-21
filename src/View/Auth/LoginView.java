@@ -21,10 +21,10 @@ public class LoginView extends JFrame {
         txtEmail = new RoundedTextField();
         txtPwd = new RoundedTextField();
 
-        //txtEmail.setText("maria.gomez@example.com");
-        //txtPwd.setText("securepass");
-        txtEmail.setText("juan.perez@example.com");
-        txtPwd.setText("password123");
+        txtEmail.setText("maria.gomez@example.com");
+        txtPwd.setText("securepass");
+        //txtEmail.setText("juan.perez@example.com");
+        //txtPwd.setText("password123");
         
         btnLogin = new RoundedButton("Iniciar sesión");
         btnRegister = new RoundedButton("Registrarse");

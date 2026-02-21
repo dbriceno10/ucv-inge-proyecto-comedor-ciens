@@ -39,7 +39,7 @@ public class DashboardView extends JFrame {
         btnProfile.setBackground(color.LIGHT_GRAY);
         btnProfile.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
-        ImageIcon defaultUser = new ImageIcon("assets/images/defaultUser.png");
+        ImageIcon defaultUser = new ImageIcon("assets/images/Icons/defaultUser.png");
         Image imgUser = defaultUser.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         btnProfile.setIcon(new ImageIcon(imgUser));
         btnProfile.setHorizontalAlignment(SwingConstants.LEFT);
@@ -49,6 +49,7 @@ public class DashboardView extends JFrame {
         String[] menu_options = {MenuOptions.DAILY, MenuOptions.WEEKLY};
         selectMenu_type = new RoundedComboBox<>(menu_options);
         selectMenu_type.setPreferredSize(new Dimension(150, 40));
+        selectMenu_type.setActionCommand("MENU_TYPE_CHANGED");
 
         // Container for the selector (JComboBox) and the text
         JPanel rightHeader = new JPanel();
@@ -115,7 +116,7 @@ public class DashboardView extends JFrame {
         btnWallet.setPreferredSize(new Dimension(80, 80));
         btnWallet.setBackground(color.OXFORD_BLUE);
         btnWallet.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnWallet.setIcon(Utils.ImageUtils.getRoundedIcon("assets/images/wallet.png", 45, 45, 0));
+        btnWallet.setIcon(Utils.ImageUtils.getRoundedIcon("assets/images/Icons/wallet.png", 45, 45, 0));
         footerPanel.add(btnWallet);
 
         // Final assembly
