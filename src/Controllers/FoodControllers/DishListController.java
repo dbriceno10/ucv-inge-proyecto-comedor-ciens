@@ -5,11 +5,9 @@ import View.Ingredient.IngredientListView;
 import View.Food.DishEditorView;
 import Model.Food.FoodService;
 import DTO.Food.FoodDto;
-
-import javax.swing.*;
-
 import Controllers.IngredientControllers.IngredientListController;
 
+import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;

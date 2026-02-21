@@ -6,12 +6,11 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
+import java.awt.event.*;
 
 public class MenuEditorView extends JFrame {
-
-    // Componentes públicos para que el controlador los use después
-    public RoundedButton btnGuardar, btnCancelar, btnAddPlato;
-    public RoundedTextField txtFecha;
+    private RoundedButton btnSave, btnCancel, btnAddDish;
+    private RoundedTextField txtDate;
     private JPanel listPanel;
     private Colors color = new Colors();
 
@@ -49,14 +48,14 @@ public class MenuEditorView extends JFrame {
         lblFecha.setFont(new Font("SansSerif", Font.BOLD, 10));
         lblFecha.setForeground(color.DARK_GRAY);
         
-        txtFecha = new RoundedTextField();
-        txtFecha.setText("08/12/2025");
-        txtFecha.setPreferredSize(new Dimension(150, 35));
+        txtDate = new RoundedTextField();
+        txtDate.setText("08/12/2025");
+        txtDate.setPreferredSize(new Dimension(150, 35));
         
         JPanel dateBox = new JPanel(new BorderLayout());
         dateBox.setBackground(color.WHITE);
         dateBox.add(lblFecha, BorderLayout.NORTH);
-        dateBox.add(txtFecha, BorderLayout.CENTER);
+        dateBox.add(txtDate, BorderLayout.CENTER);
         
         cardHeader.add(dateBox);
         whiteCard.add(cardHeader, BorderLayout.NORTH);
@@ -83,32 +82,32 @@ public class MenuEditorView extends JFrame {
         footerPanel.setBorder(new EmptyBorder(30, 0, 0, 0));
 
         // Botón Izquierdo: Añadir
-        btnAddPlato = new RoundedButton("Añadir Plato");
-        btnAddPlato.setBackground(color.LIGHT_BLUE);
-        btnAddPlato.setForeground(Color.WHITE);
-        btnAddPlato.setFont(new Font("SansSerif", Font.BOLD, 12));
-        btnAddPlato.setPreferredSize(new Dimension(140, 40));
+        btnAddDish = new RoundedButton("Añadir Plato");
+        btnAddDish.setBackground(color.LIGHT_BLUE);
+        btnAddDish.setForeground(Color.WHITE);
+        btnAddDish.setFont(new Font("SansSerif", Font.BOLD, 12));
+        btnAddDish.setPreferredSize(new Dimension(140, 40));
         
         JPanel leftBtnBox = new JPanel(new FlowLayout(FlowLayout.LEFT));
         leftBtnBox.setBackground(color.WHITE);
-        leftBtnBox.add(btnAddPlato);
+        leftBtnBox.add(btnAddDish);
 
         // Botones Derechos: Guardar/Cancelar
         JPanel rightBtnBox = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
         rightBtnBox.setBackground(color.WHITE);
 
-        btnGuardar = new RoundedButton("Guardar");
-        btnGuardar.setBackground(color.OXFORD_BLUE);
-        btnGuardar.setForeground(color.WHITE);
-        btnGuardar.setPreferredSize(new Dimension(120, 40));
+        btnSave = new RoundedButton("Guardar");
+        btnSave.setBackground(color.OXFORD_BLUE);
+        btnSave.setForeground(color.WHITE);
+        btnSave.setPreferredSize(new Dimension(120, 40));
 
-        btnCancelar = new RoundedButton("Cancelar");
-        btnCancelar.setBackground(color.YELLOW);
-        btnCancelar.setForeground(color.BLACK);
-        btnCancelar.setPreferredSize(new Dimension(120, 40));
+        btnCancel = new RoundedButton("Cancelar");
+        btnCancel.setBackground(color.YELLOW);
+        btnCancel.setForeground(color.BLACK);
+        btnCancel.setPreferredSize(new Dimension(120, 40));
 
-        rightBtnBox.add(btnGuardar);
-        rightBtnBox.add(btnCancelar);
+        rightBtnBox.add(btnSave);
+        rightBtnBox.add(btnCancel);
 
         footerPanel.add(leftBtnBox, BorderLayout.WEST);
         footerPanel.add(rightBtnBox, BorderLayout.EAST);
@@ -122,7 +121,6 @@ public class MenuEditorView extends JFrame {
         // Finalizar
         this.pack();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setVisible(true);
     }
 
     // --- MÉTODOS AUXILIARES ---
@@ -272,4 +270,10 @@ public class MenuEditorView extends JFrame {
         @Override
         public int getIconHeight() { return 28; }
     }
+
+    public String getTxtDate() { return txtDate.getText(); }
+
+    public void saveListener(ActionListener listener) { btnSave.addActionListener(listener);}
+    public void cancelListener(ActionListener listener) { btnCancel.addActionListener(listener);}
+    public void addDishListener(ActionListener listener) { btnAddDish.addActionListener(listener);} 
 }

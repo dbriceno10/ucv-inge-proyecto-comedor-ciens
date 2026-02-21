@@ -1,14 +1,12 @@
 package Controllers.IngredientControllers;
 
 import View.Ingredient.*;
+import DTO.Ingredient.CreateIngredientDto;
+import Model.Ingredient.IngredientSevice;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JOptionPane;
-
-import DTO.Ingredient.CreateIngredientDto;
-import Model.Ingredient.IngredientSevice;
 
 public class IngredientEditorController implements ActionListener {
     IngredientEditorView view;

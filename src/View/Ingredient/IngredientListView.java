@@ -1,8 +1,6 @@
 package View.Ingredient;
 
 import View.CustomComponents.*;
-import View.Menu.MenuManagementView;
-import View.Food.DishListView;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

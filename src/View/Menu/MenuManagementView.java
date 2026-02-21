@@ -9,7 +9,6 @@ import DTO.User.AuthUserDto;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.io.File;
 import java.awt.event.*;
 
 public class MenuManagementView extends JFrame {

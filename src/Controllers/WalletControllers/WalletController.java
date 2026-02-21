@@ -3,7 +3,7 @@ package Controllers.WalletControllers;
 import View.Wallet.WalletView;
 import Model.Wallet.WalletService;
 import DTO.Wallet.WalletDto;
-import DTO.User.AuthUserDto; // <--- CORREGIDO: Usamos AuthUserDto
+import DTO.User.AuthUserDto; 
 import Context.User.UserSession;
 import javax.swing.*;
 
@@ -15,22 +15,18 @@ public class WalletController {
         this.view = view;
         this.service = new WalletService();
 
-        // 1. Cargar datos apenas se abre la ventana
         loadWalletInfo();
 
-        // 2. Evento para cerrar
         if (this.view.btnCancel != null) {
             this.view.btnCancel.addActionListener(e -> view.dispose());
         }
 
-        // 3. Simulación de recarga
         if (this.view.btnTopUp != null) {
             this.view.btnTopUp.addActionListener(e -> {
                 JOptionPane.showMessageDialog(view, "Funcionalidad de recarga simulada.");
             });
         }
 
-        // 4. Mostrar la vista
         this.view.setVisible(true);
     }
 
