@@ -5,7 +5,7 @@ import DTO.Food.FoodDto;
 import DTO.Food.UpdateFoodDto;
 import Model.Food.FoodService;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Main {
   public static void main(String[] args) {
@@ -16,7 +16,7 @@ public class Main {
     // Test 1: Obtener todos los alimentos
     System.out.println("Test 1: Get all foods");
     try {
-      List<FoodDto> foods = foodService.getAllFoods();
+      ArrayList<FoodDto> foods = foodService.getAllFoods();
       if (foods != null && !foods.isEmpty()) {
         System.out.println("Total foods: " + foods.size());
         for (FoodDto food : foods) {

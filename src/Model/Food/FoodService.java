@@ -21,13 +21,13 @@ public class FoodService {
   private Dates datesUtil = new Dates();
   private IngredientSevice ingredientSevice = new IngredientSevice();
 
-  public List<FoodDto> getAllFoods() {
-    List<FoodDto> foods = new ArrayList<>();
+  public ArrayList<FoodDto> getAllFoods() {
+    ArrayList<FoodDto> foods = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
       if (file.exists()) {
-        List<FoodModel> foodModels = mapper.readValue(file,
+        ArrayList<FoodModel> foodModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, FoodModel.class));
         for (FoodModel foodModel : foodModels) {
           if (foodModel.getDeletedAt() == null) { // Filtrar alimentos con deletedAt como null
@@ -129,7 +129,7 @@ public class FoodService {
   // metodos privados
 
   private FoodModel save(FoodModel food) {
-    List<FoodModel> foods = this.commonServices.getAllElements(FILE_PATH, FoodModel.class);
+    ArrayList<FoodModel> foods = this.commonServices.getAllElements(FILE_PATH, FoodModel.class);
     foods.add(food);
     ObjectMapper mapper = new ObjectMapper();
     try {
@@ -142,7 +142,7 @@ public class FoodService {
   }
 
   private FoodModel edit(FoodModel food) {
-    List<FoodModel> foods = this.commonServices.getAllElements(FILE_PATH, FoodModel.class);
+    ArrayList<FoodModel> foods = this.commonServices.getAllElements(FILE_PATH, FoodModel.class);
     boolean found = false;
     for (int i = 0; i < foods.size(); i++) {
       if (foods.get(i).getId().equals(food.getId())) {
@@ -184,13 +184,13 @@ public class FoodService {
         ingredientDtos);
   }
 
-  private List<FoodModel> getAll() {
-    List<FoodModel> foods = new ArrayList<>();
+  private ArrayList<FoodModel> getAll() {
+    ArrayList<FoodModel> foods = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
       if (file.exists()) {
-        List<FoodModel> foodModels = mapper.readValue(file,
+        ArrayList<FoodModel> foodModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, FoodModel.class));
         for (FoodModel foodModel : foodModels) {
           if (foodModel.getDeletedAt() == null) { // Filtrar alimentos con deletedAt como null
@@ -205,7 +205,7 @@ public class FoodService {
   }
 
   private FoodModel getById(Integer id) {
-    List<FoodModel> foods = this.getAll();
+    ArrayList<FoodModel> foods = this.getAll();
     FoodModel found = null;
     for (FoodModel food : foods) {
       if (food.getId().equals(id)) {

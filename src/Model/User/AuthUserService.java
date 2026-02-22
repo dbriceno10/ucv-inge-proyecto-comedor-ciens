@@ -65,13 +65,13 @@ public class AuthUserService {
         user.getRole(), user.getType(), "token", user.getIsActive(), user.getDocumentId());
   }
 
-  private List<UserModel> getAllUsers() {
-    List<UserModel> users = new ArrayList<>();
+  private ArrayList<UserModel> getAllUsers() {
+    ArrayList<UserModel> users = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_USER);
       if (file.exists()) {
-        List<UserModel> userModels = mapper.readValue(file,
+        ArrayList<UserModel> userModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, UserModel.class));
         for (UserModel userModel : userModels) {
           if (userModel.getDeletedAt() == null) { // Filtrar usuarios con deletedAt como null
@@ -86,7 +86,7 @@ public class AuthUserService {
   }
 
   private UserModel getUserByEmail(String email) {
-    List<UserModel> users = this.getAllUsers();
+    ArrayList<UserModel> users = this.getAllUsers();
     for (UserModel user : users) {
       if (user.getEmail().equalsIgnoreCase(email)) {
         return user;

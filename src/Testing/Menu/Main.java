@@ -4,8 +4,10 @@ import DTO.Menu.CreateMenuDto;
 import DTO.Menu.MenuDto;
 import DTO.Menu.UpdateMenuDto;
 import Model.Menu.MenuService;
+import Enums.Days;
+import Enums.MenuTypes;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Main {
   public static void main(String[] args) {
@@ -16,7 +18,7 @@ public class Main {
     // Test 1: Obtener todos los menús
     System.out.println("Test 1: Get all menus");
     try {
-      List<MenuDto> menus = menuService.getAllMenus();
+      ArrayList<MenuDto> menus = menuService.getAllMenus();
       if (menus != null && !menus.isEmpty()) {
         System.out.println("Total menus: " + menus.size());
         for (MenuDto menu : menus) {
@@ -46,7 +48,8 @@ public class Main {
     System.out.println("Test 3: Create a new menu");
     try {
       CreateMenuDto newMenu = new CreateMenuDto(
-          "LUNES",
+          Days.MONDAY,
+          MenuTypes.BREACKFAST,
           new Integer[] { 1, 2, 3 },
           "2026-02-08"
       );
@@ -61,7 +64,8 @@ public class Main {
     try {
       UpdateMenuDto updatedMenu = new UpdateMenuDto(
           1,
-          "MARTES",
+          Days.TUESDAY,
+          MenuTypes.LUNCH,
           new Integer[] { 4, 5, 6 },
           "2026-02-09"
       );

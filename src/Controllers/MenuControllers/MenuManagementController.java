@@ -13,7 +13,7 @@ import Controllers.IngredientControllers.IngredientListController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.util.ArrayList;
 
 public class MenuManagementController implements ActionListener {
     private MenuManagementView view;
@@ -54,7 +54,7 @@ public class MenuManagementController implements ActionListener {
     private void loadMenus() {
         JPanel menu_containter = view.getComponentMenuContainer();
         menu_containter.removeAll();
-        List<MenuDto> menus = menuService.getAllMenus();
+        ArrayList<MenuDto> menus = menuService.getAllMenus();
         for (MenuDto menu : menus) {
             try {
                 java.lang.reflect.Method method = view.getClass().getDeclaredMethod("addMenuCard", String.class);

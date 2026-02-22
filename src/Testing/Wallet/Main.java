@@ -4,7 +4,7 @@ import Model.Common.CommonServices;
 import Model.Wallet.WalletModel;
 import Model.Wallet.WalletService;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import DTO.Wallet.CreateWalletDto;
 import DTO.Wallet.WalletDto;
@@ -20,7 +20,7 @@ public class Main {
     // Test 1: Obtener todas las wallets
     System.out.println("Test 1: Get all wallets");
     try {
-      List<WalletDto> wallets = walletService.getAllWallets();
+      ArrayList<WalletDto> wallets = walletService.getAllWallets();
       if (wallets != null && !wallets.isEmpty()) {
         System.out.println("Total wallets: " + wallets.size());
         for (WalletDto wallet : wallets) {

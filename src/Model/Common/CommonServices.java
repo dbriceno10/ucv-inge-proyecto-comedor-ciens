@@ -2,7 +2,7 @@ package Model.Common;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,8 +14,8 @@ public class CommonServices {
       File file = new File(filePath);
       if (file.exists()) {
         // Leer todos los elementos desde el archivo JSON
-        List<T> elements = mapper.readValue(file,
-            mapper.getTypeFactory().constructCollectionType(List.class, modelClass));
+        ArrayList<T> elements = mapper.readValue(file,
+            mapper.getTypeFactory().constructCollectionType(ArrayList.class, modelClass));
         // Contar los elementos
         count = elements.size();
       }
@@ -29,21 +29,21 @@ public class CommonServices {
     return this.countAllElements(filePath, modelClass) + 1; // Retorna el siguiente ID disponible
   }
 
-  public <T> List<T> getAllElements(String filePath, Class<T> modelClass) {
+  public <T> ArrayList<T> getAllElements(String filePath, Class<T> modelClass) {
     ObjectMapper mapper = new ObjectMapper();
-    List<T> elements = null;
+    ArrayList<T> elements = null;
     try {
       File file = new File(filePath);
       if (file.exists()) {
         // Leer todos los elementos desde el archivo JSON
         elements = mapper.readValue(file,
-            mapper.getTypeFactory().constructCollectionType(List.class, modelClass));
+            mapper.getTypeFactory().constructCollectionType(ArrayList.class, modelClass));
       } else {
         System.out.println("File not found: " + filePath);
       }
     } catch (IOException e) {
       e.printStackTrace();
-      //throw new RuntimeException("Error reading file: " + filePath, e);
+      // throw new RuntimeException("Error reading file: " + filePath, e);
     }
     return elements;
   }

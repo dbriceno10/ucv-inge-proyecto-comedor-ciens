@@ -19,13 +19,13 @@ public class WalletService {
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
 
-  public List<WalletDto> getAllWallets() {
-    List<WalletDto> wallets = new ArrayList<>();
+  public ArrayList<WalletDto> getAllWallets() {
+    ArrayList<WalletDto> wallets = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
       if (file.exists()) {
-        List<WalletModel> walletModels = mapper.readValue(file,
+        ArrayList<WalletModel> walletModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, WalletModel.class));
         for (WalletModel walletModel : walletModels) {
           if (walletModel.getDeletedAt() == null) { // Filtrar wallets con deletedAt como null
@@ -48,7 +48,7 @@ public class WalletService {
   }
 
   public WalletDto getWalletByUserId(Integer userId) {
-    List<WalletModel> wallets = this.getAll();
+    ArrayList<WalletModel> wallets = this.getAll();
     WalletModel found = null;
     for (WalletModel wallet : wallets) {
       if (wallet.getUserId().equals(userId)) {
@@ -116,13 +116,13 @@ public class WalletService {
         walletModel.getUpdatedAt());
   }
 
-  private List<WalletModel> getAll() {
-    List<WalletModel> wallets = new ArrayList<>();
+  private ArrayList<WalletModel> getAll() {
+    ArrayList<WalletModel> wallets = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
       if (file.exists()) {
-        List<WalletModel> walletsModels = mapper.readValue(file,
+        ArrayList<WalletModel> walletsModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, WalletModel.class));
         for (WalletModel walletModel : walletsModels) {
           if (walletModel.getDeletedAt() == null) { // Filtrar wallets con deletedAt como null
@@ -137,7 +137,7 @@ public class WalletService {
   }
 
   private WalletModel getById(Integer id) {
-    List<WalletModel> wallets = this.getAll();
+    ArrayList<WalletModel> wallets = this.getAll();
     WalletModel found = null;
     for (WalletModel wallet : wallets) {
       if (wallet.getId().equals(id)) {
@@ -152,7 +152,7 @@ public class WalletService {
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
-      List<WalletModel> wallets = this.commonServices.getAllElements(FILE_PATH, WalletModel.class);
+      ArrayList<WalletModel> wallets = this.commonServices.getAllElements(FILE_PATH, WalletModel.class);
       if (wallets == null) {
         wallets = new ArrayList<>();
       }
@@ -169,7 +169,7 @@ public class WalletService {
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
-      List<WalletModel> wallets = this.commonServices.getAllElements(FILE_PATH, WalletModel.class);
+      ArrayList<WalletModel> wallets = this.commonServices.getAllElements(FILE_PATH, WalletModel.class);
       // Find and update the ingredient
       for (Integer i = 0; i < wallets.size(); i++) {
         if (wallets.get(i).getId().equals(wallet.getId())) {

@@ -21,13 +21,13 @@ public class MenuService {
   private Dates datesUtil = new Dates();
   private FoodService foodService = new FoodService();
 
-  public List<MenuDto> getAllMenus() {
-    List<MenuDto> menus = new ArrayList<>();
+  public ArrayList<MenuDto> getAllMenus() {
+    ArrayList<MenuDto> menus = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
       if (file.exists()) {
-        List<MenuModel> menuModels = mapper.readValue(file,
+        ArrayList<MenuModel> menuModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, MenuModel.class));
         for (MenuModel menuModel : menuModels) {
           if (menuModel.getDeletedAt() == null) { // Filtrar menús con deletedAt como null
@@ -56,13 +56,19 @@ public class MenuService {
     return this.getByDay(currentDay, type);
   }
 
-
-  //el parametro type es opcional, pasarlo en null si no se necesita
-  public ArrayList<MenuDto> getMenuOfWeek(String type) {
-    if(type == null) {
-      return this.getAllMenus();
-    }
-  }
+  // //el parametro type es opcional, pasarlo en null si no se necesita
+  // public ArrayList<MenuDto> getMenuOfWeek(String type) {
+  // if(type == null) {
+  // return this.getAllMenus();
+  // }
+  // ArrayList<MenuDto> menus = new ArrayList<>();
+  // for(MenuDto menu : this.getAllMenus()) {
+  // if(menu.getType().equals(type)) {
+  // menus.add(menu);
+  // }
+  // }
+  // return menus;
+  // }
 
   public MenuDto create(CreateMenuDto menuDto) {
     if (menuDto.getDay() == null || menuDto.getDay().isEmpty()) {
@@ -132,6 +138,13 @@ public class MenuService {
     return false;
   }
 
+  // metodo para verificar si ya existe un menu para un dia y tipo especifico,
+  // para que se pueda mostrar la alerta
+  public boolean isEixstingMenu(String day, String type) {
+    ArrayList<MenuDto> menus = this.getByDay(day, type);
+    return !menus.isEmpty();
+  }
+
   // metodos privados
   private MenuDto mapToDto(MenuModel menuModel) {
     ArrayList<FoodDto> foodDtos = new ArrayList<>();
@@ -153,13 +166,13 @@ public class MenuService {
         menuModel.getImage());
   }
 
-  private List<MenuModel> getAll() {
-    List<MenuModel> menus = new ArrayList<>();
+  private ArrayList<MenuModel> getAll() {
+    ArrayList<MenuModel> menus = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
       if (file.exists()) {
-        List<MenuModel> menuModels = mapper.readValue(file,
+        ArrayList<MenuModel> menuModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, MenuModel.class));
         for (MenuModel menuModel : menuModels) {
           if (menuModel.getDeletedAt() == null) { // Filtrar menús con deletedAt como null
@@ -174,7 +187,7 @@ public class MenuService {
   }
 
   private MenuModel getById(Integer id) {
-    List<MenuModel> menus = this.getAll();
+    ArrayList<MenuModel> menus = this.getAll();
     MenuModel found = null;
     for (MenuModel menu : menus) {
       if (menu.getId().equals(id)) {
@@ -186,7 +199,7 @@ public class MenuService {
   }
 
   private ArrayList<MenuDto> getByDay(String day, String type) {
-    List<MenuModel> menus = this.getAll();
+    ArrayList<MenuModel> menus = this.getAll();
     ArrayList<MenuDto> foundMenus = new ArrayList<>();
     for (MenuModel menu : menus) {
       if (type != null) {
@@ -202,10 +215,8 @@ public class MenuService {
     return foundMenus;
   }
 
-
-
   private MenuModel save(MenuModel menu) {
-    List<MenuModel> menus = this.commonServices.getAllElements(FILE_PATH, MenuModel.class);
+    ArrayList<MenuModel> menus = this.commonServices.getAllElements(FILE_PATH, MenuModel.class);
     menus.add(menu);
     ObjectMapper mapper = new ObjectMapper();
     try {
@@ -218,7 +229,7 @@ public class MenuService {
   }
 
   private MenuModel edit(MenuModel menu) {
-    List<MenuModel> menus = this.commonServices.getAllElements(FILE_PATH, MenuModel.class);
+    ArrayList<MenuModel> menus = this.commonServices.getAllElements(FILE_PATH, MenuModel.class);
     boolean found = false;
     for (int i = 0; i < menus.size(); i++) {
       if (menus.get(i).getId().equals(menu.getId())) {
