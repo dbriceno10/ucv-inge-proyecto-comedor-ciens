@@ -49,12 +49,11 @@ public class MenuService {
     return this.mapToDto(menuModel);
   }
 
-  public MenuDto getMenuOfDay() {
-    MenuModel menuModel = this.getByDay(datesUtil.getDayOfWeek(datesUtil.getCurrentDateTime()));
-    if (menuModel == null) {
-      return null;
-    }
-    return this.mapToDto(menuModel);
+  // Para obtener los menus del dia, si se quieren todos los tipos se puede pasar
+  // null en el parametro type
+  public ArrayList<MenuDto> getMenuOfDay(String type) {
+    String currentDay = datesUtil.getDayOfWeek(datesUtil.getCurrentDateTime());
+    return this.getByDay(currentDay, type);
   }
 
   public MenuDto create(CreateMenuDto menuDto) {
@@ -178,16 +177,21 @@ public class MenuService {
     return found;
   }
 
-  private MenuModel getByDay(String day) {
+  private ArrayList<MenuDto> getByDay(String day, String type) {
     List<MenuModel> menus = this.getAll();
-    MenuModel found = null;
+    ArrayList<MenuDto> foundMenus = new ArrayList<>();
     for (MenuModel menu : menus) {
-      if (menu.getDay().equals(day)) {
-        found = menu;
-        break;
+      if (type != null) {
+        if (menu.getDay().equals(day) && menu.getType().equals(type)) {
+          foundMenus.add(this.mapToDto(menu));
+        }
+      } else {
+        if (menu.getDay().equals(day)) {
+          foundMenus.add(this.mapToDto(menu));
+        }
       }
     }
-    return found;
+    return foundMenus;
   }
 
   private MenuModel save(MenuModel menu) {
