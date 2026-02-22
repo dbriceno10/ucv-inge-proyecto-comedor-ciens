@@ -4,7 +4,7 @@ public class CreateFoodDto {
   private String name;
   private String description = null;
   private Double decrease;// porcentaje de merma
-  private Double valueCF;// valor de costos fijos como servicios, salarios, etc.
+  private Double valueCV;// valor de costos fijos como servicios, salarios, etc.
   // private Integer[] ingredientIds;
 
   public CreateFoodDto(
@@ -17,7 +17,7 @@ public class CreateFoodDto {
     this.name = name;
     this.description = description;
     this.decrease = decrease;
-    this.valueCF = valueCF;
+    this.valueCV = valueCF;
     // this.ingredientIds = ingredientIds;
   }
 
@@ -39,6 +39,6 @@ public class CreateFoodDto {
   // }
 
   public Double getValueCF() {
-    return valueCF;
+    return valueCV;
   }
 }

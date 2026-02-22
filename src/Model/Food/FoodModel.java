@@ -7,7 +7,6 @@ public class FoodModel {
   private String name;
   private String description = null;
   private Double decrease;// porcentaje de merma
-  private Double valueCF;// valor de costos fijos como servicios, salarios, etc.
   private Double valueCV = null;// valor de costos variables como ingredientes, etc.
   private Boolean isActive;
   private String createdAt = null;
@@ -20,33 +19,6 @@ public class FoodModel {
       String name,
       String description,
       Double decrease,
-      Double valueCF,
-      Boolean isActive,
-      String createdAt,
-      String updatedAt,
-      String deletedAt
-  // Integer[] ingredientIds
-  ) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.decrease = decrease;
-    this.isActive = isActive;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-    this.deletedAt = deletedAt;
-    // this.ingredientIds = ingredientIds;
-    this.ingredientIds = new Integer[] {};
-    this.valueCF = valueCF;
-    this.valueCV = null;
-  }
-
-  public FoodModel(
-      Integer id,
-      String name,
-      String description,
-      Double decrease,
-      Double valueCF,
       Double valueCV,
       Boolean isActive,
       String createdAt,
@@ -64,7 +36,6 @@ public class FoodModel {
     this.deletedAt = deletedAt;
     // this.ingredientIds = ingredientIds;
     this.ingredientIds = new Integer[] {};
-    this.valueCF = valueCF;
     this.valueCV = valueCV;
   }
 
@@ -78,7 +49,6 @@ public class FoodModel {
     this.updatedAt = createdAt;
     // this.ingredientIds = foodDto.getIngredientIds();
     this.ingredientIds = new Integer[] {};
-    this.valueCF = foodDto.getValueCF();
     this.valueCV = 0.0;
   }
 
@@ -120,10 +90,6 @@ public class FoodModel {
 
   public Integer[] getIngredientIds() {
     return ingredientIds;
-  }
-
-  public Double getValueCF() {
-    return valueCF;
   }
 
   public Double getValueCV() {

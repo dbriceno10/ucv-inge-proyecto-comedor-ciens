@@ -5,7 +5,6 @@ public class UpdateFoodDto {
   private String name;
   private String description = null;
   private Double decrease;// porcentaje de merma
-  private Double valueCF;// valor de costos fijos como servicios, salarios, etc.
   private Double valueCV = null;// valor de costos variables como ingredientes, etc.
   // private Integer[] ingredientIds;
 
@@ -17,16 +16,14 @@ public class UpdateFoodDto {
       String name,
       String description,
       Double decrease,
-      Double valueCF,
       Double valueCV
-      // Integer[] ingredientIds
-    ) {
+  // Integer[] ingredientIds
+  ) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.decrease = decrease;
     // this.ingredientIds = ingredientIds;
-    this.valueCF = valueCF;
     this.valueCV = valueCV;
   }
 
@@ -44,15 +41,11 @@ public class UpdateFoodDto {
   }
 
   // public Integer[] getIngredientIds() {
-  //   return ingredientIds;
+  // return ingredientIds;
   // }
 
   public Integer getId() {
     return id;
-  }
-
-  public Double getValueCF() {
-    return valueCF;
   }
 
   public Double getValueCV() {

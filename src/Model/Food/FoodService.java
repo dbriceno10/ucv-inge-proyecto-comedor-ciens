@@ -83,7 +83,7 @@ public class FoodService {
     if (foodDto.getDecrease() == null || foodDto.getDecrease() < 0) {
       throw new IllegalArgumentException("Food decrease must be a non-negative number.");
     }
-    if (foodDto.getValueCF() == null || foodDto.getValueCF() < 0) {
+    if (foodDto.getValueCV() == null || foodDto.getValueCV() < 0) {
       throw new IllegalArgumentException("Food valueCF must be a non-negative number.");
     }
     // if (foodDto.getIngredientIds() == null || foodDto.getIngredientIds().length
@@ -99,7 +99,7 @@ public class FoodService {
         foodDto.getName(),
         foodDto.getDescription(),
         foodDto.getDecrease(),
-        foodDto.getValueCF(),
+        foodDto.getValueCV(),
         existingFood.getIsActive(),
         existingFood.getCreatedAt(),
         this.datesUtil.getCurrentDateTime(),
@@ -176,6 +176,7 @@ public class FoodService {
         food.getId(),
         food.getName(),
         food.getDescription(),
+        food.getValueCV(),
         food.getDecrease(),
         food.getIsActive(),
         food.getCreatedAt(),

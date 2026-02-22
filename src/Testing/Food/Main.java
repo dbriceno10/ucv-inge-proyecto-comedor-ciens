@@ -66,8 +66,7 @@ public class Main {
           "Ensalada César",
           "Ensalada con lechuga, pollo, crutones y aderezo César.",
           0.05,
-          5.0,
-          10.0
+          5.0
       // new Integer[] { 4, 5, 6 }
       );
       FoodDto result = foodService.update(updatedFood);
