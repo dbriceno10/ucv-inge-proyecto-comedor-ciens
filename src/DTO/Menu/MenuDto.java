@@ -13,6 +13,8 @@ public class MenuDto {
   private String createdAt = null;
   private String updatedAt = null;
   private String image = null;
+  private Integer qty;
+  private Integer currentQty;
 
   public MenuDto(
       Integer id,
@@ -23,6 +25,8 @@ public class MenuDto {
       Boolean isActive,
       String createdAt,
       String updatedAt,
+      Integer qty,
+      Integer currentQty,
       String image) {
     this.id = id;
     this.day = day;
@@ -33,6 +37,8 @@ public class MenuDto {
     this.updatedAt = updatedAt;
     this.type = type;
     this.image = image;
+    this.qty = qty;
+    this.currentQty = currentQty;
   }
 
   public MenuDto() {
@@ -72,6 +78,14 @@ public class MenuDto {
 
   public String getImage() {
     return image;
+  }
+
+  public Integer getQty() {
+    return qty;
+  }
+
+  public Integer getCurrentQty() {
+    return currentQty;
   }
 
 }

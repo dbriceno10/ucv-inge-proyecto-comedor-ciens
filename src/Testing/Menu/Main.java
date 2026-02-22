@@ -50,9 +50,8 @@ public class Main {
       CreateMenuDto newMenu = new CreateMenuDto(
           Days.MONDAY,
           MenuTypes.BREACKFAST,
-          new Integer[] { 1, 2, 3 },
-          "2026-02-08"
-      );
+          new Integer[] { 1, 2, 3 }, 10,
+          "2026-02-08");
       MenuDto createdMenu = menuService.create(newMenu);
       System.out.println("Menu created: " + createdMenu.getDay());
     } catch (Exception e) {
@@ -67,8 +66,7 @@ public class Main {
           Days.TUESDAY,
           MenuTypes.LUNCH,
           new Integer[] { 4, 5, 6 },
-          "2026-02-09"
-      );
+          "2026-02-09", 10, 10);
       MenuDto result = menuService.update(updatedMenu);
       System.out.println("Menu updated: " + result.getDay() + ", New Foods: " + result.getFoods().size());
     } catch (Exception e) {

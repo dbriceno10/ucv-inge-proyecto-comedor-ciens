@@ -7,19 +7,25 @@ public class UpdateMenuDto {
   private Integer[] foodIds;
   private String date; // e.g., "2024-06-10"
   private String image;
+  private Integer qty;
+  private Integer currentQty;
 
   public UpdateMenuDto(
       Integer id,
       String day,
       String type,
       Integer[] foodIds,
-      String date) {
+      String date,
+      Integer qty,
+      Integer currentQty) {
     this.id = id;
     this.day = day;
     this.foodIds = foodIds;
     this.date = date;
     this.type = type;
     this.image = null;
+    this.qty = qty;
+    this.currentQty = currentQty;
   }
 
   public UpdateMenuDto(
@@ -28,6 +34,8 @@ public class UpdateMenuDto {
       String type,
       Integer[] foodIds,
       String date,
+      Integer qty,
+      Integer currentQty,
       String image) {
     this.id = id;
     this.day = day;
@@ -35,6 +43,8 @@ public class UpdateMenuDto {
     this.date = date;
     this.type = type;
     this.image = image;
+    this.qty = qty;
+    this.currentQty = currentQty;
   }
 
   public UpdateMenuDto() {
@@ -63,4 +73,13 @@ public class UpdateMenuDto {
   public String getImage() {
     return image;
   }
+
+  public Integer getQty() {
+    return qty;
+  }
+
+  public Integer getCurrentQty() {
+    return currentQty;
+  }
+
 }

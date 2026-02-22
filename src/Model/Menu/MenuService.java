@@ -119,8 +119,8 @@ public class MenuService {
         existing.getIsActive(), // Mantener el estado actual
         existing.getCreatedAt(), // Mantener la fecha de creación
         this.datesUtil.getCurrentDateTime(), // Actualizar la fecha de actualización
-        existing.getDeletedAt() // Mantener la fecha de eliminación
-    );
+        existing.getDeletedAt(), // Mantener la fecha de eliminación,,
+        menuDto.getQty());
     MenuModel menu = this.edit(updatedMenu);
     if (menu == null) {
       return null;
@@ -145,6 +145,17 @@ public class MenuService {
     return !menus.isEmpty();
   }
 
+  public boolean validateMenu(Integer id) {
+    MenuModel menu = this.getById(id);
+    if (menu == null) {
+      throw new IllegalArgumentException("Menu not found with id: " + id);
+    }
+    if (menu.getCurrentQty() >= 1) {
+      return true;
+    }
+    throw new IllegalStateException("Menu with id " + id + " has no available quantity");
+  }
+
   // metodos privados
   private MenuDto mapToDto(MenuModel menuModel) {
     ArrayList<FoodDto> foodDtos = new ArrayList<>();
@@ -163,6 +174,8 @@ public class MenuService {
         menuModel.getIsActive(),
         menuModel.getCreatedAt(),
         menuModel.getUpdatedAt(),
+        menuModel.getQty(),
+        menuModel.getCurrentQty(),
         menuModel.getImage());
   }
 

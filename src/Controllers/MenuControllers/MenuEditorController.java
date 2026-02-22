@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MenuEditorController implements ActionListener {
     private MenuEditorView view;
@@ -58,7 +57,7 @@ public class MenuEditorController implements ActionListener {
                 return; 
             }
 
-            CreateMenuDto newMenu = new CreateMenuDto(Days.MONDAY, MenuTypes.BREACKFAST,tempFoodIds.toArray(new Integer[0]), view.getTxtDate());
+            CreateMenuDto newMenu = new CreateMenuDto(Days.MONDAY, MenuTypes.BREACKFAST,tempFoodIds.toArray(new Integer[0]),10, view.getTxtDate());
             menuService.create(newMenu);
             JOptionPane.showMessageDialog(view, "Guardado");
         } catch (Exception ex) { JOptionPane.showMessageDialog(view, "Error: " + ex.getMessage()); }
