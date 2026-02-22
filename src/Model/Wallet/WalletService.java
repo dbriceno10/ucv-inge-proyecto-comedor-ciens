@@ -9,17 +9,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import Model.Common.CommonServices;
 import Utils.Dates;
-
+import Enums.UserRoles;
 import DTO.Wallet.CreateWalletDto;
+import DTO.Wallet.MovementDto;
 import DTO.Wallet.UpdateWalletDto;
 import DTO.Wallet.WalletDto;
+import Context.User.UserSession;
 
 public class WalletService {
   private static final String FILE_PATH = "src/Database/Wallet/wallets.json";
+  private static final String MOVEMENTS_FILE_PATH = "src/Database/Wallet/movements.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
 
   public ArrayList<WalletDto> getAllWallets() {
+    UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el usuario tenga rol ADMIN
     ArrayList<WalletDto> wallets = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
@@ -40,6 +44,7 @@ public class WalletService {
   }
 
   public WalletDto getWalletById(Integer id) {
+    UserSession.getInstance().isAuthenticated();
     WalletModel walletModel = this.getById(id);
     if (walletModel == null) {
       return null;
@@ -48,6 +53,7 @@ public class WalletService {
   }
 
   public WalletDto getWalletByUserId(Integer userId) {
+    UserSession.getInstance().isAuthenticated();
     ArrayList<WalletModel> wallets = this.getAll();
     WalletModel found = null;
     for (WalletModel wallet : wallets) {
@@ -75,6 +81,7 @@ public class WalletService {
   }
 
   public WalletDto update(UpdateWalletDto walletDto) {
+    UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el usuario tenga rol ADMIN
     WalletModel existing = getById(walletDto.getId());
     if (existing == null) {
       throw new IllegalArgumentException("Wallet not found with id: " + walletDto.getId());
@@ -96,6 +103,7 @@ public class WalletService {
   }
 
   public Boolean delete(Integer id) {
+    UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el usuario tenga rol ADMIN
     WalletModel existing = getById(id);
     if (existing != null) {
       existing.setDeletedAt(this.datesUtil.getCurrentDateTime());
@@ -103,6 +111,33 @@ public class WalletService {
       return true;
     }
     return false;
+  }
+
+  public WalletDto addMovement(Integer walletId, MovementDto movementDto) {
+    UserSession.getInstance().isAuthenticated();
+    WalletModel existing = getById(walletId);
+    if (existing == null) {
+      throw new IllegalArgumentException("Wallet not found with id: " + walletId);
+    }
+    Double newBalance = existing.getBalance();
+    if (movementDto.getType().equals(Enums.TypeMovement.ENTRY)) {
+      newBalance += movementDto.getAmount();
+    } else if (movementDto.getType().equals(Enums.TypeMovement.EXIT)) {
+      newBalance -= movementDto.getAmount();
+    } else {
+      throw new IllegalArgumentException("Invalid movement type: " + movementDto.getType());
+    }
+    existing.setBalance(newBalance);
+    WalletModel updatedWallet = this.edit(existing);
+    if (updatedWallet == null) {
+      return null;
+    }
+    this.saveMovement(movementDto);
+    WalletModel wallet = this.getById(walletId);
+    if (wallet == null) {
+      return null;
+    }
+    return this.mapToDto(wallet);
   }
 
   // metodos privados
@@ -113,7 +148,8 @@ public class WalletService {
         walletModel.getUserId(),
         walletModel.getIsActive(),
         walletModel.getCreatedAt(),
-        walletModel.getUpdatedAt());
+        walletModel.getUpdatedAt(),
+        this.getMovements(walletModel.getId()));
   }
 
   private ArrayList<WalletModel> getAll() {
@@ -183,5 +219,40 @@ public class WalletService {
       return null;
     }
     return wallet;
+  }
+
+  private MovementDto mapMovementToDto(MovementModel movementModel) {
+    return new MovementDto(
+        movementModel.getId(),
+        movementModel.getWalletId(),
+        movementModel.getType(),
+        movementModel.getAmount(),
+        movementModel.getDate(),
+        movementModel.getDescription());
+  }
+
+  private ArrayList<MovementDto> getMovements(Integer walletId) {
+    ArrayList<MovementModel> movements = this.commonServices.getAllElements(MOVEMENTS_FILE_PATH, MovementModel.class);
+    ArrayList<MovementDto> movementDtos = new ArrayList<>();
+    for (MovementModel movement : movements) {
+      if (movement.getWalletId().equals(walletId)) {
+        movementDtos.add(this.mapMovementToDto(movement));
+      }
+    }
+    return movementDtos;
+  }
+
+  private ArrayList<MovementDto> saveMovement(MovementDto movementDto) {
+    ArrayList<MovementDto> movements = this.getMovements(movementDto.getWalletId());
+    movements.add(movementDto);
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      File file = new File(MOVEMENTS_FILE_PATH);
+      mapper.writeValue(file, movements);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return movements;
   }
 }
