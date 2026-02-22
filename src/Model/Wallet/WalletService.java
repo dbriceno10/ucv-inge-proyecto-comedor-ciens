@@ -127,6 +127,9 @@ public class WalletService {
     } else {
       throw new IllegalArgumentException("Invalid movement type: " + movementDto.getType());
     }
+    if (newBalance < 0) {
+      throw new IllegalArgumentException("Insufficient balance for this movement.");
+    }
     existing.setBalance(newBalance);
     WalletModel updatedWallet = this.edit(existing);
     if (updatedWallet == null) {
