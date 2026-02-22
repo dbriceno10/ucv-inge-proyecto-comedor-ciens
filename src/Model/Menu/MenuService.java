@@ -56,6 +56,14 @@ public class MenuService {
     return this.getByDay(currentDay, type);
   }
 
+
+  //el parametro type es opcional, pasarlo en null si no se necesita
+  public ArrayList<MenuDto> getMenuOfWeek(String type) {
+    if(type == null) {
+      return this.getAllMenus();
+    }
+  }
+
   public MenuDto create(CreateMenuDto menuDto) {
     if (menuDto.getDay() == null || menuDto.getDay().isEmpty()) {
       throw new IllegalArgumentException("Menu day cannot be null or empty");
@@ -193,6 +201,8 @@ public class MenuService {
     }
     return foundMenus;
   }
+
+
 
   private MenuModel save(MenuModel menu) {
     List<MenuModel> menus = this.commonServices.getAllElements(FILE_PATH, MenuModel.class);
