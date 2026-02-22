@@ -49,7 +49,7 @@ public class MenuService {
     return this.mapToDto(menuModel);
   }
 
-   public MenuDto getMenuOfDay() {
+  public MenuDto getMenuOfDay() {
     MenuModel menuModel = this.getByDay(datesUtil.getDayOfWeek(datesUtil.getCurrentDateTime()));
     if (menuModel == null) {
       return null;
@@ -60,6 +60,9 @@ public class MenuService {
   public MenuDto create(CreateMenuDto menuDto) {
     if (menuDto.getDay() == null || menuDto.getDay().isEmpty()) {
       throw new IllegalArgumentException("Menu day cannot be null or empty");
+    }
+    if (menuDto.getType() == null || menuDto.getType().isEmpty()) {
+      throw new IllegalArgumentException("Menu type cannot be null or empty");
     }
     if (menuDto.getFoodIds() == null || menuDto.getFoodIds().length == 0) {
       throw new IllegalArgumentException("Menu must have at least one food item");
@@ -81,6 +84,9 @@ public class MenuService {
     if (menuDto.getDay() == null || menuDto.getDay().isEmpty()) {
       throw new IllegalArgumentException("Menu day cannot be null or empty");
     }
+    if (menuDto.getType() == null || menuDto.getType().isEmpty()) {
+      throw new IllegalArgumentException("Menu type cannot be null or empty");
+    }
     if (menuDto.getFoodIds() == null || menuDto.getFoodIds().length == 0) {
       throw new IllegalArgumentException("Menu must have at least one food item");
     }
@@ -94,6 +100,7 @@ public class MenuService {
     MenuModel updatedMenu = new MenuModel(
         existing.getId(),
         menuDto.getDay(),
+        menuDto.getType(),
         menuDto.getFoodIds(),
         menuDto.getDate(),
         existing.getIsActive(), // Mantener el estado actual
@@ -130,11 +137,13 @@ public class MenuService {
     return new MenuDto(
         menuModel.getId(),
         menuModel.getDay(),
+        menuModel.getType(),
         foodDtos,
         menuModel.getDate(),
         menuModel.getIsActive(),
         menuModel.getCreatedAt(),
-        menuModel.getUpdatedAt());
+        menuModel.getUpdatedAt(),
+        menuModel.getImage());
   }
 
   private List<MenuModel> getAll() {
@@ -169,7 +178,7 @@ public class MenuService {
     return found;
   }
 
-    private MenuModel getByDay(String day) {
+  private MenuModel getByDay(String day) {
     List<MenuModel> menus = this.getAll();
     MenuModel found = null;
     for (MenuModel menu : menus) {
@@ -180,7 +189,6 @@ public class MenuService {
     }
     return found;
   }
-
 
   private MenuModel save(MenuModel menu) {
     List<MenuModel> menus = this.commonServices.getAllElements(FILE_PATH, MenuModel.class);

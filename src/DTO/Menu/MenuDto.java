@@ -6,20 +6,24 @@ import DTO.Food.FoodDto;
 public class MenuDto {
   private Integer id;
   private String day; // e.g., "LUNES", "MARTES", etc.
+  private String type; // e.g., "DESAYUNO", "ALMUERZO", "CENA"
   private ArrayList<FoodDto> foods;
   private String date; // e.g., "2024-06-10"
   private Boolean isActive;
   private String createdAt = null;
   private String updatedAt = null;
+  private String image = null;
 
   public MenuDto(
       Integer id,
       String day,
+      String type,
       ArrayList<FoodDto> foods,
       String date,
       Boolean isActive,
       String createdAt,
-      String updatedAt) {
+      String updatedAt,
+      String image) {
     this.id = id;
     this.day = day;
     this.foods = foods;
@@ -27,6 +31,8 @@ public class MenuDto {
     this.isActive = isActive;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+    this.type = type;
+    this.image = image;
   }
 
   public MenuDto() {
@@ -58,6 +64,14 @@ public class MenuDto {
 
   public String getUpdatedAt() {
     return updatedAt;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public String getImage() {
+    return image;
   }
 
 }
