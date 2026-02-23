@@ -53,8 +53,8 @@ public class FoodService {
     if (foodDto.getName() == null || foodDto.getName().isEmpty()) {
       throw new IllegalArgumentException("Food name is required.");
     }
-    if (foodDto.getDecrease() == null || foodDto.getDecrease() < 0) {
-      throw new IllegalArgumentException("Food decrease must be a non-negative number.");
+    if (foodDto.getDecrease() == null || foodDto.getDecrease() < 0 || foodDto.getDecrease() > 100) {
+      throw new IllegalArgumentException("Food decrease must be a number between 0 and 100.");
     }
     if (foodDto.getValueCF() == null || foodDto.getValueCF() < 0) {
       throw new IllegalArgumentException("Food valueCF must be a non-negative number.");
@@ -80,8 +80,8 @@ public class FoodService {
     if (foodDto.getName() == null || foodDto.getName().isEmpty()) {
       throw new IllegalArgumentException("Food name is required.");
     }
-    if (foodDto.getDecrease() == null || foodDto.getDecrease() < 0) {
-      throw new IllegalArgumentException("Food decrease must be a non-negative number.");
+    if (foodDto.getDecrease() == null || foodDto.getDecrease() < 0 || foodDto.getDecrease() > 100) {
+      throw new IllegalArgumentException("Food decrease must be a number between 0 and 100.");
     }
     if (foodDto.getValueCV() == null || foodDto.getValueCV() < 0) {
       throw new IllegalArgumentException("Food valueCF must be a non-negative number.");
