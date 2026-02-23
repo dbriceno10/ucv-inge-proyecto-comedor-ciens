@@ -1,10 +1,12 @@
 package DTO.Menu;
 
+import java.util.ArrayList;
+
 public class UpdateMenuDto {
   private Integer id;
   private String day; // e.g., "LUNES", "MARTES", etc.
   private String type; // e.g., "DESAYUNO", "ALMUERZO", "CENA"
-  private Integer[] foodIds;
+  private ArrayList<Integer> foodIds;
   private String date; // e.g., "2024-06-10"
   private String image;
   private Integer qty;
@@ -14,7 +16,7 @@ public class UpdateMenuDto {
       Integer id,
       String day,
       String type,
-      Integer[] foodIds,
+      ArrayList<Integer> foodIds,
       String date,
       Integer qty,
       Integer currentQty) {
@@ -32,7 +34,7 @@ public class UpdateMenuDto {
       Integer id,
       String day,
       String type,
-      Integer[] foodIds,
+      ArrayList<Integer> foodIds,
       String date,
       Integer qty,
       Integer currentQty,
@@ -58,7 +60,7 @@ public class UpdateMenuDto {
     return day;
   }
 
-  public Integer[] getFoodIds() {
+  public ArrayList<Integer> getFoodIds() {
     return foodIds;
   }
 

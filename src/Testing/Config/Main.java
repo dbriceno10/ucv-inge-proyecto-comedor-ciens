@@ -27,11 +27,10 @@ public class Main {
     try {
       ConfigDto newConfig = new ConfigDto(
           1500.0,
-          80,
-          20,
-          100,
-          "2026-02-22T00:00:00Z"
-      );
+          80.0,
+          20.0,
+          100.0,
+          "2026-02-22T00:00:00Z");
       ConfigDto createdConfig = configService.createConfig(newConfig);
       System.out.println("Config created: CF Value: " + createdConfig.getValueCF());
     } catch (Exception e) {
@@ -43,11 +42,10 @@ public class Main {
     try {
       ConfigDto updatedConfig = new ConfigDto(
           2000.0,
-          75,
-          25,
-          100,
-          "2026-02-22T12:00:00Z"
-      );
+          75.0,
+          25.0,
+          100.0,
+          "2026-02-22T12:00:00Z");
       ConfigDto result = configService.updateConfig(updatedConfig);
       System.out.println("Config updated: CF Value: " + result.getValueCF());
     } catch (Exception e) {

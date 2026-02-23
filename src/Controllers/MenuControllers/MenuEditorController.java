@@ -57,7 +57,7 @@ public class MenuEditorController implements ActionListener {
                 return; 
             }
 
-            CreateMenuDto newMenu = new CreateMenuDto(Days.MONDAY, MenuTypes.BREACKFAST,tempFoodIds.toArray(new Integer[0]),10, view.getTxtDate());
+            CreateMenuDto newMenu = new CreateMenuDto(Days.MONDAY, MenuTypes.BREACKFAST,tempFoodIds,10, view.getTxtDate());
             menuService.create(newMenu);
             JOptionPane.showMessageDialog(view, "Guardado");
         } catch (Exception ex) { JOptionPane.showMessageDialog(view, "Error: " + ex.getMessage()); }

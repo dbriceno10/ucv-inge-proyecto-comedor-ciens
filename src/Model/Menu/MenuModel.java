@@ -1,12 +1,14 @@
 package Model.Menu;
 
+import java.util.ArrayList;
+
 import DTO.Menu.CreateMenuDto;
 
 public class MenuModel {
   private Integer id;
   private String day; // e.g., "LUNES", "MARTES", etc.
   private String type; // e.g., "DESAYUNO", "ALMUERZO", "CENA"
-  private Integer[] foodIds;
+  private ArrayList<Integer> foodIds;
   private String date; // e.g., "2024-06-10"
   private Boolean isActive;
   private String createdAt = null;
@@ -20,7 +22,7 @@ public class MenuModel {
       Integer id,
       String day,
       String type,
-      Integer[] foodIds,
+      ArrayList<Integer> foodIds,
       String date,
       Boolean isActive,
       String createdAt,
@@ -46,7 +48,7 @@ public class MenuModel {
       Integer id,
       String day,
       String type,
-      Integer[] foodIds,
+      ArrayList<Integer> foodIds,
       String date,
       Boolean isActive,
       String createdAt,
@@ -92,7 +94,7 @@ public class MenuModel {
     return day;
   }
 
-  public Integer[] getFoodIds() {
+  public ArrayList<Integer> getFoodIds() {
     return foodIds;
   }
 
@@ -124,13 +126,13 @@ public class MenuModel {
     return image;
   }
 
-    public Integer getQty() {
-      return qty;
-    }
+  public Integer getQty() {
+    return qty;
+  }
 
-    public Integer getCurrentQty() {
-      return currentQty;
-    }
+  public Integer getCurrentQty() {
+    return currentQty;
+  }
 
   // seters
 
@@ -153,6 +155,5 @@ public class MenuModel {
   public void setCurrentQty(Integer currentQty) {
     this.currentQty = currentQty;
   }
-
 
 }
