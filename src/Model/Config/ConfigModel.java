@@ -2,15 +2,15 @@ package Model.Config;
 
 public class ConfigModel {
   private Double valueCF;
-  private Integer teacherPercentage;
-  private Integer studentPercentage;
-  private Integer workerPercentage;
+  private Double teacherPercentage;
+  private Double studentPercentage;
+  private Double workerPercentage;
   private String updateAt;
 
   public ConfigModel() {
   }
 
-  public ConfigModel(Double valueCF, Integer teacherPercentage, Integer studentPercentage, Integer workerPercentage,
+  public ConfigModel(Double valueCF, Double teacherPercentage, Double studentPercentage, Double workerPercentage,
       String updateAt) {
     this.valueCF = valueCF;
     this.teacherPercentage = teacherPercentage;
@@ -24,15 +24,15 @@ public class ConfigModel {
     return valueCF;
   }
 
-  public Integer getTeacherPercentage() {
+  public Double getTeacherPercentage() {
     return teacherPercentage;
   }
 
-  public Integer getStudentPercentage() {
+  public Double getStudentPercentage() {
     return studentPercentage;
   }
 
-  public Integer getWorkerPercentage() {
+  public Double getWorkerPercentage() {
     return workerPercentage;
   }
 
@@ -45,15 +45,15 @@ public class ConfigModel {
     this.valueCF = valueCF;
   }
 
-  public void setTeacherPercentage(Integer teacherPercentage) {
+  public void setTeacherPercentage(Double teacherPercentage) {
     this.teacherPercentage = teacherPercentage;
   }
 
-  public void setStudentPercentage(Integer studentPercentage) {
+  public void setStudentPercentage(Double studentPercentage) {
     this.studentPercentage = studentPercentage;
   }
 
-  public void setWorkerPercentage(Integer workerPercentage) {
+  public void setWorkerPercentage(Double workerPercentage) {
     this.workerPercentage = workerPercentage;
   }
 

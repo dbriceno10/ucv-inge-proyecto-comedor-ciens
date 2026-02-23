@@ -24,7 +24,7 @@ public class ConfigService {
         return this.mapToDto(config);
       } else {
         // Crear el archivo JSON con el elemento predeterminado si no existe
-        ConfigModel defaultConfig = new ConfigModel(1000.0, 70, 20, 90, "2026-01-01T00:00:00Z");
+        ConfigModel defaultConfig = new ConfigModel(1000.0, 70.0, 20.0, 90.0, "2026-01-01T00:00:00Z");
         mapper.writerWithDefaultPrettyPrinter().writeValue(file, defaultConfig);
         return this.mapToDto(defaultConfig);
       }

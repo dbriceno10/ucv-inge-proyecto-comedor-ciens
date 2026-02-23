@@ -11,6 +11,7 @@ import Model.Common.CommonServices;
 import Utils.Dates;
 import Enums.BookingStatus;
 import Enums.UserRoles;
+import Enums.UserTypes;
 import DTO.Wallet.CreateWalletDto;
 import DTO.Wallet.MovementDto;
 import DTO.Wallet.UpdateWalletDto;
@@ -51,46 +52,47 @@ public class BookingService {
     return bookings;
   }
 
-  // public BookingDto create(CreateBookingDto bookingDto) {
-  //   UserSession.getInstance().isAuthenticated();
-  //   if (bookingDto.getUserId() == null) {
-  //     throw new IllegalArgumentException("User ID is required.");
-  //   }
-  //   if (bookingDto.getMenuId() == null) {
-  //     throw new IllegalArgumentException("Menu ID is required.");
-  //   }
-  //   if (bookingDto.getFoodId() == null) {
-  //     throw new IllegalArgumentException("Food ID is required.");
-  //   }
-  //   if (bookingDto.getShift() == null || bookingDto.getShift().isEmpty()) {
-  //     throw new IllegalArgumentException("Shift is required.");
-  //   }
-  //   if (bookingDto.getDate() == null || bookingDto.getDate().isEmpty()) {
-  //     throw new IllegalArgumentException("Date is required.");
-  //   }
-  //   if (bookingDto.getDay() == null || bookingDto.getDay().isEmpty()) {
-  //     throw new IllegalArgumentException("Day is required.");
-  //   }
+//   public BookingDto create(CreateBookingDto bookingDto) {
+//   UserSession.getInstance().isAuthenticated();
+//   if (bookingDto.getUserId() == null) {
+//   throw new IllegalArgumentException("User ID is required.");
+//   }
+//   if (bookingDto.getMenuId() == null) {
+//   throw new IllegalArgumentException("Menu ID is required.");
+//   }
+//   if (bookingDto.getFoodId() == null) {
+//   throw new IllegalArgumentException("Food ID is required.");
+//   }
+//   if (bookingDto.getShift() == null || bookingDto.getShift().isEmpty()) {
+//   throw new IllegalArgumentException("Shift is required.");
+//   }
+//   if (bookingDto.getDate() == null || bookingDto.getDate().isEmpty()) {
+//   throw new IllegalArgumentException("Date is required.");
+//   }
+//   if (bookingDto.getDay() == null || bookingDto.getDay().isEmpty()) {
+//   throw new IllegalArgumentException("Day is required.");
+//   }
 
-    
+// UserModel user = this.userService.getUserById(bookingDto.getUserId());
 
-  //   Integer newId = this.commonServices.getLastIndex(FILE_PATH, BookingModel.class);
+//   Integer newId = this.commonServices.getLastIndex(FILE_PATH,
+//   BookingModel.class);
 
-  //   BookingModel booking = new BookingModel(
-  //       newId,
-  //       bookingDto.getUserId(),
-  //       bookingDto.getMenuId(),
-  //       bookingDto.getFoodId(),
-  //       bookingDto.getShift(),
-  //       bookingDto.getDate(),
-  //       bookingDto.getDay(),
-  //       bookingDto.getUserDocumentId(),
-  //       bookingDto.getPrice(),
-  //       datesUtil.getCurrentDateTime(),
-  //       datesUtil.getCurrentDateTime(),
-  //       BookingStatus.PENDING);
-  //   return this.mapToDto(this.save(booking));
-  // }
+//   BookingModel booking = new BookingModel(
+//   newId,
+//   bookingDto.getUserId(),
+//   bookingDto.getMenuId(),
+//   bookingDto.getFoodId(),
+//   bookingDto.getShift(),
+//   bookingDto.getDate(),
+//   bookingDto.getDay(),
+//   bookingDto.getUserDocumentId(),
+//   bookingDto.getPrice(),
+//   datesUtil.getCurrentDateTime(),
+//   datesUtil.getCurrentDateTime(),
+//   BookingStatus.PENDING);
+//   return this.mapToDto(this.save(booking));
+//   }
 
   // metodos privados
   private BookingDto mapToDto(BookingModel model) {
@@ -165,10 +167,11 @@ public class BookingService {
     return booking;
   }
 
-  private Double calculateCCB(String role, Integer qt, Double decrease, Double valueCV) {
+  private Double calculateCCB(String type, Integer qty, Double decrease, Double valueCV) {
     ConfigDto config = this.configService.getConfig();
-    
-    return 0.0;
+    double decreasePercentage = decrease / 100.0; // pasamos a porcentaje
+    Double ccb = ((config.getValueCF() + valueCV) / qty) * (1 + decreasePercentage);
+    return ccb;
   }
 
 }

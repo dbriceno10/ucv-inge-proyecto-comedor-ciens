@@ -2,15 +2,15 @@ package DTO.Config;
 
 public class ConfigDto {
   private Double valueCF;
-  private Integer teacherPercentage;
-  private Integer studentPercentage;
-  private Integer workerPercentage;
+  private Double teacherPercentage;
+  private Double studentPercentage;
+  private Double workerPercentage;
   private String updateAt;
 
   public ConfigDto() {
   }
 
-  public ConfigDto(Double valueCF, Integer teacherPercentage, Integer studentPercentage, Integer workerPercentage,
+  public ConfigDto(Double valueCF, Double teacherPercentage, Double studentPercentage, Double workerPercentage,
       String updateAt) {
     this.valueCF = valueCF;
     this.teacherPercentage = teacherPercentage;
@@ -24,15 +24,15 @@ public class ConfigDto {
     return valueCF;
   }
 
-  public Integer getTeacherPercentage() {
+  public Double getTeacherPercentage() {
     return teacherPercentage;
   }
 
-  public Integer getStudentPercentage() {
+  public Double getStudentPercentage() {
     return studentPercentage;
   }
 
-  public Integer getWorkerPercentage() {
+  public Double getWorkerPercentage() {
     return workerPercentage;
   }
 
