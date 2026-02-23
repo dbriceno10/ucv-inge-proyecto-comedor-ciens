@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import javax.swing.JFileChooser;
+
 public class FileManager {
 
   public boolean simulateRecognition(Path savedImagePath, Path uploadedImagePath) {
@@ -49,5 +51,32 @@ public class FileManager {
     }
 
     return filePath;
+  }
+
+  public String uploadFile(byte[] fileData, String fileName) {
+    return this.uploadFile(fileData, fileName, null);
+  }
+
+  public String pickupFile(String folderName) {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Select a File");
+    int userSelection = fileChooser.showOpenDialog(null);
+
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+      File selectedFile = fileChooser.getSelectedFile();
+      try {
+        byte[] fileData = Files.readAllBytes(selectedFile.toPath());
+        return this.uploadFile(fileData, selectedFile.getName(), folderName);
+      } catch (Exception e) {
+        e.printStackTrace();
+        throw new RuntimeException("Failed to process the selected file: " + e.getMessage());
+      }
+    } else {
+      throw new RuntimeException("No file was selected.");
+    }
+  }
+
+  public String pickupFile() {
+    return this.pickupFile(null);
   }
 }
