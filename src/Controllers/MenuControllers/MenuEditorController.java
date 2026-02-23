@@ -5,17 +5,18 @@ import DTO.Food.FoodDto;
 import DTO.Menu.CreateMenuDto;
 import Model.Food.FoodService;
 import Model.Menu.MenuService;
+import Enums.Days;
+import Enums.MenuTypes;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MenuEditorController implements ActionListener {
     private MenuEditorView view;
-    private List<Integer> tempFoodIds;
+    private ArrayList<Integer> tempFoodIds;
     private MenuService menuService;
     private FoodService foodService;
         
@@ -58,14 +59,14 @@ public class MenuEditorController implements ActionListener {
                 return; 
             }
 
-            CreateMenuDto newMenu = new CreateMenuDto("LUNES", tempFoodIds.toArray(new Integer[0]), view.getTxtDate());
+            CreateMenuDto newMenu = new CreateMenuDto(Days.MONDAY, MenuTypes.BREACKFAST,tempFoodIds.toArray(new Integer[0]),10, view.getTxtDate());
             menuService.create(newMenu);
             JOptionPane.showMessageDialog(view, "Guardado");
         } catch (Exception ex) { JOptionPane.showMessageDialog(view, "Error: " + ex.getMessage()); }
     }
 
     void showFoodSelector() {
-        List<FoodDto> foods = foodService.getAllFoods();
+        ArrayList<FoodDto> foods = foodService.getAllFoods();
         if (foods.isEmpty()) {
             JOptionPane.showMessageDialog(view, "No hay platos creados.");
             return;

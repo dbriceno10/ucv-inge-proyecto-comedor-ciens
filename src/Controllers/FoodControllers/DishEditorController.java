@@ -48,7 +48,7 @@ public class DishEditorController implements ActionListener {
             service.create(new CreateFoodDto(
                 view.getTxtName(), 
                 view.getTxtDesc(), 
-                0.0, 0.0, new Integer[]{1}));
+                0.0, 0.0));
                 JOptionPane.showMessageDialog(view, "Guardado");
 
                 dishController.loadDishes();

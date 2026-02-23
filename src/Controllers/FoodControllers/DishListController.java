@@ -10,7 +10,7 @@ import Controllers.IngredientControllers.IngredientListController;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.List;
+import java.util.ArrayList;
 
 public class DishListController implements ActionListener {
     private DishListView view;
@@ -53,7 +53,7 @@ public class DishListController implements ActionListener {
     public void loadDishes() { 
         JPanel panel = view.getComponent_gridPanel();
         panel.removeAll();
-        List<FoodDto> list = service.getAllFoods();
+        ArrayList<FoodDto> list = service.getAllFoods();
         for(FoodDto f : list) {
             try {
                 java.lang.reflect.Method m = view.getClass().getDeclaredMethod("addDishCard", String.class);

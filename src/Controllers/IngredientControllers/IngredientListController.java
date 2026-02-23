@@ -11,7 +11,7 @@ import Controllers.MenuControllers.MenuManagementController;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.util.List;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -59,7 +59,7 @@ public class IngredientListController implements ActionListener {
     public void loadIngredients() {
         JPanel panel = view.getComponent_gridPanel();
         panel.removeAll();
-        List<IngredientDto> list = service.getAllIngredients();
+        ArrayList<IngredientDto> list = service.getAllIngredients();
         for(IngredientDto i : list) {
             try {
                 java.lang.reflect.Method m = view.getClass().getDeclaredMethod("addIngredientCard", String.class, String.class, String.class);

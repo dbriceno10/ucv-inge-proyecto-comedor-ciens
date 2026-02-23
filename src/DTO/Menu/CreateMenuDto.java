@@ -2,16 +2,31 @@ package DTO.Menu;
 
 public class CreateMenuDto {
   private String day; // e.g., "LUNES", "MARTES", etc.
+  private String type; // e.g., "DESAYUNO", "ALMUERZO", "CENA"
   private Integer[] foodIds;
   private String date; // e.g., "2024-06-10"
+  private String image;
+  private Integer qty;
 
   public CreateMenuDto() {
   }
 
-  public CreateMenuDto(String day, Integer[] foodIds, String date) {
+  public CreateMenuDto(String day, String type, Integer[] foodIds, Integer qty, String date) {
     this.day = day;
     this.foodIds = foodIds;
     this.date = date;
+    this.type = type;
+    this.image = null;
+    this.qty = qty;
+  }
+
+  public CreateMenuDto(String day, String type, Integer[] foodIds, String date, Integer qty, String image) {
+    this.day = day;
+    this.foodIds = foodIds;
+    this.date = date;
+    this.type = type;
+    this.image = image;
+    this.qty = qty;
   }
 
   public String getDay() {
@@ -24,5 +39,17 @@ public class CreateMenuDto {
 
   public String getDate() {
     return date;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public Integer getQty() {
+    return qty;
   }
 }

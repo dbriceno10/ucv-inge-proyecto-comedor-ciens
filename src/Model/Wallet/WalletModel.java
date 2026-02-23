@@ -66,4 +66,8 @@ public class WalletModel {
   public void setDeletedAt(String deletedAt) {
     this.deletedAt = deletedAt;
   }
+
+  public void setBalance(Double balance) {
+    this.balance = balance;
+  }
 }

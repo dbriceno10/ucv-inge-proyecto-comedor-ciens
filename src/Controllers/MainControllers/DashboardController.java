@@ -32,7 +32,8 @@ public class DashboardController implements ActionListener {
     }
 
     private void loadData() {
-        MenuDto dailyMenu = menuService.getMenuOfDay();
+        // MenuDto dailyMenu = menuService.getMenuOfDay();
+        MenuDto dailyMenu = menuService.getMenuById(1); //TODO: esto lo puse solo para que no se rompa, ahora getMenuOfDay trae un arreglo en lugar de un solo elemento
         view.showDailyMenu(dailyMenu);
     }
 
