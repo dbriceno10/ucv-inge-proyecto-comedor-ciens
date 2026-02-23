@@ -17,7 +17,6 @@ public class IngredientEditorView extends JFrame {
 
     public IngredientEditorView() {
         setTitle("SGCU - Nuevo Ingrediente");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         // 1. PANEL PRINCIPAL
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -131,8 +130,9 @@ public class IngredientEditorView extends JFrame {
         mainPanel.add(whiteCard, BorderLayout.CENTER);
 
         this.setContentPane(mainPanel);
-        this.pack();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(1024, 768));
+        setLocationRelativeTo(null);
     }
 
     // --- UTILS ---

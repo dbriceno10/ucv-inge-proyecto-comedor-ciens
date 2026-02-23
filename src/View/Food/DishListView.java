@@ -125,8 +125,9 @@ public class DishListView extends JFrame {
 
     // Configuración Final Frame
     this.setContentPane(mainPanel);
-    this.pack();
-    this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setMinimumSize(new Dimension(1024, 768));
+    setLocationRelativeTo(null);
   }
 
   // --- MÉTODO PARA CREAR TARJETA NARANJA ---

@@ -18,7 +18,6 @@ public class DishEditorView extends JFrame {
 
     public DishEditorView() {
         setTitle("SGCU - Crear / Editar Plato");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         // 1. PANEL PRINCIPAL (Fondo Gris)
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -127,8 +126,9 @@ public class DishEditorView extends JFrame {
 
         // CONFIGURACIÓN FINAL
         this.setContentPane(mainPanel);
-        this.pack();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(1024, 768));
+        setLocationRelativeTo(null);
     }
 
     // --- MÉTODOS AUXILIARES ---

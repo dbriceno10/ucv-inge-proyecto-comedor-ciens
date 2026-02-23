@@ -22,6 +22,7 @@ public class DishEditorController implements ActionListener {
         this.view.uploadBtnListener(this);
 
         this.view.setVisible(true);
+        this.view.setExtendedState(JFrame.MAXIMIZED_BOTH); // to display the interface in full screen mode.
     }
     
     @Override

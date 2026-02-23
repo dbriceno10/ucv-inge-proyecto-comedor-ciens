@@ -21,7 +21,6 @@ public class DashboardView extends JFrame {
 
     public DashboardView() {
         setTitle("UCV - SGCU");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // 1. Main panel (the background)
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -128,9 +127,9 @@ public class DashboardView extends JFrame {
         
         // INITIAL VIEW.
         updateTitles(MenuOptions.DAILY);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize(screenSize.width, screenSize.height);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH); // To display the interface in full screen mode.
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(1024, 768));
+        setLocationRelativeTo(null);
     }
 
     public void updateTitles(String viewType) { // It updates the titles based on the daily or weekly menu selection

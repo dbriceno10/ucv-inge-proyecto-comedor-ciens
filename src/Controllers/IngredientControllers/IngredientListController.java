@@ -9,6 +9,7 @@ import DTO.Ingredient.IngredientDto;
 import Controllers.FoodControllers.DishListController;
 import Controllers.MenuControllers.MenuManagementController;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,7 @@ public class IngredientListController implements ActionListener {
 
         loadIngredients();
         this.view.setVisible(true);
+        this.view.setExtendedState(JFrame.MAXIMIZED_BOTH); // to display the interface in full screen mode.
     }
 
     public IngredientListController() {}

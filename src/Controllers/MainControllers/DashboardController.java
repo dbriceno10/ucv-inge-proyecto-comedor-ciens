@@ -11,6 +11,7 @@ import Controllers.WalletControllers.WalletController;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 
 import java.awt.event.ActionEvent;
 
@@ -27,6 +28,7 @@ public class DashboardController implements ActionListener {
 
         loadData();
         this.view.setVisible(true);
+        this.view.setExtendedState(JFrame.MAXIMIZED_BOTH); // to display the interface in full screen mode.
     }
 
     private void loadData() {

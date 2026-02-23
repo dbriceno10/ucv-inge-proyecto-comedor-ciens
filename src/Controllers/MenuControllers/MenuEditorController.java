@@ -6,6 +6,7 @@ import DTO.Menu.CreateMenuDto;
 import Model.Food.FoodService;
 import Model.Menu.MenuService;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +31,7 @@ public class MenuEditorController implements ActionListener {
         this.view.addDishListener(this);
 
         this.view.setVisible(true);
+        this.view.setExtendedState(JFrame.MAXIMIZED_BOTH); // to display the interface in full screen mode.
     }
 
     @Override
