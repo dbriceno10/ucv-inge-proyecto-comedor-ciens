@@ -113,12 +113,33 @@ public class WalletService {
     return false;
   }
 
-  public WalletDto addMovement(Integer walletId, MovementDto movementDto) {
+  public WalletDto rechargeWallet(Double amount, String reference, String bankName) {
     UserSession.getInstance().isAuthenticated();
+    Integer userId = UserSession.getInstance().getUser().getId();
+    WalletDto wallet = this.getWalletByUserId(userId);
+    if (wallet == null) {
+      throw new IllegalArgumentException("Wallet not found for user id: " + userId);
+    }
+    MovementDto movementDto = new MovementDto(
+        null,
+        wallet.getId(),
+        Enums.TypeMovement.ENTRY,
+        amount,
+        this.datesUtil.getCurrentDateTime(),
+        "Recarga de saldo",
+        reference,
+        bankName);
+    return this.addMovement(wallet.getId(), movementDto);
+  }
+
+  // metodos privados
+
+  private WalletDto addMovement(Integer walletId, MovementDto movementDto) {
     WalletModel existing = getById(walletId);
     if (existing == null) {
       throw new IllegalArgumentException("Wallet not found with id: " + walletId);
     }
+    Integer nextId = this.commonServices.getLastIndex(MOVEMENTS_FILE_PATH, MovementModel.class);
     Double newBalance = existing.getBalance();
     if (movementDto.getType().equals(Enums.TypeMovement.ENTRY)) {
       newBalance += movementDto.getAmount();
@@ -135,6 +156,15 @@ public class WalletService {
     if (updatedWallet == null) {
       return null;
     }
+    movementDto = new MovementDto(
+        nextId,
+        walletId,
+        movementDto.getType(),
+        movementDto.getAmount(),
+        movementDto.getDate(),
+        movementDto.getDescription(),
+        movementDto.getReference(),
+        movementDto.getBankName());
     this.saveMovement(movementDto);
     WalletModel wallet = this.getById(walletId);
     if (wallet == null) {
@@ -143,7 +173,6 @@ public class WalletService {
     return this.mapToDto(wallet);
   }
 
-  // metodos privados
   private WalletDto mapToDto(WalletModel walletModel) {
     return new WalletDto(
         walletModel.getId(),
@@ -231,7 +260,9 @@ public class WalletService {
         movementModel.getType(),
         movementModel.getAmount(),
         movementModel.getDate(),
-        movementModel.getDescription());
+        movementModel.getDescription(),
+        movementModel.getReference(),
+        movementModel.getBankName());
   }
 
   private ArrayList<MovementDto> getMovements(Integer walletId) {
