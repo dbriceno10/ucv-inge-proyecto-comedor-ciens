@@ -1,5 +1,7 @@
 package DTO.Wallet;
 
+import java.util.ArrayList;
+
 public class WalletDto {
   private Integer id;
   private Double balance;
@@ -7,6 +9,7 @@ public class WalletDto {
   private Boolean isActive;
   private String createdAt;
   private String updatedAt;
+  private ArrayList<MovementDto> movements;
 
   public WalletDto() {
   }
@@ -17,13 +20,15 @@ public class WalletDto {
       Integer userId,
       Boolean isActive,
       String createdAt,
-      String updatedAt) {
+      String updatedAt,
+      ArrayList<MovementDto> movements) {
     this.id = id;
     this.balance = balance;
     this.userId = userId;
     this.isActive = isActive;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+    this.movements = movements;
   }
 
   // getters
@@ -49,5 +54,9 @@ public class WalletDto {
 
   public String getUpdatedAt() {
     return updatedAt;
+  }
+
+  public ArrayList<MovementDto> getMovements() {
+    return movements;
   }
 }

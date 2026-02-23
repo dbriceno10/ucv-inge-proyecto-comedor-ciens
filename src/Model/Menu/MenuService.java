@@ -21,13 +21,13 @@ public class MenuService {
   private Dates datesUtil = new Dates();
   private FoodService foodService = new FoodService();
 
-  public List<MenuDto> getAllMenus() {
-    List<MenuDto> menus = new ArrayList<>();
+  public ArrayList<MenuDto> getAllMenus() {
+    ArrayList<MenuDto> menus = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
       if (file.exists()) {
-        List<MenuModel> menuModels = mapper.readValue(file,
+        ArrayList<MenuModel> menuModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, MenuModel.class));
         for (MenuModel menuModel : menuModels) {
           if (menuModel.getDeletedAt() == null) { // Filtrar menús con deletedAt como null
@@ -49,17 +49,33 @@ public class MenuService {
     return this.mapToDto(menuModel);
   }
 
-   public MenuDto getMenuOfDay() {
-    MenuModel menuModel = this.getByDay(datesUtil.getDayOfWeek(datesUtil.getCurrentDateTime()));
-    if (menuModel == null) {
-      return null;
-    }
-    return this.mapToDto(menuModel);
+  // Para obtener los menus del dia, si se quieren todos los tipos se puede pasar
+  // null en el parametro type
+  public ArrayList<MenuDto> getMenuOfDay(String type) {
+    String currentDay = datesUtil.getDayOfWeek(datesUtil.getCurrentDateTime());
+    return this.getByDay(currentDay, type);
   }
+
+  // //el parametro type es opcional, pasarlo en null si no se necesita
+  // public ArrayList<MenuDto> getMenuOfWeek(String type) {
+  // if(type == null) {
+  // return this.getAllMenus();
+  // }
+  // ArrayList<MenuDto> menus = new ArrayList<>();
+  // for(MenuDto menu : this.getAllMenus()) {
+  // if(menu.getType().equals(type)) {
+  // menus.add(menu);
+  // }
+  // }
+  // return menus;
+  // }
 
   public MenuDto create(CreateMenuDto menuDto) {
     if (menuDto.getDay() == null || menuDto.getDay().isEmpty()) {
       throw new IllegalArgumentException("Menu day cannot be null or empty");
+    }
+    if (menuDto.getType() == null || menuDto.getType().isEmpty()) {
+      throw new IllegalArgumentException("Menu type cannot be null or empty");
     }
     if (menuDto.getFoodIds() == null || menuDto.getFoodIds().length == 0) {
       throw new IllegalArgumentException("Menu must have at least one food item");
@@ -81,6 +97,9 @@ public class MenuService {
     if (menuDto.getDay() == null || menuDto.getDay().isEmpty()) {
       throw new IllegalArgumentException("Menu day cannot be null or empty");
     }
+    if (menuDto.getType() == null || menuDto.getType().isEmpty()) {
+      throw new IllegalArgumentException("Menu type cannot be null or empty");
+    }
     if (menuDto.getFoodIds() == null || menuDto.getFoodIds().length == 0) {
       throw new IllegalArgumentException("Menu must have at least one food item");
     }
@@ -94,13 +113,14 @@ public class MenuService {
     MenuModel updatedMenu = new MenuModel(
         existing.getId(),
         menuDto.getDay(),
+        menuDto.getType(),
         menuDto.getFoodIds(),
         menuDto.getDate(),
         existing.getIsActive(), // Mantener el estado actual
         existing.getCreatedAt(), // Mantener la fecha de creación
         this.datesUtil.getCurrentDateTime(), // Actualizar la fecha de actualización
-        existing.getDeletedAt() // Mantener la fecha de eliminación
-    );
+        existing.getDeletedAt(), // Mantener la fecha de eliminación,,
+        menuDto.getQty());
     MenuModel menu = this.edit(updatedMenu);
     if (menu == null) {
       return null;
@@ -118,6 +138,24 @@ public class MenuService {
     return false;
   }
 
+  // metodo para verificar si ya existe un menu para un dia y tipo especifico,
+  // para que se pueda mostrar la alerta
+  public boolean isEixstingMenu(String day, String type) {
+    ArrayList<MenuDto> menus = this.getByDay(day, type);
+    return !menus.isEmpty();
+  }
+
+  public boolean validateMenu(Integer id) {
+    MenuModel menu = this.getById(id);
+    if (menu == null) {
+      throw new IllegalArgumentException("Menu not found with id: " + id);
+    }
+    if (menu.getCurrentQty() >= 1) {
+      return true;
+    }
+    throw new IllegalStateException("Menu with id " + id + " has no available quantity");
+  }
+
   // metodos privados
   private MenuDto mapToDto(MenuModel menuModel) {
     ArrayList<FoodDto> foodDtos = new ArrayList<>();
@@ -130,20 +168,24 @@ public class MenuService {
     return new MenuDto(
         menuModel.getId(),
         menuModel.getDay(),
+        menuModel.getType(),
         foodDtos,
         menuModel.getDate(),
         menuModel.getIsActive(),
         menuModel.getCreatedAt(),
-        menuModel.getUpdatedAt());
+        menuModel.getUpdatedAt(),
+        menuModel.getQty(),
+        menuModel.getCurrentQty(),
+        menuModel.getImage());
   }
 
-  private List<MenuModel> getAll() {
-    List<MenuModel> menus = new ArrayList<>();
+  private ArrayList<MenuModel> getAll() {
+    ArrayList<MenuModel> menus = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
       if (file.exists()) {
-        List<MenuModel> menuModels = mapper.readValue(file,
+        ArrayList<MenuModel> menuModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, MenuModel.class));
         for (MenuModel menuModel : menuModels) {
           if (menuModel.getDeletedAt() == null) { // Filtrar menús con deletedAt como null
@@ -158,7 +200,7 @@ public class MenuService {
   }
 
   private MenuModel getById(Integer id) {
-    List<MenuModel> menus = this.getAll();
+    ArrayList<MenuModel> menus = this.getAll();
     MenuModel found = null;
     for (MenuModel menu : menus) {
       if (menu.getId().equals(id)) {
@@ -169,21 +211,25 @@ public class MenuService {
     return found;
   }
 
-    private MenuModel getByDay(String day) {
-    List<MenuModel> menus = this.getAll();
-    MenuModel found = null;
+  private ArrayList<MenuDto> getByDay(String day, String type) {
+    ArrayList<MenuModel> menus = this.getAll();
+    ArrayList<MenuDto> foundMenus = new ArrayList<>();
     for (MenuModel menu : menus) {
-      if (menu.getDay().equals(day)) {
-        found = menu;
-        break;
+      if (type != null) {
+        if (menu.getDay().equals(day) && menu.getType().equals(type)) {
+          foundMenus.add(this.mapToDto(menu));
+        }
+      } else {
+        if (menu.getDay().equals(day)) {
+          foundMenus.add(this.mapToDto(menu));
+        }
       }
     }
-    return found;
+    return foundMenus;
   }
 
-
   private MenuModel save(MenuModel menu) {
-    List<MenuModel> menus = this.commonServices.getAllElements(FILE_PATH, MenuModel.class);
+    ArrayList<MenuModel> menus = this.commonServices.getAllElements(FILE_PATH, MenuModel.class);
     menus.add(menu);
     ObjectMapper mapper = new ObjectMapper();
     try {
@@ -196,7 +242,7 @@ public class MenuService {
   }
 
   private MenuModel edit(MenuModel menu) {
-    List<MenuModel> menus = this.commonServices.getAllElements(FILE_PATH, MenuModel.class);
+    ArrayList<MenuModel> menus = this.commonServices.getAllElements(FILE_PATH, MenuModel.class);
     boolean found = false;
     for (int i = 0; i < menus.size(); i++) {
       if (menus.get(i).getId().equals(menu.getId())) {

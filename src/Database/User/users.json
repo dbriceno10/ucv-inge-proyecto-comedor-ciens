@@ -11,7 +11,8 @@
     "createdAt": "2026-01-01T10:00:00Z",
     "updatedAt": "2026-01-10T15:00:00Z",
     "deletedAt": null,
-    "role": "ADMINISTRADOR"
+    "role": "ADMINISTRADOR",
+    "image": null
   },
   {
     "id": 2,
@@ -25,7 +26,8 @@
     "createdAt": "2026-01-02T11:00:00Z",
     "updatedAt": "2026-01-12T16:00:00Z",
     "deletedAt": null,
-    "role": "COMENSAL"
+    "role": "COMENSAL",
+    "image": null
   },
   {
     "id": 3,
@@ -39,7 +41,8 @@
     "createdAt": "2026-01-03T12:00:00Z",
     "updatedAt": "2026-01-13T17:00:00Z",
     "deletedAt": "2026-01-20T18:00:00Z",
-    "role": "COMENSAL"
+    "role": "COMENSAL",
+    "image": null
   },
   {
     "id": 4,
@@ -53,7 +56,8 @@
     "createdAt": "2026-01-04T13:00:00Z",
     "updatedAt": "2026-01-14T18:00:00Z",
     "deletedAt": null,
-    "role": null
+    "role": null,
+    "image": null
   },
   {
     "id": 5,
@@ -67,7 +71,8 @@
     "createdAt": "2026-01-05T14:00:00Z",
     "updatedAt": "2026-01-15T19:00:00Z",
     "deletedAt": null,
-    "role": "COMENSAL"
+    "role": "COMENSAL",
+    "image": null
   },
   {
     "id": 6,
@@ -81,7 +86,8 @@
     "createdAt": "2026-01-06T15:00:00Z",
     "updatedAt": "2026-01-16T20:00:00Z",
     "deletedAt": "2026-01-25T21:00:00Z",
-    "role": "COMENSAL"
+    "role": "COMENSAL",
+    "image": null
   },
   {
     "id": 7,
@@ -95,7 +101,8 @@
     "createdAt": "2026-01-07T16:00:00Z",
     "updatedAt": "2026-01-17T21:00:00Z",
     "deletedAt": null,
-    "role": "ADMINISTRADOR"
+    "role": "ADMINISTRADOR",
+    "image": null
   },
   {
     "id": 8,
@@ -109,7 +116,8 @@
     "createdAt": "2026-01-08T17:00:00Z",
     "updatedAt": "2026-01-18T22:00:00Z",
     "deletedAt": null,
-    "role": "COMENSAL"
+    "role": "COMENSAL",
+    "image": null
   },
   {
     "id": 9,
@@ -123,7 +131,8 @@
     "createdAt": "2026-01-09T18:00:00Z",
     "updatedAt": "2026-01-19T23:00:00Z",
     "deletedAt": "2026-01-30T00:00:00Z",
-    "role": "COMENSAL"
+    "role": "COMENSAL",
+    "image": null
   },
   {
     "id": 10,
@@ -137,6 +146,7 @@
     "createdAt": "2026-01-10T19:00:00Z",
     "updatedAt": "2026-01-20T01:00:00Z",
     "deletedAt": null,
-    "role": "ADMINISTRADOR"
+    "role": "ADMINISTRADOR",
+    "image": null
   }
 ]

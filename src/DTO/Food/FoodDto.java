@@ -8,6 +8,7 @@ public class FoodDto {
   private String name;
   private String description = null;
   private Double decrease;// porcentaje de merma
+  private Double valueCV = null;// valor de costos variables como ingredientes, etc.
   private Boolean isActive;
   private String createdAt = null;
   private String updatedAt = null;
@@ -17,6 +18,7 @@ public class FoodDto {
       Integer id,
       String name,
       String description,
+      Double valueCV,
       Double decrease,
       Boolean isActive,
       String createdAt,
@@ -25,6 +27,7 @@ public class FoodDto {
     this.id = id;
     this.name = name;
     this.description = description;
+    this.valueCV = valueCV;
     this.decrease = decrease;
     this.isActive = isActive;
     this.createdAt = createdAt;
@@ -62,5 +65,9 @@ public class FoodDto {
 
   public ArrayList<IngredientDto> getIngredients() {
     return ingredients;
+  }
+
+  public Double getValueCV() {
+    return valueCV;
   }
 }

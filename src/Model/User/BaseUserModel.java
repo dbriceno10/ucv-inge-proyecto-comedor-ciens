@@ -7,17 +7,20 @@ public class BaseUserModel {
   protected String email;
   protected String type; // 'STUDENT' | 'PROFESSOR' | 'WORKER' | 'ADMIN'
   protected Integer documentId;
+  private String image = null;
 
   public BaseUserModel() {
   }
 
-  public BaseUserModel(Integer id, String firstName, String lastName, String email, String type, Integer documentId) {
+  public BaseUserModel(Integer id, String firstName, String lastName, String email, String type, Integer documentId,
+      String image) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.type = type;
     this.documentId = documentId;
+    this.image = image;
   }
 
   public BaseUserModel(UserModel user) {
@@ -52,5 +55,9 @@ public class BaseUserModel {
 
   public Integer getDocumentId() {
     return documentId;
+  }
+
+  public String getImage() {
+    return image;
   }
 }

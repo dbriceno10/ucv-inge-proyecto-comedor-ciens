@@ -4,7 +4,7 @@ import Model.Common.CommonServices;
 import Model.Ingredient.IngredientModel;
 import Model.Ingredient.IngredientSevice;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import DTO.Ingredient.CreateIngredientDto;
 import DTO.Ingredient.IngredientDto;
@@ -20,7 +20,7 @@ public class Main {
     // Test 1: Obtener todos los ingredientes
     System.out.println("Test 1: Get all ingredients");
     try {
-      List<IngredientDto> ingredients = ingredientService.getAllIngredients();
+      ArrayList<IngredientDto> ingredients = ingredientService.getAllIngredients();
       if (ingredients != null && !ingredients.isEmpty()) {
         System.out.println("Total ingredients: " + ingredients.size());
         for (IngredientDto ingredient : ingredients) {

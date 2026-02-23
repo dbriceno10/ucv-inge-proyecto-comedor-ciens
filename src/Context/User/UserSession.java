@@ -30,4 +30,22 @@ public class UserSession {
   public boolean isLoggedIn() {
     return user != null;
   }
+
+  public void logout() {
+    user = null; // Limpiamos la sesión
+  }
+
+  // metodos para proteger servicios
+  public void isAuthenticated() {
+    if (!isLoggedIn()) {
+      throw new RuntimeException("Usuario no autenticado");
+    }
+  }
+
+  public void hasRole(String requiredRole) {
+    isAuthenticated(); // Primero verificamos que esté autenticado
+    if (!user.getRole().equals(requiredRole)) {
+      throw new RuntimeException("Acceso denegado: se requiere el rol " + requiredRole);
+    }
+  }
 }
