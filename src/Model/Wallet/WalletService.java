@@ -135,6 +135,25 @@ public class WalletService {
     return this.addMovement(wallet.getId(), movementDto);
   }
 
+  public WalletDto makePayment(Integer userId, Double amount) {
+    // UserSession.getInstance().isAuthenticated();
+    // Integer userId = //UserSession.getInstance().getUser().getId();
+    WalletDto wallet = this.getWalletByUserId(userId);
+    if (wallet == null) {
+      throw new IllegalArgumentException("Wallet not found for user id: " + userId);
+    }
+    MovementDto movementDto = new MovementDto(
+        null,
+        wallet.getId(),
+        Enums.TypeMovement.EXIT,
+        amount,
+        this.datesUtil.getCurrentDateTime(),
+        "Pago de comida",
+        null,
+        null);
+    return this.addMovement(wallet.getId(), movementDto);
+  }
+
   // metodos privados
 
   private WalletDto addMovement(Integer walletId, MovementDto movementDto) {
