@@ -16,7 +16,6 @@ public class IngredientListView extends JFrame {
 
   public IngredientListView() {
     setTitle("SGCU - Inventario de Ingredientes");
-    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     // panel de navegacion
     JPanel navPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
@@ -110,8 +109,9 @@ public class IngredientListView extends JFrame {
     mainPanel.add(whiteCard, BorderLayout.CENTER);
 
     this.setContentPane(mainPanel);
-    this.pack();
-    this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setMinimumSize(new Dimension(1024, 768));
+    setLocationRelativeTo(null);
   }
 
   private void addIngredientCard(String name, String stock, String imageName) {

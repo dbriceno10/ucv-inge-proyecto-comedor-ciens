@@ -18,7 +18,6 @@ public class RegisterView extends JFrame {
 
     public RegisterView() {
         setTitle("UCV - SGCU");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // objects are initialized to avoid null references.
         txtFirstName = new RoundedTextField();
@@ -145,9 +144,9 @@ public class RegisterView extends JFrame {
         splitPanel.add(rightContainer);
 
         this.add(splitPanel);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize(screenSize.width, screenSize.height);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH); //to display the interface in full screen mode.
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(1024, 768));
+        setLocationRelativeTo(null);
     }
 
     private JPanel newField(String title, JComponent component) {

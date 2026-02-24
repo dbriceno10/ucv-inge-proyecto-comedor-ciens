@@ -9,6 +9,10 @@ import View.Wallet.WalletView;
 import Controllers.WalletControllers.WalletController;
 
 import java.awt.event.ActionListener;
+
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionEvent;
 
 public class DashboardController implements ActionListener {
@@ -24,6 +28,7 @@ public class DashboardController implements ActionListener {
 
         loadData();
         this.view.setVisible(true);
+        this.view.setExtendedState(JFrame.MAXIMIZED_BOTH); // to display the interface in full screen mode.
     }
 
     private void loadData() {
@@ -36,18 +41,20 @@ public class DashboardController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         switch (command) {
-            case MenuOptions.DAILY:
-                view.updateTitles(MenuOptions.DAILY);
-                break;
-            case MenuOptions.WEEKLY:
-                view.updateTitles(MenuOptions.WEEKLY);
-                break;
             case "OPEN_WALLET":
                 WalletView walletView = new WalletView(this.view);
                 new WalletController(walletView);
                 break;
-            default:
-                break;
+            case "MENU_TYPE_CHANGED":
+                JComboBox<?> comboBox = (JComboBox<?>) e.getSource();
+                String selectedMenu = (String) comboBox.getSelectedItem();
+
+                if (MenuOptions.DAILY.equals(selectedMenu)) {
+                    view.updateTitles(MenuOptions.DAILY);
+                } else if (MenuOptions.WEEKLY.equals(selectedMenu)) {
+                    view.updateTitles(MenuOptions.WEEKLY);
+                }
+            default: break;
         }
     }
 }

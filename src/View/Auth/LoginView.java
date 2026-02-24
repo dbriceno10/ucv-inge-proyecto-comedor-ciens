@@ -15,16 +15,15 @@ public class LoginView extends JFrame {
 
     public LoginView() {
         setTitle("UCV - SGCU");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // objects are initialized to avoid null references.
         txtEmail = new RoundedTextField();
         txtPwd = new RoundedTextField();
 
-        //txtEmail.setText("maria.gomez@example.com");
-        //txtPwd.setText("securepass");
-        txtEmail.setText("juan.perez@example.com");
-        txtPwd.setText("password123");
+        txtEmail.setText("maria.gomez@example.com");
+        txtPwd.setText("securepass");
+        //txtEmail.setText("juan.perez@example.com");
+        //txtPwd.setText("password123");
         
         btnLogin = new RoundedButton("Iniciar sesión");
         btnRegister = new RoundedButton("Registrarse");
@@ -124,9 +123,9 @@ public class LoginView extends JFrame {
         splitPanel.add(rightContainer);
 
         this.add(splitPanel);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize(screenSize.width, screenSize.height);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH); //to display the interface in full screen mode.
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(1024, 768));
+        setLocationRelativeTo(null);
     }
 
     private JPanel newField(String title, JComponent component) {

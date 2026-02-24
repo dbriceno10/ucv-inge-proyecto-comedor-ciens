@@ -19,7 +19,6 @@ public class MenuManagementView extends JFrame {
 
     public MenuManagementView() {
         setTitle("SGCU - Gestión de Menús");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // 1. main panel
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -110,9 +109,9 @@ public class MenuManagementView extends JFrame {
         mainPanel.add(body, BorderLayout.CENTER);
 
         this.add(mainPanel);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize(screenSize.width, screenSize.height);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH); //to display the interface in full screen mode.
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(1024, 768));
+        setLocationRelativeTo(null);
     }
 
     // AUXILIARY METHODS

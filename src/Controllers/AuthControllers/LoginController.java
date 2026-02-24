@@ -13,6 +13,8 @@ import Context.User.UserSession;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class LoginController implements ActionListener {
@@ -29,12 +31,13 @@ public class LoginController implements ActionListener {
         InputValidator.addInputRestriction(this.view.getComponentPwd(), "DEFAULT", 30);
 
         this.view.setVisible(true);
+        this.view.setExtendedState(JFrame.MAXIMIZED_BOTH); // to display the interface in full screen mode.
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String button = e.getActionCommand();
-        switch (button) {
+        String command = e.getActionCommand();
+        switch (command) {
             case "Iniciar sesión":
                 processLogin();
                 break;

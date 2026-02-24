@@ -16,7 +16,6 @@ public class MenuEditorView extends JFrame {
 
     public MenuEditorView() {
         setTitle("SGCU - Crear/Editar Menú");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         // 1. CONFIGURACIÓN DEL PANEL PRINCIPAL (Fondo Gris)
         JPanel mainPanel = new JPanel(new BorderLayout());
@@ -119,8 +118,9 @@ public class MenuEditorView extends JFrame {
         this.setContentPane(mainPanel); // Asegura que el fondo gris se vea
         
         // Finalizar
-        this.pack();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setMinimumSize(new Dimension(1024, 768));
+        setLocationRelativeTo(null);
     }
 
     // --- MÉTODOS AUXILIARES ---
