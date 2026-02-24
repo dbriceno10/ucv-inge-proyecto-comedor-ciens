@@ -1,6 +1,7 @@
 package Controllers.WalletControllers;
 
 import View.Wallet.WalletView;
+import View.Wallet.TopUpView;
 import Model.Wallet.WalletService;
 import DTO.Wallet.WalletDto;
 import DTO.User.AuthUserDto; 
@@ -23,7 +24,11 @@ public class WalletController {
 
         if (this.view.btnTopUp != null) {
             this.view.btnTopUp.addActionListener(e -> {
-                JOptionPane.showMessageDialog(view, "Funcionalidad de recarga simulada.");
+                TopUpView topUpView = new TopUpView(this.view); 
+                new TopUpController(topUpView); 
+                
+                // ¡Asegúrate de que esta línea esté aquí!
+                loadWalletInfo(); 
             });
         }
 
