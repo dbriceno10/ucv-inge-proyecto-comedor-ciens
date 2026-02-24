@@ -244,10 +244,14 @@ public class BookingService {
     return this.mapToDto(booking);
   }
 
-  public BookingDto chargeForService(Integer BookingId, String routePath) {
-    BookingModel booking = this.getById(BookingId);
+  public BookingDto chargeForService(Integer bookingId, String routePath) {
+    ConfigDto config = this.configService.getConfig();
+    if (config == null) {
+      throw new IllegalArgumentException("Configuration not found.");
+    }
+    BookingModel booking = this.getById(bookingId);
     if (booking == null) {
-      throw new IllegalArgumentException("Booking not found with id: " + BookingId);
+      throw new IllegalArgumentException("Booking not found with id: " + bookingId);
     }
 
     UserModel user = this.userService.getUserById(booking.getUserId());
@@ -265,7 +269,16 @@ public class BookingService {
       throw new IllegalArgumentException("Wallet not found for user id: " + booking.getUserId());
     }
 
-    Double newBalance = wallet.getBalance() - booking.getPrice();
+    Double configPercentage = 1.0;
+    if (user.getType().equals(UserTypes.PROFESSOR)) {
+      configPercentage = config.getTeacherPercentage() / 100.0;
+    } else if (user.getType().equals(UserTypes.STUDENT)) {
+      configPercentage = config.getStudentPercentage() / 100.0;
+    } else if (user.getType().equals(UserTypes.WORKER)) {
+      configPercentage = config.getWorkerPercentage() / 100.0;
+    }
+
+    Double newBalance = wallet.getBalance() - (booking.getPrice() * configPercentage);
 
     if (newBalance < 0) {
       throw new IllegalArgumentException("Insufficient balance in wallet for user id: " + booking.getUserId());
