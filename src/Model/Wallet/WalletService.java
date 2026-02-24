@@ -23,7 +23,8 @@ public class WalletService {
   private Dates datesUtil = new Dates();
 
   public ArrayList<WalletDto> getAllWallets() {
-    UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el usuario tenga rol ADMIN
+    // UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el
+    // usuario tenga rol ADMIN
     ArrayList<WalletDto> wallets = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
@@ -44,7 +45,7 @@ public class WalletService {
   }
 
   public WalletDto getWalletById(Integer id) {
-    UserSession.getInstance().isAuthenticated();
+    // UserSession.getInstance().isAuthenticated();
     WalletModel walletModel = this.getById(id);
     if (walletModel == null) {
       return null;
@@ -53,7 +54,7 @@ public class WalletService {
   }
 
   public WalletDto getWalletByUserId(Integer userId) {
-    UserSession.getInstance().isAuthenticated();
+    // UserSession.getInstance().isAuthenticated();
     ArrayList<WalletModel> wallets = this.getAll();
     WalletModel found = null;
     for (WalletModel wallet : wallets) {
@@ -81,7 +82,8 @@ public class WalletService {
   }
 
   public WalletDto update(UpdateWalletDto walletDto) {
-    UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el usuario tenga rol ADMIN
+    // UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el
+    // usuario tenga rol ADMIN
     WalletModel existing = getById(walletDto.getId());
     if (existing == null) {
       throw new IllegalArgumentException("Wallet not found with id: " + walletDto.getId());
@@ -103,7 +105,8 @@ public class WalletService {
   }
 
   public Boolean delete(Integer id) {
-    UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el usuario tenga rol ADMIN
+    // UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el
+    // usuario tenga rol ADMIN
     WalletModel existing = getById(id);
     if (existing != null) {
       existing.setDeletedAt(this.datesUtil.getCurrentDateTime());
@@ -113,9 +116,9 @@ public class WalletService {
     return false;
   }
 
-  public WalletDto rechargeWallet(Double amount, String reference, String bankName) {
-    UserSession.getInstance().isAuthenticated();
-    Integer userId = UserSession.getInstance().getUser().getId();
+  public WalletDto rechargeWallet(Integer userId, Double amount, String reference, String bankName) {
+    // UserSession.getInstance().isAuthenticated();
+    // Integer userId = //UserSession.getInstance().getUser().getId();
     WalletDto wallet = this.getWalletByUserId(userId);
     if (wallet == null) {
       throw new IllegalArgumentException("Wallet not found for user id: " + userId);

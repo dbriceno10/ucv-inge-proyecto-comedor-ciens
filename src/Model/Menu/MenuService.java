@@ -77,8 +77,8 @@ public class MenuService {
     if (menuDto.getType() == null || menuDto.getType().isEmpty()) {
       throw new IllegalArgumentException("Menu type cannot be null or empty");
     }
-    if (menuDto.getFoodIds() == null || menuDto.getFoodIds().length == 0) {
-      throw new IllegalArgumentException("Menu must have at least one food item");
+    if (menuDto.getFoodIds() == null || menuDto.getFoodIds().size() == 0 || menuDto.getFoodIds().size() > 3) {
+      throw new IllegalArgumentException("Menu must have between 1 and 3 food items");
     }
     if (menuDto.getDate() == null || menuDto.getDate().isEmpty()) {
       throw new IllegalArgumentException("Menu date cannot be null or empty");
@@ -100,8 +100,8 @@ public class MenuService {
     if (menuDto.getType() == null || menuDto.getType().isEmpty()) {
       throw new IllegalArgumentException("Menu type cannot be null or empty");
     }
-    if (menuDto.getFoodIds() == null || menuDto.getFoodIds().length == 0) {
-      throw new IllegalArgumentException("Menu must have at least one food item");
+    if (menuDto.getFoodIds() == null || menuDto.getFoodIds().size() == 0 || menuDto.getFoodIds().size() > 3) {
+      throw new IllegalArgumentException("Menu must have between 1 and 3 food items");
     }
     if (menuDto.getDate() == null || menuDto.getDate().isEmpty()) {
       throw new IllegalArgumentException("Menu date cannot be null or empty");
@@ -156,6 +156,19 @@ public class MenuService {
     throw new IllegalStateException("Menu with id " + id + " has no available quantity");
   }
 
+  public boolean updateCurrentQty(Integer id, Integer qty) {
+    if (qty == null || qty < 0) {
+      throw new IllegalArgumentException("Quantity must be a non-negative value");
+    }
+    MenuModel menu = this.getById(id);
+    if (menu == null) {
+      throw new IllegalArgumentException("Menu not found with id: " + id);
+    }
+    menu.setCurrentQty(qty);
+    MenuModel updatedMenu = this.edit(menu);
+    return updatedMenu != null;
+  }
+
   // metodos privados
   private MenuDto mapToDto(MenuModel menuModel) {
     ArrayList<FoodDto> foodDtos = new ArrayList<>();
@@ -175,8 +188,7 @@ public class MenuService {
         menuModel.getCreatedAt(),
         menuModel.getUpdatedAt(),
         menuModel.getQty(),
-        menuModel.getCurrentQty(),
-        menuModel.getImage());
+        menuModel.getCurrentQty());
   }
 
   private ArrayList<MenuModel> getAll() {

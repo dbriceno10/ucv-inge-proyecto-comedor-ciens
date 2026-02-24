@@ -13,6 +13,7 @@ public class FoodModel {
   private String updatedAt = null;
   private String deletedAt = null;
   private Integer[] ingredientIds;
+  private String image = null;
 
   public FoodModel(
       Integer id,
@@ -37,6 +38,7 @@ public class FoodModel {
     // this.ingredientIds = ingredientIds;
     this.ingredientIds = new Integer[] {};
     this.valueCV = valueCV;
+    this.image = null;
   }
 
   public FoodModel(CreateFoodDto foodDto, Integer id, String createdAt) {
@@ -50,6 +52,7 @@ public class FoodModel {
     // this.ingredientIds = foodDto.getIngredientIds();
     this.ingredientIds = new Integer[] {};
     this.valueCV = 0.0;
+    this.image = null;
   }
 
   public FoodModel() {
@@ -94,6 +97,10 @@ public class FoodModel {
 
   public Double getValueCV() {
     return valueCV;
+  }
+
+  public String getImage() {
+    return image;
   }
 
   // setters
