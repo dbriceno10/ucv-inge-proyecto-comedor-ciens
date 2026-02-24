@@ -3,19 +3,15 @@ package Model.Booking;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import Model.Common.CommonServices;
-import Utils.Dates;
+import Utils.*;
 import Enums.BookingStatus;
 import Enums.UserRoles;
 import Enums.UserTypes;
-import DTO.Wallet.CreateWalletDto;
-import DTO.Wallet.MovementDto;
-import DTO.Wallet.UpdateWalletDto;
-import DTO.Wallet.WalletDto;
+import DTO.Wallet.*;
 import Context.User.UserSession;
 import DTO.Booking.BookingDto;
 import DTO.Booking.CreateBookingDto;
@@ -38,16 +34,18 @@ public class BookingService {
   private ConfigService configService = new ConfigService();
 
   public ArrayList<BookingDto> getTodayBookings(Integer documentId, String shift) {
-    UserSession.getInstance().isAuthenticated();
+    //UserSession.getInstance().isAuthenticated();
+    String today = this.datesUtil.getDayOfWeek();
     ArrayList<BookingDto> bookings = new ArrayList<>();
     ArrayList<BookingModel> bookingModels = this.gePendingBookings();
     for (BookingModel booking : bookingModels) {
       if (shift != null) {
-        if (booking.getUserDocumentId().equals(documentId) && booking.getShift().equals(shift)) {
+        if (booking.getUserDocumentId().equals(documentId) && booking.getShift().equals(shift)
+            && booking.getDay().equals(today)) {
           bookings.add(this.mapToDto(booking));
         }
       } else {
-        if (booking.getUserDocumentId().equals(documentId)) {
+        if (booking.getUserDocumentId().equals(documentId) && booking.getDay().equals(today)) {
           bookings.add(this.mapToDto(booking));
         }
       }
@@ -56,7 +54,7 @@ public class BookingService {
   }
 
   public BookingDto create(CreateBookingDto bookingDto) {
-    UserSession.getInstance().isAuthenticated();
+    //UserSession.getInstance().isAuthenticated();
     if (bookingDto.getUserId() == null) {
       throw new IllegalArgumentException("User ID is required.");
     }
@@ -140,7 +138,7 @@ public class BookingService {
   }
 
   public BookingDto update(UpdateBookingDto bookingDto) {
-    UserSession.getInstance().isAuthenticated();
+    //UserSession.getInstance().isAuthenticated();
     BookingModel existing = getById(bookingDto.getId());
     if (existing == null) {
       throw new IllegalArgumentException("Booking not found with id: " + bookingDto.getId());
@@ -168,7 +166,7 @@ public class BookingService {
   }
 
   public BookingDto updateStatus(Integer id, String status) {
-    UserSession.getInstance().isAuthenticated();
+    //UserSession.getInstance().isAuthenticated();
     if (status.equals(BookingStatus.PENDING) || status.equals(BookingStatus.CONFIRMED)
         || status.equals(BookingStatus.CANCELED)) {
       BookingModel existing = getById(id);
@@ -208,7 +206,7 @@ public class BookingService {
   }
 
   public Boolean delete(Integer id) {
-    UserSession.getInstance().isAuthenticated();
+    //UserSession.getInstance().isAuthenticated();
     BookingModel existing = getById(id);
     if (existing == null) {
       throw new IllegalArgumentException("Booking not found with id: " + id);
@@ -234,6 +232,28 @@ public class BookingService {
     }
     return true;
   }
+
+  // public BookingDto getBookingById(Integer id) {
+  //   BookingModel booking = this.getById(id);
+  //   if (booking == null) {
+  //     return null;
+  //   }
+  //   return this.mapToDto(booking);
+  // }
+
+  // public BookingDto makePayment(Integer BookingId) {
+  //   BookingModel booking = this.getById(BookingId);
+  //   if (booking == null) {
+  //     throw new IllegalArgumentException("Booking not found with id: " + BookingId);
+  //   }
+
+  //   UserModel user = this.userService.getUserById(booking.getUserId());
+  //   if (user == null) {
+  //     throw new IllegalArgumentException("User not found with ID: " + booking.getUserId());
+  //   }
+
+  //   return null;
+  // }
 
   // metodos privados
   private BookingDto mapToDto(BookingModel model) {
