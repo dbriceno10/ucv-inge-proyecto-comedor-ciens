@@ -1,6 +1,7 @@
 package View.Goalkeeper;
 
 import View.CustomComponents.*;
+import Enums.MenuTypes;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -10,6 +11,7 @@ import java.awt.event.*;
 public class GoalkeeperView extends JFrame {
     private JTextField txtUserID; // id del usuario a buscar
     private JButton btnSearch, btnClose;
+    private JComboBox<String> cmbType;
     private Colors color = new Colors();
 
     public GoalkeeperView() {
@@ -112,10 +114,33 @@ public class GoalkeeperView extends JFrame {
         fieldPanel.add(lblInput, BorderLayout.NORTH);
         fieldPanel.add(inputRow, BorderLayout.CENTER);
 
+        JPanel comboPanel = new JPanel(new BorderLayout(0, 5));
+        comboPanel.setOpaque(false);
+
+        JLabel lblCombo = new JLabel("TIPO DE MENÚ");
+        lblCombo.setFont(new Font("SansSerif", Font.BOLD, 12));
+        lblCombo.setForeground(color.DARK_GRAY);
+
+        // Opciones genéricas para la lista
+        String[] userTypes = {Enums.MenuTypes.BREACKFAST, Enums.MenuTypes.LUNCH, Enums.MenuTypes.DINNER};
+        cmbType = new RoundedComboBox<>(userTypes);
+        cmbType.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        
+        // Le damos la misma altura (40) que al inputRow para que queden alineados
+        cmbType.setPreferredSize(new Dimension(180, 40)); 
+        cmbType.setBackground(Color.WHITE);
+        cmbType.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cmbType.setActionCommand("FILTER_USER_TYPE"); // Etiqueta para el Controlador
+
+        comboPanel.add(lblCombo, BorderLayout.NORTH);
+        comboPanel.add(cmbType, BorderLayout.CENTER);
+
         // subpanel genérico para que no se estire por todo el ancho del squarePanel
-        JPanel searchContainer = new JPanel(); 
+        JPanel searchContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0)); 
         searchContainer.setOpaque(false); 
+
         searchContainer.add(fieldPanel);
+        searchContainer.add(comboPanel);
 
         squarePanel.add(searchContainer, BorderLayout.NORTH);
 
@@ -131,8 +156,6 @@ public class GoalkeeperView extends JFrame {
         setMinimumSize(new Dimension(1024, 768));
         setLocationRelativeTo(null);
     }
-
-
 
     public void searchListener(ActionListener listener) { btnSearch.addActionListener(listener);}
     public void closeListener(ActionListener listener) { btnClose.addActionListener(listener);}
