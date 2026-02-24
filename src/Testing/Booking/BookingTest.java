@@ -76,5 +76,27 @@ public class BookingTest {
     } catch (Exception e) {
       System.out.println("Failed to delete booking: " + e.getMessage());
     }
+
+    // Test 5: Obtener una reserva por ID
+    System.out.println("Test 5: Get booking by ID");
+    try {
+      BookingDto booking = bookingService.getBookingById(1);
+      if (booking != null) {
+        System.out.println("Booking found: ID " + booking.getId());
+      } else {
+        System.out.println("Booking not found.");
+      }
+    } catch (Exception e) {
+      System.out.println("Failed to get booking by ID: " + e.getMessage());
+    }
+
+    // Test 6: Cobrar por un servicio
+    System.out.println("Test 6: Charge for service");
+    try {
+      BookingDto chargedBooking = bookingService.chargeForService(1, "path/to/image");
+      System.out.println("Service charged successfully for booking ID: " + chargedBooking.getId());
+    } catch (Exception e) {
+      System.out.println("Failed to charge for service: " + e.getMessage());
+    }
   }
 }

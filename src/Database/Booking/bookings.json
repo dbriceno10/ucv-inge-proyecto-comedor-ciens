@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "id": 1,
+    "userId": 2,
+    "menuId": 2,
+    "foodId": 2,
+    "shift": "afternoon",
+    "date": "2026-02-24",
+    "day": "Tuesday",
+    "userDocumentId": 12345678,
+    "price": 43.80884999999999,
+    "createdAt": "2026-02-24T00:57:57Z",
+    "updatedAt": "2026-02-24T00:57:57Z",
+    "status": "CANCELADA",
+    "deletedAt": null
+  }
+]
