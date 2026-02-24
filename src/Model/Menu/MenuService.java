@@ -188,8 +188,7 @@ public class MenuService {
         menuModel.getCreatedAt(),
         menuModel.getUpdatedAt(),
         menuModel.getQty(),
-        menuModel.getCurrentQty(),
-        menuModel.getImage());
+        menuModel.getCurrentQty());
   }
 
   private ArrayList<MenuModel> getAll() {

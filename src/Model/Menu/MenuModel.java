@@ -14,7 +14,6 @@ public class MenuModel {
   private String createdAt = null;
   private String updatedAt = null;
   private String deletedAt = null;
-  private String image = null;
   private Integer qty;
   private Integer currentQty;
 
@@ -27,33 +26,7 @@ public class MenuModel {
       Boolean isActive,
       String createdAt,
       String updatedAt,
-      String deletedAt,
-      Integer qty,
-      String image) {
-    this.id = id;
-    this.day = day;
-    this.type = type;
-    this.foodIds = foodIds;
-    this.date = date;
-    this.isActive = isActive;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-    this.deletedAt = deletedAt;
-    this.image = image;
-    this.qty = qty;
-    this.currentQty = qty; // Inicialmente, currentQty es igual a qty
-  }
-
-  public MenuModel(
-      Integer id,
-      String day,
-      String type,
-      ArrayList<Integer> foodIds,
-      String date,
-      Boolean isActive,
-      String createdAt,
-      String updatedAt,
-      String deletedAt,
+      String deleted,
       Integer qty) {
     this.id = id;
     this.day = day;
@@ -63,8 +36,7 @@ public class MenuModel {
     this.isActive = isActive;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.deletedAt = deletedAt;
-    this.image = null;
+    this.deletedAt = null;
     this.qty = qty;
     this.currentQty = qty; // Inicialmente, currentQty es igual a qty
   }
@@ -122,10 +94,6 @@ public class MenuModel {
     return type;
   }
 
-  public String getImage() {
-    return image;
-  }
-
   public Integer getQty() {
     return qty;
   }
@@ -146,10 +114,6 @@ public class MenuModel {
 
   public void setDeletedAt(String deletedAt) {
     this.deletedAt = deletedAt;
-  }
-
-  public void setImage(String image) {
-    this.image = image;
   }
 
   public void setCurrentQty(Integer currentQty) {

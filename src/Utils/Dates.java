@@ -35,6 +35,9 @@ public class Dates {
       default:
         return dayOfWeek.toString().toUpperCase();
     }
+  }
 
+  public String getDayOfWeek() {
+    return this.getDayOfWeek(this.getCurrentDateTime());
   }
 }
