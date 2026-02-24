@@ -13,5 +13,20 @@
     "updatedAt": "2026-02-24T00:57:57Z",
     "status": "CANCELADA",
     "deletedAt": null
+  },
+  {
+    "id": 2,
+    "userId": 3,
+    "menuId": 2,
+    "foodId": 2,
+    "shift": "DESAYUNO",
+    "date": "2026-02-24",
+    "day": "Tuesday",
+    "userDocumentId": 80000000,
+    "price": 43.80884999999999,
+    "createdAt": "2026-02-24T00:57:57Z",
+    "updatedAt": "2026-02-24T00:57:57Z",
+    "status": "PENDIENTE",
+    "deletedAt": null
   }
 ]

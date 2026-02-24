@@ -148,5 +148,20 @@
     "deletedAt": null,
     "role": "ADMINISTRADOR",
     "image": null
+  },
+  {
+    "id": 11,
+    "firstName": "Pedrito",
+    "lastName": "Alimaña",
+    "email": "pedrito123@gmail.com",
+    "type": "",
+    "documentId": 12345678,
+    "password": "password123",
+    "isActive": true,
+    "createdAt": "2026-01-01T10:00:00Z",
+    "updatedAt": "2026-01-10T15:00:00Z",
+    "deletedAt": null,
+    "role": "PORTERO",
+    "image": null
   }
 ]
