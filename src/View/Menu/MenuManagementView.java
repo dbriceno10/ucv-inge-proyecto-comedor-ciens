@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MenuManagementView extends JFrame {
-    private RoundedButton btnCreateMenu, btnInventory, btnDishes; 
+    private RoundedButton btnCreateMenu, btnInventory, btnDishes, btnConfig;
     private RoundedTextField txtDateFrom, txtDateUntil;
     private JPanel menuContainer;
     private Colors color = new Colors();
@@ -44,7 +44,20 @@ public class MenuManagementView extends JFrame {
 
         btnDishes = new RoundedButton("Platos");
         stylize_button(btnDishes, color.LIGHT_BLUE);
+        btnDishes.setActionCommand("Platos"); // Buena práctica añadir los comandos
 
+        btnConfig = new RoundedButton("Configurar CCB");
+        stylize_button(btnConfig, color.YELLOW); 
+        btnConfig.setForeground(Color.BLACK); 
+
+        btnConfig.setPreferredSize(new Dimension(200, 38)); 
+
+        btnConfig.setActionCommand("Configurar CCB");
+        navPanel.add(btnConfig);
+
+        navPanel.add(btnConfig); // Añadimos el tuyo primero (opcional, para que salga a la izquierda)
+        navPanel.add(btnInventory);
+        navPanel.add(btnDishes);
         navPanel.add(btnInventory);
         navPanel.add(btnDishes);
 
@@ -190,6 +203,7 @@ public class MenuManagementView extends JFrame {
     public void CreateMenuListener(ActionListener listener) { btnCreateMenu.addActionListener(listener);}
     public void InventoryListener(ActionListener listener) { btnInventory.addActionListener(listener);}
     public void DishesListener(ActionListener listener) { btnDishes.addActionListener(listener);} 
+    public void configListener(ActionListener listener) { btnConfig.addActionListener(listener);} 
 
     // component getters, not text
     public JPanel getComponentMenuContainer() { return menuContainer; }
