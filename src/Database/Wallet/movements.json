@@ -1,10 +1,1 @@
-[
-  {
-    "id": 1,
-    "walletId": 2,
-    "amount": 200,
-    "type": "ENTRADA",
-    "description": "Recarga de saldo",
-    "date": "2026-01-02T11:00:00Z"
-  }
-]
+[{"id":1,"walletId":2,"type":"ENTRADA","amount":200.0,"date":"2026-01-02T11:00:00Z","description":"Recarga de saldo","reference":null,"bankName":null},{"id":2,"walletId":2,"type":"ENTRADA","amount":22222.22,"date":"2026-02-24T00:25:11Z","description":"Recarga de saldo","reference":"1234567891011","bankName":"0102 - Banco de Venezuela"},{"id":3,"walletId":2,"type":"ENTRADA","amount":1.0E10,"date":"2026-02-24T00:35:53Z","description":"Recarga de saldo","reference":"123456789123433","bankName":"0172 - Bancamiga"},{"id":4,"walletId":2,"type":"ENTRADA","amount":1.11,"date":"2026-02-24T17:31:13Z","description":"Recarga de saldo","reference":"233223232323232","bankName":"0102 - Banco de Venezuela"},{"id":5,"walletId":2,"type":"ENTRADA","amount":23232.32,"date":"2026-02-25T15:34:26Z","description":"Recarga de saldo","reference":"322342232323232","bankName":"0102 - Banco de Venezuela"}]

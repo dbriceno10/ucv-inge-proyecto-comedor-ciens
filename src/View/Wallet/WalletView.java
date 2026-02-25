@@ -67,11 +67,6 @@ public class WalletView extends JDialog { // a modal window is used as an interm
         transactionListPanel.setLayout(new BoxLayout(transactionListPanel, BoxLayout.Y_AXIS));
         transactionListPanel.setBackground(color.WHITE);
 
-        //ejemplos***
-        transactionListPanel.add(createTransactionRow("07/02/2026", "$100.00"));
-        transactionListPanel.add(createTransactionRow("06/02/2026", "$250.00"));
-        transactionListPanel.add(createTransactionRow("05/02/2026", "$50.00"));
-
         JScrollPane scrollPane = new JScrollPane(transactionListPanel);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
@@ -87,6 +82,7 @@ public class WalletView extends JDialog { // a modal window is used as an interm
         btnTopUp.setPreferredSize(new Dimension(150, 40));
         btnTopUp.setBackground(color.OXFORD_BLUE);
         btnTopUp.setForeground(color.WHITE);
+        btnTopUp.setActionCommand("Recarga");
 
         footerPanel.add(btnTopUp);
         add(footerPanel, BorderLayout.SOUTH);
@@ -112,6 +108,7 @@ public class WalletView extends JDialog { // a modal window is used as an interm
     }
 
     public JLabel getComponentBlc() { return lblBalance; }
+    public JPanel getTransactionListPanel() { return transactionListPanel; }
 
     public void topUpListener(ActionListener listener) { btnTopUp.addActionListener(listener);}
     public void cancelListener(ActionListener listener) { btnClose.addActionListener(listener);}
