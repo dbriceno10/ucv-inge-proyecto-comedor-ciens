@@ -1,6 +1,7 @@
 package Controllers.MenuControllers;
 
 import View.Menu.*;
+import View.Config.ConfigView;
 import View.Food.*;
 import View.Ingredient.IngredientListView;
 import DTO.Menu.*;
@@ -8,6 +9,7 @@ import Model.Menu.*;
 
 import javax.swing.*;
 
+import Controllers.ConfigControllers.ConfigController;
 import Controllers.FoodControllers.DishListController;
 import Controllers.IngredientControllers.IngredientListController;
 
@@ -26,6 +28,7 @@ public class MenuManagementController implements ActionListener {
         this.view.CreateMenuListener(this);
         this.view.InventoryListener(this);
         this.view.DishesListener(this);
+        this.view.configListener(this);
 
         loadMenus();
         this.view.setVisible(true);
@@ -47,6 +50,10 @@ public class MenuManagementController implements ActionListener {
             case "Platos":
                 DishListView dishView = new DishListView();
                 new DishListController(dishView);
+                break;
+            case "Configurar CCB":
+                ConfigView configView = new ConfigView(this.view); 
+                new ConfigController(configView);
                 break;
             default: break;
         }
