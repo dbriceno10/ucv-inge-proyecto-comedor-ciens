@@ -10,8 +10,8 @@ import java.awt.event.*;
 
 public class GoalkeeperView extends JFrame {
     private JTextField txtUserID; // id del usuario a buscar
-    private JButton btnSearch, btnClose;
-    private JComboBox<String> cmbType;
+    private JButton btnSearch, btnClose, btnProcess;
+    private JComboBox<String> cmbShift;
     private JPanel cardsContainer;
     private Colors color = new Colors();
 
@@ -107,20 +107,20 @@ public class GoalkeeperView extends JFrame {
         lblCombo.setForeground(color.DARK_GRAY);
 
         String[] menuOptions = {
-            Enums.MenuTypes.BREACKFAST.toString(), 
-            Enums.MenuTypes.LUNCH.toString(), 
-            Enums.MenuTypes.DINNER.toString()
+            "DESAYUNO",
+            "ALMUERZO",
+            "CENA"
         };
 
-        cmbType = new RoundedComboBox<>(menuOptions);
-        cmbType.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        cmbType.setPreferredSize(new Dimension(180, 40));
-        cmbType.setBackground(Color.WHITE);
-        cmbType.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        cmbType.setActionCommand("FILTER_USER_TYPE");
+        cmbShift = new RoundedComboBox<>(menuOptions);
+        cmbShift.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        cmbShift.setPreferredSize(new Dimension(180, 40));
+        cmbShift.setBackground(Color.WHITE);
+        cmbShift.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cmbShift.setActionCommand("FILTER_USER_TYPE");
 
         comboPanel.add(lblCombo, BorderLayout.NORTH);
-        comboPanel.add(cmbType, BorderLayout.CENTER);
+        comboPanel.add(cmbShift, BorderLayout.CENTER);
 
         // panel de botón de búsqueda
         JPanel buttonPanel = new JPanel(new BorderLayout(0, 5));
@@ -135,6 +135,20 @@ public class GoalkeeperView extends JFrame {
         btnSearch.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSearch.setIcon(Utils.ImageUtils.getRoundedIcon("assets/images/Icons/magnifying_glass.png", 20, 20, 0));
         btnSearch.setActionCommand("SEARCH_USER");
+
+        // este botón se dibuja (muestra) cuando se genera una tarjeta de reservación
+        btnProcess = new RoundedButton("PROCESAR RESERVA");
+        btnProcess.setFont(new Font("SansSerif", Font.BOLD, 14));
+        btnProcess.setBackground(color.OXFORD_BLUE);
+        btnProcess.setForeground(Color.WHITE);
+        btnProcess.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnProcess.setActionCommand("PROCESS_BOOKING");
+        
+        Dimension btnSize = new Dimension(250, 45);
+        btnProcess.setPreferredSize(btnSize);
+        btnProcess.setMaximumSize(btnSize);
+        btnProcess.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //---------------------------------------------------------------------------
 
         buttonPanel.add(lblEmpty, BorderLayout.NORTH);
         buttonPanel.add(btnSearch, BorderLayout.CENTER);
@@ -164,7 +178,8 @@ public class GoalkeeperView extends JFrame {
 
         // contenedor dinámico central 
         cardsContainer = new JPanel();
-        cardsContainer.setLayout(new BoxLayout(cardsContainer, BoxLayout.Y_AXIS));
+        // usamos GridBagLayout para que la única tarjeta quede perfectamente centrada
+        cardsContainer.setLayout(new GridBagLayout());
         cardsContainer.setOpaque(false); // hereda el fondo de squarePanel
 
         squarePanel.add(topWrapper, BorderLayout.NORTH);
@@ -183,31 +198,34 @@ public class GoalkeeperView extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    private JPanel createReservationCard(String userDocumentId, String date, 
-        String price, String status) {
+    private JPanel createReservationCard(Integer userDocumentId, String date, 
+        Double price, String status) {
 
         // panel principal de la tarjeta
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setBackground(color.WHITE);
+        card.setBackground(color.DARK_GRAY);
         card.setBorder(BorderFactory.createCompoundBorder(
         BorderFactory.createLineBorder(color.LIGHT_GRAY, 1, true),
         BorderFactory.createEmptyBorder(15, 20, 15, 20)));
 
         // limitamos la altura máxima, con posibilidad de expandirse a lo ancho
-        card.setMaximumSize(new Dimension(800, 100));
+        Dimension cardSize = new Dimension(600, 120);
+        card.setPreferredSize(cardSize);
+        card.setMaximumSize(cardSize);
+        card.setMinimumSize(cardSize);
 
         // superior: cédula y fecha
         JPanel topRow = new JPanel(new BorderLayout());
         topRow.setOpaque(false);
         
         JLabel lblId = new JLabel("C.I: " + userDocumentId);
-        lblId.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        lblId.setForeground(Color.GRAY);
+        lblId.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblId.setForeground(color.LIGHT_GRAY);
         
         JLabel lblDate = new JLabel(date);
-        lblDate.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        lblDate.setForeground(Color.GRAY);
+        lblDate.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblDate.setForeground(color.LIGHT_GRAY);
         
         topRow.add(lblId, BorderLayout.WEST);
         topRow.add(lblDate, BorderLayout.EAST);
@@ -216,7 +234,7 @@ public class GoalkeeperView extends JFrame {
         JPanel bottomRow = new JPanel(new BorderLayout());
         bottomRow.setOpaque(false);
         
-        JLabel lblPrice = new JLabel("$" + price);
+        JLabel lblPrice = new JLabel(String.format("$%.2f", price));
         lblPrice.setFont(new Font("SansSerif", Font.BOLD, 22));
         lblPrice.setForeground(color.OXFORD_BLUE);
         
@@ -233,17 +251,52 @@ public class GoalkeeperView extends JFrame {
         return card;
     }
     
-    public void displayCard(String userDocumentId, String date, 
-        String price, String status) {
-            createReservationCard(userDocumentId, date, price, status);
+    public void displayCard(Integer userDocumentId, String date, 
+        Double price, String status) {
+            cardsContainer.removeAll();
+
+            JPanel wrapper = new JPanel();
+            wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.Y_AXIS));
+            wrapper.setOpaque(false);
+
+            JPanel newCard = createReservationCard(userDocumentId, date, price, status);
+            newCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            wrapper.add(newCard);
+            wrapper.add(Box.createRigidArea(new Dimension(0, 20)));
+            wrapper.add(btnProcess); // agregamos el botón de procesar debajo
+
+            cardsContainer.add(wrapper); // añadimos la tarjeta al contenedor
+            cardsContainer.revalidate(); // refrescamos UI
+            cardsContainer.repaint();
         }
+
+    public void showMessage(String message) {
+        cardsContainer.removeAll();
+        JLabel lblMsg = new JLabel(message);
+        lblMsg.setFont(new Font("SansSerif", Font.ITALIC, 16));
+        lblMsg.setForeground(Color.DARK_GRAY);
+        cardsContainer.add(lblMsg);
+        cardsContainer.revalidate();
+        cardsContainer.repaint();
+    }
     
-    public Integer getID() { return Integer.parseInt(txtUserID.getText()); }
-    public String getType_() { return (String) cmbType.getSelectedItem(); }
+    public Integer getID() { 
+        String text = txtUserID.getText().trim();
+        if (text.isEmpty()) return null;
+        try {
+            return Integer.parseInt(text);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    public String getShift() { return (String) cmbShift.getSelectedItem(); }
 
     // component getter, not text
     public JTextField getComponent_txtUserID() { return txtUserID; }
 
     public void searchListener(ActionListener listener) { btnSearch.addActionListener(listener);}
     public void closeListener(ActionListener listener) { btnClose.addActionListener(listener);}
+    public void processListener(ActionListener listener) { btnProcess.addActionListener(listener); }
 }

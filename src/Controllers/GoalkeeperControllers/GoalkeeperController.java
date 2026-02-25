@@ -20,6 +20,7 @@ public class GoalkeeperController implements ActionListener {
         
         this.view.searchListener(this);
         this.view.closeListener(this);
+        this.view.processListener(this);
 
         InputValidator.addInputRestriction(this.view.getComponent_txtUserID(), "ONLY_NUMBERS", 8);
 
@@ -33,10 +34,12 @@ public class GoalkeeperController implements ActionListener {
         switch (command) {
             case "SEARCH_USER":
                 processSearchUser(); // búsqueda de reservación de usuario
-                System.out.println("case SEARCH_USER");
                 break;
             case "CLOSE_VIEW":
                 view.dispose();
+                break;
+            case "PROCESS_BOOKING":
+                //
                 break;
             default: break;
         }
@@ -44,19 +47,24 @@ public class GoalkeeperController implements ActionListener {
 
     private void processSearchUser() {
         Integer id = view.getID();
-        String type = view.getType_();
+        if (id == null) {
+            view.showMessage("Por favor, ingrese un número de C.I. válido.");
+            return;
+        }
 
-        ArrayList<BookingDto> bookingList = bookingService.getTodayBookings(id, type);
-        System.out.println("SIZE: " + bookingList.size());
+        String shift = view.getShift();
+        ArrayList<BookingDto> bookingList = bookingService.getTodayBookings(id, shift);
 
         if (!bookingList.isEmpty()) {
-            System.out.println("lista NO vacia");
+
             for (BookingDto booking : bookingList) {
-                if (booking.getShift().equals(type)) {
-                    view.displayCard(type, type, type, type);
+                if (booking.getShift().equalsIgnoreCase(shift)) {
+                    view.displayCard(id, booking.getDate(), booking.getPrice(), booking.getStatus());
+                    break;
                 }
             }
+        } else {
+            view.showMessage("No se han encontrado reservaciones activas para el usuario");
         }
-        System.out.println("lista vacia");
-    }
+    }   
 }

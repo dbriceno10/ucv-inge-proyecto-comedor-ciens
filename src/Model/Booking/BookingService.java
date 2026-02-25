@@ -40,7 +40,7 @@ public class BookingService {
     // UserSession.getInstance().isAuthenticated();
     String today = this.datesUtil.getDayOfWeek();
     ArrayList<BookingDto> bookings = new ArrayList<>();
-    ArrayList<BookingModel> bookingModels = this.gePendingBookings();
+    ArrayList<BookingModel> bookingModels = this.getPendingBookings();
     for (BookingModel booking : bookingModels) {
       if (shift != null) {
         if (booking.getUserDocumentId().equals(documentId) && booking.getShift().equals(shift)
@@ -77,7 +77,7 @@ public class BookingService {
       throw new IllegalArgumentException("Day is required.");
     }
 
-    ArrayList<BookingModel> existing = this.gePendingBookings();
+    ArrayList<BookingModel> existing = this.getPendingBookings();
     ArrayList<BookingModel> userBookings = new ArrayList<>();
     if (existing != null) {
       for (BookingModel booking : existing) {
@@ -330,7 +330,7 @@ public class BookingService {
     return bookings;
   }
 
-  private ArrayList<BookingModel> gePendingBookings() {
+  private ArrayList<BookingModel> getPendingBookings() {
     ArrayList<BookingModel> bookingModels = this.getAll();
     ArrayList<BookingModel> bookings = new ArrayList<>();
     for (BookingModel booking : bookingModels) {
