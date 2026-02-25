@@ -12,6 +12,7 @@ import Enums.BookingStatus;
 import Enums.UserRoles;
 import Enums.UserTypes;
 import DTO.Wallet.*;
+import Model.Wallet.*;
 import Context.User.UserSession;
 import DTO.Booking.BookingDto;
 import DTO.Booking.CreateBookingDto;
@@ -32,9 +33,11 @@ public class BookingService {
   private MenuService menuService = new MenuService();
   private FoodService foodService = new FoodService();
   private ConfigService configService = new ConfigService();
+  private WalletService walletService = new WalletService();
+  private FileManager fileManager = new FileManager();
 
   public ArrayList<BookingDto> getTodayBookings(Integer documentId, String shift) {
-    //UserSession.getInstance().isAuthenticated();
+    // UserSession.getInstance().isAuthenticated();
     String today = this.datesUtil.getDayOfWeek();
     ArrayList<BookingDto> bookings = new ArrayList<>();
     ArrayList<BookingModel> bookingModels = this.gePendingBookings();
@@ -54,7 +57,7 @@ public class BookingService {
   }
 
   public BookingDto create(CreateBookingDto bookingDto) {
-    //UserSession.getInstance().isAuthenticated();
+    // UserSession.getInstance().isAuthenticated();
     if (bookingDto.getUserId() == null) {
       throw new IllegalArgumentException("User ID is required.");
     }
@@ -138,7 +141,7 @@ public class BookingService {
   }
 
   public BookingDto update(UpdateBookingDto bookingDto) {
-    //UserSession.getInstance().isAuthenticated();
+    // UserSession.getInstance().isAuthenticated();
     BookingModel existing = getById(bookingDto.getId());
     if (existing == null) {
       throw new IllegalArgumentException("Booking not found with id: " + bookingDto.getId());
@@ -166,7 +169,7 @@ public class BookingService {
   }
 
   public BookingDto updateStatus(Integer id, String status) {
-    //UserSession.getInstance().isAuthenticated();
+    // UserSession.getInstance().isAuthenticated();
     if (status.equals(BookingStatus.PENDING) || status.equals(BookingStatus.CONFIRMED)
         || status.equals(BookingStatus.CANCELED)) {
       BookingModel existing = getById(id);
@@ -206,7 +209,7 @@ public class BookingService {
   }
 
   public Boolean delete(Integer id) {
-    //UserSession.getInstance().isAuthenticated();
+    // UserSession.getInstance().isAuthenticated();
     BookingModel existing = getById(id);
     if (existing == null) {
       throw new IllegalArgumentException("Booking not found with id: " + id);
@@ -233,27 +236,66 @@ public class BookingService {
     return true;
   }
 
-  // public BookingDto getBookingById(Integer id) {
-  //   BookingModel booking = this.getById(id);
-  //   if (booking == null) {
-  //     return null;
-  //   }
-  //   return this.mapToDto(booking);
-  // }
+  public BookingDto getBookingById(Integer id) {
+    BookingModel booking = this.getById(id);
+    if (booking == null) {
+      return null;
+    }
+    return this.mapToDto(booking);
+  }
 
-  // public BookingDto makePayment(Integer BookingId) {
-  //   BookingModel booking = this.getById(BookingId);
-  //   if (booking == null) {
-  //     throw new IllegalArgumentException("Booking not found with id: " + BookingId);
-  //   }
+  public BookingDto chargeForService(Integer bookingId, String routePath) {
+    ConfigDto config = this.configService.getConfig();
+    if (config == null) {
+      throw new IllegalArgumentException("Configuration not found.");
+    }
+    BookingModel booking = this.getById(bookingId);
+    if (booking == null) {
+      throw new IllegalArgumentException("Booking not found with id: " + bookingId);
+    }
 
-  //   UserModel user = this.userService.getUserById(booking.getUserId());
-  //   if (user == null) {
-  //     throw new IllegalArgumentException("User not found with ID: " + booking.getUserId());
-  //   }
+    UserModel user = this.userService.getUserById(booking.getUserId());
+    if (user == null) {
+      throw new IllegalArgumentException("User not found with ID: " + booking.getUserId());
+    }
 
-  //   return null;
-  // }
+    BaseUserModel baseUser = this.userService.getUCVUserByDocumentId(user.getDocumentId());
+    if (baseUser == null) {
+      throw new IllegalArgumentException("Base user not found with document ID: " + user.getDocumentId());
+    }
+
+    WalletDto wallet = this.walletService.getWalletByUserId(booking.getUserId());
+    if (wallet == null) {
+      throw new IllegalArgumentException("Wallet not found for user id: " + booking.getUserId());
+    }
+
+    Double configPercentage = 1.0;
+    if (user.getType().equals(UserTypes.PROFESSOR)) {
+      configPercentage = config.getTeacherPercentage() / 100.0;
+    } else if (user.getType().equals(UserTypes.STUDENT)) {
+      configPercentage = config.getStudentPercentage() / 100.0;
+    } else if (user.getType().equals(UserTypes.WORKER)) {
+      configPercentage = config.getWorkerPercentage() / 100.0;
+    }
+
+    Double newBalance = wallet.getBalance() - (booking.getPrice() * configPercentage);
+
+    if (newBalance < 0) {
+      throw new IllegalArgumentException("Insufficient balance in wallet for user id: " + booking.getUserId());
+    }
+
+    Boolean result = this.fileManager.simulateRecognition(baseUser.getImage(), routePath);
+
+    if (result) {
+      this.walletService.makePayment(user.getId(), newBalance);
+      booking.setStatus(BookingStatus.CONFIRMED);
+      booking.setUpdatedAt(this.datesUtil.getCurrentDateTime());
+      this.edit(booking);
+      return this.mapToDto(booking);
+    }
+
+    throw new IllegalArgumentException("Facial recognition failed for user id: " + booking.getUserId());
+  }
 
   // metodos privados
   private BookingDto mapToDto(BookingModel model) {

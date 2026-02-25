@@ -1,5 +1,8 @@
 package Controllers.WalletControllers;
 
+import Context.User.UserSession; 
+import DTO.User.AuthUserDto;
+
 import View.Wallet.TopUpView;
 import Model.Wallet.WalletService;
 import Utils.InputValidator;
@@ -136,9 +139,15 @@ public class TopUpController implements ActionListener {
                 return;
             }
 
-            // Llamamos a tu servicio existente. 
-            // Éste internamente añade el dinero a la cuenta y guarda el movimiento.
-            service.rechargeWallet(amount, reference, bank);
+            // Obtenemos al usuario actual de la sesión
+            AuthUserDto currentUser = UserSession.getInstance().getUser();
+            if (currentUser == null) {
+                JOptionPane.showMessageDialog(view, "Error: No hay sesión activa.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Enviamos la recarga incluyendo el ID del usuario, como exigen los nuevos cambios
+            service.rechargeWallet(currentUser.getId(), amount, reference, bank);
 
             JOptionPane.showMessageDialog(view, "¡Recarga registrada con éxito! El saldo ha sido actualizado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             

@@ -10,7 +10,10 @@ import javax.swing.JFileChooser;
 
 public class FileManager {
 
-  public boolean simulateRecognition(Path savedImagePath, Path uploadedImagePath) {
+  public boolean simulateRecognition(String routeSaved, String routeUploaded) {
+    Path savedImagePath = Path.of(routeSaved);
+    Path uploadedImagePath = Path.of(routeUploaded);
+
     try {
       // Compara los archivos byte por byte.
       // -1 significa que son exactamente iguales.

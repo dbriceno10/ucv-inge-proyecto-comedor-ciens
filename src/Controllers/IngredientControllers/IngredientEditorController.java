@@ -6,6 +6,8 @@ import Model.Ingredient.IngredientSevice;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class IngredientEditorController implements ActionListener {
@@ -22,6 +24,7 @@ public class IngredientEditorController implements ActionListener {
         this.view.uploadImgListener(this);
 
         this.view.setVisible(true);
+        this.view.setExtendedState(JFrame.MAXIMIZED_BOTH); // to display the interface in full screen mode.
     }
 
     @Override
