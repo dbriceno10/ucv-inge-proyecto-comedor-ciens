@@ -4,6 +4,7 @@ import DTO.Booking.BookingDto;
 import DTO.Booking.CreateBookingDto;
 import DTO.Booking.UpdateBookingDto;
 import Model.Booking.BookingService;
+import Enums.*;
 
 import java.util.ArrayList;
 
@@ -14,9 +15,9 @@ public class BookingTest {
     System.out.println("Starting booking tests...");
 
     // Test 1: Obtener todas las reservas
-    System.out.println("Test 1: Get all bookings");
+    System.out.println("Test 1:  Obtener reservas de la cedula 23456789");
     try {
-      ArrayList<BookingDto> bookings = bookingService.getTodayBookings(12345678, "morning");
+      ArrayList<BookingDto> bookings = bookingService.getTodayBookings(23456789, null);
       if (bookings != null && !bookings.isEmpty()) {
         System.out.println("Total bookings: " + bookings.size());
         for (BookingDto booking : bookings) {
@@ -36,9 +37,9 @@ public class BookingTest {
           1, // User ID
           1, // Menu ID
           1, // Food ID
-          "morning", // Shift
+          MenuTypes.BREACKFAST, // Shift
           "2026-02-23", // Date
-          "Monday" // Day
+          Days.TUESDAY // Day
       );
       BookingDto createdBooking = bookingService.create(newBooking);
       System.out.println("Booking created: ID " + createdBooking.getId());
@@ -54,12 +55,13 @@ public class BookingTest {
           2, // New User ID
           2, // New Menu ID
           2, // New Food ID
-          "afternoon", // New Shift
+          MenuTypes.LUNCH, // New Shift
           "2026-02-24", // New Date
-          "Tuesday" // New Day
+          Days.TUESDAY // New Day
       );
       BookingDto result = bookingService.update(updatedBooking);
-      System.out.println("Booking updated: ID " + result.getId() + ", New Shift: " + result.getShift());
+      System.out.println("Booking updated: ID " + result.getId() + ", New Shift: "
+          + result.getShift());
     } catch (Exception e) {
       System.out.println("Failed to update booking: " + e.getMessage());
     }
@@ -93,8 +95,10 @@ public class BookingTest {
     // Test 6: Cobrar por un servicio
     System.out.println("Test 6: Charge for service");
     try {
-      BookingDto chargedBooking = bookingService.chargeForService(1, "path/to/image");
-      System.out.println("Service charged successfully for booking ID: " + chargedBooking.getId());
+      BookingDto chargedBooking = bookingService.chargeForService(1,
+          "assets/filemanager/avatar2.jpg");
+      System.out.println("Service charged successfully for booking ID: " +
+          chargedBooking.getId());
     } catch (Exception e) {
       System.out.println("Failed to charge for service: " + e.getMessage());
     }
