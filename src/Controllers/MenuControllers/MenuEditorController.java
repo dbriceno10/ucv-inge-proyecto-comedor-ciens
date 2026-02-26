@@ -55,14 +55,26 @@ public class MenuEditorController implements ActionListener {
     void processMenuSave() {
         try {
             if (tempFoodIds.isEmpty()) { 
-                JOptionPane.showMessageDialog(view, "Añada un plato."); 
+                JOptionPane.showMessageDialog(view, "Añada un plato.");
                 return; 
             }
-
-            CreateMenuDto newMenu = new CreateMenuDto(Days.MONDAY, MenuTypes.BREACKFAST,tempFoodIds,10, view.getTxtDate());
+            
+            String day = view.getCmbDay();
+            String type = view.getCmbType();
+            String date = view.getTxtDate();
+            Integer qty = Integer.parseInt(view.getTxtQty()); 
+           
+            CreateMenuDto newMenu = new CreateMenuDto(day, type, tempFoodIds, qty, date);
             menuService.create(newMenu);
-            JOptionPane.showMessageDialog(view, "Guardado");
-        } catch (Exception ex) { JOptionPane.showMessageDialog(view, "Error: " + ex.getMessage()); }
+            
+            JOptionPane.showMessageDialog(view, "¡Menú guardado exitosamente!");
+            view.dispose(); 
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(view, "La cantidad de bandejas debe ser un número entero válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) { 
+            JOptionPane.showMessageDialog(view, "Error: " + ex.getMessage());
+        }
     }
 
     void showFoodSelector() {

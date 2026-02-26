@@ -130,4 +130,52 @@
   "deletedAt" : null,
   "qty" : null,
   "currentQty" : null
+}, {
+  "id" : 12,
+  "day" : "LUNES",
+  "type" : "DESAYUNO",
+  "foodIds" : [ 1, 4 ],
+  "date" : "08/12/2025",
+  "isActive" : true,
+  "createdAt" : "2026-02-26T22:37:51Z",
+  "updatedAt" : "2026-02-26T22:37:51Z",
+  "deletedAt" : null,
+  "qty" : null,
+  "currentQty" : null
+}, {
+  "id" : 13,
+  "day" : "LUNES",
+  "type" : "DESAYUNO",
+  "foodIds" : [ 1 ],
+  "date" : "08/12/2025",
+  "isActive" : true,
+  "createdAt" : "2026-02-26T22:49:02Z",
+  "updatedAt" : "2026-02-26T22:49:02Z",
+  "deletedAt" : null,
+  "qty" : null,
+  "currentQty" : null
+}, {
+  "id" : 14,
+  "day" : "LUNES",
+  "type" : "DESAYUNO",
+  "foodIds" : [ 5 ],
+  "date" : "08/12/2029",
+  "isActive" : true,
+  "createdAt" : "2026-02-26T22:53:41Z",
+  "updatedAt" : "2026-02-26T22:53:41Z",
+  "deletedAt" : null,
+  "qty" : null,
+  "currentQty" : null
+}, {
+  "id" : 15,
+  "day" : "LUNES",
+  "type" : "DESAYUNO",
+  "foodIds" : [ 4, 9 ],
+  "date" : "08/12/2025",
+  "isActive" : true,
+  "createdAt" : "2026-02-26T22:54:26Z",
+  "updatedAt" : "2026-02-26T22:54:26Z",
+  "deletedAt" : null,
+  "qty" : null,
+  "currentQty" : null
 } ]
