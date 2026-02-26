@@ -268,5 +268,14 @@
     "type": "PROFESOR",
     "documentId": 34567890,
     "image": "assets/images/UCVUsers/avatar5.png"
+  },
+  {
+    "id": 31,
+    "firstName": "Prueba",
+    "lastName": "Monedero",
+    "email": "prueba_monedero@email.com",
+    "type": "ESTUDIANTE",
+    "documentId": 30117524,
+    "image": "assets/images/UCVUsers/avatar5.png"
   }
 ]
