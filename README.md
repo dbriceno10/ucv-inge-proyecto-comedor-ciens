@@ -16,6 +16,13 @@ El proyecto inició con la metodología de desarrollo **Rational Unified Process
 * **Pruebas Unitarias:** JUnit Framework.
 * **Editor Sugerido:** VS Code con el *Extension Pack for Java*.
 
+## 📦 Paquetes y Dependencias (pom.xml)
+El proyecto hace uso de las siguientes librerías y plugins gestionados a través de Maven:
+* **Jackson Databind (`jackson-databind`):** Librería principal utilizada para la lectura y escritura de archivos JSON. Permite mapear (serializar y deserializar) los objetos Java hacia los archivos `.json` que actúan como la base de datos del sistema.
+* **JUnit Jupiter (`junit-jupiter`):** Framework de pruebas (JUnit 5) utilizado para escribir y ejecutar las pruebas unitarias del sistema, asegurando la calidad del código.
+* **Maven Surefire Plugin (`maven-surefire-plugin`):** Plugin de Maven encargado de reconocer y ejecutar automáticamente las pruebas unitarias durante la fase de *test* del ciclo de vida de construcción.
+* **Exec Maven Plugin (`exec-maven-plugin`):** Plugin que facilita la ejecución de la aplicación (la clase `Main`) directamente desde la línea de comandos de Maven.
+
 ---
 
 ## 📈 Nuevos Requerimientos y Reglas de Negocio
@@ -61,6 +68,28 @@ mvn clean install
 mvn exec:java
 ó
 mvn exec:java -Dexec.mainClass="com.edu.ucv.comedor.Main"
+```
+
+## 🧪 Pruebas Unitarias (Testing)
+
+El proyecto utiliza **JUnit 5** y el plugin **Maven Surefire** para la creación y ejecución de pruebas unitarias. Todas las pruebas se encuentran dentro del directorio `src/Testing/`.
+
+### Pruebas Disponibles
+Actualmente, el proyecto cuenta con las siguientes pruebas:
+* **`Testing.Wallet.GetWalletByUserIdTest`**: Verifica que el método `getWalletByUserId` obtenga correctamente los datos de la billetera (wallet) asociada a un ID de usuario específico (ej. usuario 11), validando su balance, estado y correspondencia de IDs.
+
+### Ejecutar todas las pruebas
+Para ejecutar todas las pruebas unitarias del proyecto en conjunto, abre tu terminal en la raíz del proyecto y ejecuta:
+
+```bash
+mvn test
+```
+
+### Ejecutar una prueba individual
+Si deseas ejecutar únicamente una prueba específica (por ejemplo, mientras desarrollas o depuras), puedes utilizar el parámetro `-Dtest` seguido de la ruta de la clase. Por ejemplo:
+
+```bash
+mvn test -Dtest=Testing.Wallet.GetWalletByUserIdTest
 ```
 
 ## 👥 Equipo de Trabajo
