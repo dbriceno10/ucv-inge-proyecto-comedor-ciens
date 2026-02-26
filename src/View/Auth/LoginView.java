@@ -22,7 +22,9 @@ public class LoginView extends JFrame {
 
         //txtEmail.setText("maria.gomez@example.com");
         //txtPwd.setText("securepass");
-        txtEmail.setText("juan.perez@example.com");
+
+        txtEmail.setText("pedrito123@gmail.com");
+        //txtEmail.setText("juan.perez@example.com");
         txtPwd.setText("password123");
         
         btnLogin = new RoundedButton("Iniciar sesión");

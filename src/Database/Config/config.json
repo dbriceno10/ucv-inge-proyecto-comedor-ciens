@@ -1,7 +1,7 @@
 {
-  "valueCF": 1000.0,
-  "teacherPercentage": 70,
-  "studentPercentage": 20,
-  "workerPercentage": 90,
-  "updateAt": "2026-01-01T00:00:00Z "
+  "valueCF" : 10000.0,
+  "teacherPercentage" : 70.0,
+  "studentPercentage" : 20.0,
+  "workerPercentage" : 90.0,
+  "updateAt" : "2026-02-26T19:57:05Z"
 }

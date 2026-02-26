@@ -3,25 +3,25 @@ package Controllers.MainControllers;
 import DTO.Menu.MenuDto;
 import Enums.MenuOptions;
 import Model.Menu.MenuService;
-//import Context.User.UserSession;
+import Context.User.UserSession;
 import View.Main.DashboardView;
 import View.Wallet.WalletView;
 import Controllers.WalletControllers.WalletController;
 
 import java.awt.event.ActionListener;
-
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-
 import java.awt.event.ActionEvent;
 
 public class DashboardController implements ActionListener {
     private DashboardView view;
     private MenuService menuService;
+    private UserSession userSession;
 
     public DashboardController(DashboardView view) {
         this.view = view;
-        this.menuService = new MenuService();
+        menuService = new MenuService();
+        //userSession = 
 
         this.view.menuTypeListener(this);
         this.view.walletBtnListener(this);

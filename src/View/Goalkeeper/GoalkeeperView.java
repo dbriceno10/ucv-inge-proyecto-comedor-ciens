@@ -87,7 +87,7 @@ public class GoalkeeperView extends JFrame {
         JPanel fieldPanel = new JPanel(new BorderLayout(0, 5));
         fieldPanel.setOpaque(false);
 
-        JLabel lblInput = new JLabel("ID DEL COMENSAL");
+        JLabel lblInput = new JLabel("CÉDULA DEL COMENSAL");
         lblInput.setFont(new Font("SansSerif", Font.BOLD, 12));
         lblInput.setForeground(color.DARK_GRAY);
 

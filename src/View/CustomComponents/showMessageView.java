@@ -1,4 +1,4 @@
-package View.Auth;
+package View.CustomComponents;
 
 import javax.swing.JOptionPane;
 import java.awt.Component;

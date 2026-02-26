@@ -1,22 +1,32 @@
 package Controllers.GoalkeeperControllers;
 
 import View.Goalkeeper.GoalkeeperView;
+import View.CustomComponents.showMessageView;
 import Model.Booking.BookingService;
 import DTO.Booking.BookingDto;
 import Utils.InputValidator;
+import Utils.FileManager;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionEvent;
 
 public class GoalkeeperController implements ActionListener {
     private GoalkeeperView view;
     private BookingService bookingService;
+    private FileManager fileManager;
+    String imagePath; // ruta de la imagen para el "reconocimiento facial".
+    Integer current_bookingNumber;
 
     public GoalkeeperController (GoalkeeperView view) {
         this.view = view;
         bookingService = new BookingService();
+        fileManager = new FileManager();
+        imagePath = null;
+        current_bookingNumber = null;
         
         this.view.searchListener(this);
         this.view.closeListener(this);
@@ -39,7 +49,7 @@ public class GoalkeeperController implements ActionListener {
                 view.dispose();
                 break;
             case "PROCESS_BOOKING":
-                //
+                proccesBooking();
                 break;
             default: break;
         }
@@ -60,6 +70,9 @@ public class GoalkeeperController implements ActionListener {
             for (BookingDto booking : bookingList) {
                 if (booking.getShift().equalsIgnoreCase(shift)) {
                     view.displayCard(id, booking.getDate(), booking.getPrice(), booking.getStatus());
+
+                    // usado por chargeForService() para continuar el flujo.
+                    current_bookingNumber = booking.getId(); 
                     break;
                 }
             }
@@ -67,4 +80,15 @@ public class GoalkeeperController implements ActionListener {
             view.showMessage("No se han encontrado reservaciones activas para el usuario");
         }
     }   
+
+    void proccesBooking() {
+        try {
+            imagePath = fileManager.pickupFile();
+            System.out.println("imagePath: " + imagePath);
+            bookingService.chargeForService(current_bookingNumber, imagePath);
+        } catch (IllegalArgumentException e) {
+            showMessageView.showMsg(view, e.getMessage(), JOptionPane.ERROR_MESSAGE);
+        }
+               
+    }
 }

@@ -1,6 +1,7 @@
 package Controllers.AuthControllers;
 
 import View.Auth.*;
+import View.CustomComponents.showMessageView;
 import View.Goalkeeper.GoalkeeperView;
 import View.Main.DashboardView;
 import View.Menu.MenuManagementView; 

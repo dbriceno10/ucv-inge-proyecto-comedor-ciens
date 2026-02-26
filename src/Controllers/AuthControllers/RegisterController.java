@@ -1,6 +1,7 @@
 package Controllers.AuthControllers;
 
 import View.Auth.*;
+import View.CustomComponents.showMessageView;
 import Model.User.AuthUserService;
 import Utils.InputValidator;
 
