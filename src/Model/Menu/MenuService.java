@@ -41,6 +41,10 @@ public class MenuService {
     return menus;
   }
 
+  public ArrayList<MenuDto> getMenus(String day, String type) {
+    return this.getByDay(day, type);
+  }
+
   public MenuDto getMenuById(Integer id) {
     MenuModel menuModel = this.getById(id);
     if (menuModel == null) {
