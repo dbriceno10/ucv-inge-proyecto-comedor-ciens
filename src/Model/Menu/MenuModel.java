@@ -51,6 +51,8 @@ public class MenuModel {
     this.updatedAt = createdAt; // Inicialmente, updatedAt es igual a createdAt
     this.deletedAt = null;
     this.type = menuDto.getType();
+    this.qty = menuDto.getQty();
+    this.currentQty = menuDto.getQty(); // Inicialmente, currentQty es igual a qty
   }
 
   public MenuModel() {
