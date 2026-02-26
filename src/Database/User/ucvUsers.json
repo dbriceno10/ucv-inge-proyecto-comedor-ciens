@@ -140,7 +140,7 @@
     "lastName": "Blanco",
     "email": "natalia.blanco@example.com",
     "type": "ADMINISTRADOR",
-    "documentId": 78901234,
+    "documentId": 78901334,
     "image": "assets/images/UCVUsers/avatar1.jpg"
   },
   {
@@ -221,7 +221,7 @@
     "lastName": "Soto",
     "email": "martin.soto@example.com",
     "type": "ESTUDIANTE",
-    "documentId": 78901234,
+    "documentId": 78401234,
     "image": "assets/images/UCVUsers/avatar5.png"
   },
   {

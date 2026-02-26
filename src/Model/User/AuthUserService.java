@@ -44,7 +44,7 @@ public class AuthUserService {
 
     // Crear nuevo usuario
     UserModel newUser = new UserModel(
-        existingUCV.getFirstName(), existingUCV.getLastName(), existingUCV.getLastName(), password, role, type,
+        existingUCV.getFirstName(), existingUCV.getLastName(), existingUCV.getEmail(), password, role, type,
         existingUCV.getDocumentId());
 
     newUser = userService.create(newUser);
