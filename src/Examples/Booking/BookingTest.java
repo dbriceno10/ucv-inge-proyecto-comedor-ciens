@@ -1,4 +1,4 @@
-package Testing.Booking;
+package Examples.Booking;
 
 import DTO.Booking.BookingDto;
 import DTO.Booking.CreateBookingDto;

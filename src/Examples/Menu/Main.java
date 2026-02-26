@@ -1,4 +1,4 @@
-package Testing.Menu;
+package Examples.Menu;
 
 import DTO.Menu.CreateMenuDto;
 import DTO.Menu.MenuDto;

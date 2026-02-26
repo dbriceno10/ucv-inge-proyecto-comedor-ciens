@@ -1,4 +1,4 @@
-package Testing.Auth;
+package Examples.Auth;
 
 import DTO.User.AuthUserDto;
 import Model.User.AuthUserService;
