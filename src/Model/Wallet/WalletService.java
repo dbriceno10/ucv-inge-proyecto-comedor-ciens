@@ -119,6 +119,9 @@ public class WalletService {
   public WalletDto rechargeWallet(Integer userId, Double amount, String reference, String bankName) {
     // UserSession.getInstance().isAuthenticated();
     // Integer userId = //UserSession.getInstance().getUser().getId();
+    if (amount <= 0) {
+      throw new IllegalArgumentException("Amount must be greater than zero.");
+    }
     WalletDto wallet = this.getWalletByUserId(userId);
     if (wallet == null) {
       throw new IllegalArgumentException("Wallet not found for user id: " + userId);

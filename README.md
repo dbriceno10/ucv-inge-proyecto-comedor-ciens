@@ -77,6 +77,7 @@ El proyecto utiliza **JUnit 5** y el plugin **Maven Surefire** para la creación
 ### Pruebas Disponibles
 Actualmente, el proyecto cuenta con las siguientes pruebas:
 * **`Testing.Wallet.GetWalletByUserIdTest`**: Verifica que el método `getWalletByUserId` obtenga correctamente los datos de la billetera (wallet) asociada a un ID de usuario específico (ej. usuario 11), validando su balance, estado y correspondencia de IDs.
+* **`Testing.Wallet.RechargeWalletTest`**: Verifica el método `rechargeWallet`, comprobando recargas exitosas (incremento de saldo), manejo de errores al intentar recargar montos negativos y validación de usuarios inexistentes.
 
 ### Ejecutar todas las pruebas
 Para ejecutar todas las pruebas unitarias del proyecto en conjunto, abre tu terminal en la raíz del proyecto y ejecuta:
@@ -86,10 +87,11 @@ mvn test
 ```
 
 ### Ejecutar una prueba individual
-Si deseas ejecutar únicamente una prueba específica (por ejemplo, mientras desarrollas o depuras), puedes utilizar el parámetro `-Dtest` seguido de la ruta de la clase. Por ejemplo:
+Si deseas ejecutar únicamente una prueba específica (por ejemplo, mientras desarrollas o depuras), puedes utilizar el parámetro `-Dtest` seguido de la ruta de la clase. Ejemplos:
 
 ```bash
 mvn test -Dtest=Testing.Wallet.GetWalletByUserIdTest
+mvn test -Dtest=Testing.Wallet.RechargeWalletTest
 ```
 
 ## 👥 Equipo de Trabajo
