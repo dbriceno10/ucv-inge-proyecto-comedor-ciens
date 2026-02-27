@@ -83,6 +83,7 @@ Actualmente, el proyecto cuenta con las siguientes pruebas:
 * **`Testing.User.GetUserByIdTest`**: Verifica el método `getUserById` del servicio de usuarios, comprobando que se obtengan correctamente los datos de un usuario existente y que retorne nulo al buscar un ID inexistente.
 * **`Testing.Config.UpdateConfigTest`**: Verifica el método `updateConfig` del servicio de configuración, comprobando las validaciones de rangos permitidos para los porcentajes de subsidio y valores de costos fijos, además de validar la actualización exitosa y restauración de los datos.
 * **`Testing.Booking.ChargeForServiceTest`**: Verifica el método `chargeForService` del servicio de reservas, comprobando el cobro exitoso de un servicio con saldo suficiente y el manejo de errores cuando el usuario no tiene saldo suficiente en su billetera.
+* **`Testing.Booking.ChargeForServiceTestWithRestore`**: Variante de la prueba de cobro de reservas que incluye la restauración automática del saldo del usuario y del estado de la reserva a sus valores originales después de cada ejecución, garantizando la idempotencia de las pruebas.
 
 ### Ejecutar todas las pruebas
 Para ejecutar todas las pruebas unitarias del proyecto en conjunto, abre tu terminal en la raíz del proyecto y ejecuta:
@@ -102,6 +103,7 @@ mvn test -Dtest=Testing.User.RegisterUserTest
 mvn test -Dtest=Testing.User.GetUserByIdTest
 mvn test -Dtest=Testing.Config.UpdateConfigTest
 mvn test -Dtest=Testing.Booking.ChargeForServiceTest
+mvn test -Dtest=Testing.Booking.ChargeForServiceTestWithRestore
 ```
 
 ## 👥 Equipo de Trabajo
