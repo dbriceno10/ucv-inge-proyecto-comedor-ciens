@@ -83,9 +83,6 @@ public class MenuEditorView extends JFrame {
 
         // Espacio inicial y platos de ejemplo
         listPanel.add(Box.createVerticalStrut(20));
-        addPlatoRow("Pasta con Vegetales");
-        addPlatoRow("Pasta con Vegetales");
-        addPlatoRow("Pasta con Vegetales");
 
         JScrollPane scroll = new JScrollPane(listPanel);
         scroll.setBorder(null); // Sin borde feo
@@ -103,19 +100,6 @@ public class MenuEditorView extends JFrame {
         btnAddDish.setForeground(Color.WHITE);
         btnAddDish.setFont(new Font("SansSerif", Font.BOLD, 12));
         btnAddDish.setPreferredSize(new Dimension(140, 40));
-        
-        // La acción para añadir un plato
-        btnAddDish.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Aquí llamamos al método para agregar la fila
-                addPlatoRow("Nuevo Plato Añadido"); 
-                
-                // Actualizamos la vista para que aparezca
-                listPanel.revalidate();
-                listPanel.repaint();
-            }
-        });
         
         JPanel leftBtnBox = new JPanel(new FlowLayout(FlowLayout.LEFT));
         leftBtnBox.setBackground(color.WHITE);
@@ -200,8 +184,7 @@ public class MenuEditorView extends JFrame {
         dishCard.setHorizontalAlignment(SwingConstants.LEFT);
         dishCard.setMargin(new Insets(0, 10, 0, 0));
         
-        // Cargar foto de la pasta (pasta.jpg) -- ¡AQUÍ ESTÁ EL CAMBIO!
-        ImageIcon dishImg = loadScaledImage("assets/images/pasta.jpg", 80, 60);
+        ImageIcon dishImg = loadScaledImage("assets/images/Ingredients/pasta.jpg", 80, 60);
         if(dishImg != null) {
              dishCard.setIcon(dishImg);
              dishCard.setIconTextGap(15);
@@ -270,7 +253,7 @@ public class MenuEditorView extends JFrame {
         gbc.gridx = 2; gbc.weightx = 0.2; gbc.anchor = GridBagConstraints.EAST;
         
         JButton btnDel = new JButton();
-        ImageIcon trashImg = loadScaledImage("assets/images/trash.png", 24, 28);
+        ImageIcon trashImg = loadScaledImage("assets/images/Icons/boton-eliminar.png", 24, 28);
         
         if(trashImg != null) {
             btnDel.setIcon(trashImg);
@@ -295,6 +278,8 @@ public class MenuEditorView extends JFrame {
         row.add(btnDel, gbc);
         listPanel.add(row);
         listPanel.add(Box.createVerticalStrut(10));
+        listPanel.revalidate(); 
+        listPanel.repaint();    
     }
 
     private RoundedButton createCircularButton(String symbol) {

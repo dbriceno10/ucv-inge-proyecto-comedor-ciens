@@ -178,4 +178,28 @@
   "deletedAt" : null,
   "qty" : null,
   "currentQty" : null
+}, {
+  "id" : 16,
+  "day" : "JUEVES",
+  "type" : "DESAYUNO",
+  "foodIds" : [ 1, 4 ],
+  "date" : "08/12/2070",
+  "isActive" : true,
+  "createdAt" : "2026-02-26T22:59:08Z",
+  "updatedAt" : "2026-02-26T22:59:08Z",
+  "deletedAt" : null,
+  "qty" : null,
+  "currentQty" : null
+}, {
+  "id" : 17,
+  "day" : "LUNES",
+  "type" : "DESAYUNO",
+  "foodIds" : [ 4, 5, 7 ],
+  "date" : "08/12/2025",
+  "isActive" : true,
+  "createdAt" : "2026-02-27T02:39:25Z",
+  "updatedAt" : "2026-02-27T02:39:25Z",
+  "deletedAt" : null,
+  "qty" : null,
+  "currentQty" : null
 } ]
