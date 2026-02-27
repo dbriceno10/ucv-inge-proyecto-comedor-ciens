@@ -1,22 +1,24 @@
 package View.Main;
 
 import Enums.MenuOptions;
-import View.CustomComponents.Colors;
-import View.CustomComponents.RoundedButton;
-import View.CustomComponents.RoundedComboBox;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import View.CustomComponents.*;
+import Context.User.UserSession;
 import DTO.Food.FoodDto;
 import DTO.Menu.MenuDto;
+import DTO.User.AuthUserDto;
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class DashboardView extends JFrame {
     private JButton btnProfile, btnWallet;
     private JComboBox<String> selectMenu_type;
     private JLabel lblSectionTitle;
     private JPanel cardsPanel;
+
+    private AuthUserDto userSession = UserSession.getInstance().getUser();
     private Colors color = new Colors();
 
     public DashboardView() {
@@ -32,8 +34,12 @@ public class DashboardView extends JFrame {
         headerPanel.setBackground(color.BACKGROUND);
 
         // A. profile button (left)
+        // Extraemos los datos del usuario autenticado
+        String userName = userSession.getFirstName(); 
+        String userRole = userSession.getRole();
+
         // HTML is used to give the desired formatting to the text within a Swing component
-        String profileText = "<html><b>User</b><br><i style='font-size:10px'>User_type</i></html>";
+        String profileText = "<html><b>" + userName + "</b><br><i style='font-size:10px'>" + userRole + "</i></html>";
         btnProfile = new RoundedButton(profileText);
         btnProfile.setBackground(color.LIGHT_GRAY);
         btnProfile.setFont(new Font("SansSerif", Font.PLAIN, 14));

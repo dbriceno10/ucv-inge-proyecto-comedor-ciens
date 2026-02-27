@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import java.awt.event.ActionEvent;
 
@@ -84,11 +85,21 @@ public class GoalkeeperController implements ActionListener {
     void proccesBooking() {
         try {
             imagePath = fileManager.pickupFile();
-            System.out.println("imagePath: " + imagePath);
             bookingService.chargeForService(current_bookingNumber, imagePath);
+            showMessageView.showMsg(view, "Verificación completada con éxito.\nSe ha realizado el cobro correspondiente.", JOptionPane.INFORMATION_MESSAGE);
+            clearFields();
         } catch (IllegalArgumentException e) {
             showMessageView.showMsg(view, e.getMessage(), JOptionPane.ERROR_MESSAGE);
-        }
-               
+        }  
+    }
+
+    void clearFields() {
+        view.getComponent_txtUserID().setText("");
+        JPanel panel = view.getComponent_cardsContainer();
+        panel.removeAll();
+        panel.revalidate();
+        panel.repaint();
     }
 }
+
+    

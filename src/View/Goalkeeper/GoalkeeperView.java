@@ -295,6 +295,7 @@ public class GoalkeeperView extends JFrame {
 
     // component getter, not text
     public JTextField getComponent_txtUserID() { return txtUserID; }
+    public JPanel getComponent_cardsContainer() { return cardsContainer; }
 
     public void searchListener(ActionListener listener) { btnSearch.addActionListener(listener);}
     public void closeListener(ActionListener listener) { btnClose.addActionListener(listener);}
