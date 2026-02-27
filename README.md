@@ -80,6 +80,7 @@ Actualmente, el proyecto cuenta con las siguientes pruebas:
 * **`Testing.Wallet.RechargeWalletTest`**: Verifica el método `rechargeWallet`, comprobando recargas exitosas (incremento de saldo), manejo de errores al intentar recargar montos negativos y validación de usuarios inexistentes.
 * **`Testing.Menu.CreateMenuTest`**: Verifica el método `create` del servicio de menús, comprobando la creación exitosa de un menú (y su posterior borrado lógico), así como el manejo de errores al intentar crear menús sin platos o con más de 3 platos.
 * **`Testing.User.RegisterUserTest`**: Verifica el método `register` del servicio de autenticación, comprobando validaciones de roles (ej. un estudiante no puede registrarse como administrador), el registro exitoso de un comensal, la prevención de correos duplicados y la limpieza de la base de datos mediante el borrado lógico.
+* **`Testing.User.GetUserByIdTest`**: Verifica el método `getUserById` del servicio de usuarios, comprobando que se obtengan correctamente los datos de un usuario existente y que retorne nulo al buscar un ID inexistente.
 
 ### Ejecutar todas las pruebas
 Para ejecutar todas las pruebas unitarias del proyecto en conjunto, abre tu terminal en la raíz del proyecto y ejecuta:
@@ -96,6 +97,7 @@ mvn test -Dtest=Testing.Wallet.GetWalletByUserIdTest
 mvn test -Dtest=Testing.Wallet.RechargeWalletTest
 mvn test -Dtest=Testing.Menu.CreateMenuTest
 mvn test -Dtest=Testing.User.RegisterUserTest
+mvn test -Dtest=Testing.User.GetUserByIdTest
 ```
 
 ## 👥 Equipo de Trabajo
