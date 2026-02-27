@@ -17,6 +17,7 @@ public class DashboardView extends JFrame {
     private JComboBox<String> selectMenu_type;
     private JLabel lblSectionTitle;
     private JPanel cardsPanel;
+    private ActionListener cardListener;
 
     private AuthUserDto userSession = UserSession.getInstance().getUser();
     private Colors color = new Colors();
@@ -162,7 +163,7 @@ public class DashboardView extends JFrame {
 
             for (FoodDto food : menuDay.getFoods()) {
                 String imgPath = "assets/images/Menu/" + food.getId() + ".png";
-                MenuCard card = new MenuCard(food.getName(), imgPath);
+                MenuCard card = new MenuCard(food, imgPath);
                 
                 cardsPanel.add(card);
             }
@@ -176,12 +177,14 @@ public class DashboardView extends JFrame {
         private boolean isSelected = false;
         private Color defaultColor = color.ORANGE; 
         private Color selectedColor = new Color(100, 100, 100); 
+        private FoodDto foodData;
         
-        public MenuCard(String title, String imgPath) {
+        public MenuCard(FoodDto food, String imgPath) {
+            foodData = food;
             setLayout(new BorderLayout());
             setBackground(defaultColor); 
-            setCursor(new Cursor(Cursor.HAND_CURSOR)); // Hand cursor
-            setBorder(new EmptyBorder(15, 15, 15, 15)); // Border to improve image visibility
+            setCursor(new Cursor(Cursor.HAND_CURSOR));
+            setBorder(new EmptyBorder(15, 15, 15, 15)); 
 
             JLabel lblImg = new JLabel();
             lblImg.setHorizontalAlignment(SwingConstants.CENTER);
@@ -193,7 +196,7 @@ public class DashboardView extends JFrame {
             lblImg.setIcon(Utils.ImageUtils.getRoundedIcon(imgPath, 180, 120, 30));
             
             // Title
-            JLabel lblTitle = new JLabel(title);
+            JLabel lblTitle = new JLabel(food.getName());
             lblTitle.setFont(new Font("SansSerif", Font.BOLD, 14));
             lblTitle.setForeground(color.WHITE);
             lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -206,8 +209,11 @@ public class DashboardView extends JFrame {
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) { 
-                    // to be implemented: intermediate screen to display shifts ***
                     toggleSelection(); 
+
+                    // Enviamos un comando único que incluye el ID del plato
+                    String command = "OPEN_FOOD_DETAILS_" + foodData.getId();
+                    cardListener.actionPerformed(new ActionEvent(MenuCard.this, ActionEvent.ACTION_PERFORMED, command));
                 }
             });
         }
@@ -233,5 +239,5 @@ public class DashboardView extends JFrame {
     // event listener
     public void menuTypeListener(ActionListener listener) { selectMenu_type.addActionListener(listener);} 
     public void walletBtnListener(ActionListener listener) { btnWallet.addActionListener(listener);} 
-
+    public void setCardListener(ActionListener listener) { cardListener = listener; }
 }

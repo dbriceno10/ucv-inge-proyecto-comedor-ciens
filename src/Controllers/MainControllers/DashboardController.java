@@ -1,10 +1,13 @@
 package Controllers.MainControllers;
 
+import DTO.Food.FoodDto;
 import DTO.Menu.MenuDto;
 import Enums.MenuOptions;
 import Model.Menu.MenuService;
+import Model.Food.FoodService;
 import Context.User.UserSession;
 import View.Main.DashboardView;
+import View.Main.FoodDetailsView;
 import View.Wallet.WalletView;
 import Controllers.WalletControllers.WalletController;
 
@@ -16,15 +19,17 @@ import java.awt.event.ActionEvent;
 public class DashboardController implements ActionListener {
     private DashboardView view;
     private MenuService menuService;
-    private UserSession userSession;
+    private FoodService foodService;
+    //private UserSession userSession;
 
     public DashboardController(DashboardView view) {
         this.view = view;
         menuService = new MenuService();
-        //userSession = 
-
+        foodService = new FoodService();
+        
         this.view.menuTypeListener(this);
         this.view.walletBtnListener(this);
+        this.view.setCardListener(this);
 
         loadData();
         this.view.setVisible(true);
@@ -40,6 +45,14 @@ public class DashboardController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
+
+        if (command.startsWith("OPEN_FOOD_DETAILS_")) {
+            // ex. OPEN_FOOD_DETAILS_5 -> 5)
+            String foodIdStr = command.replace("OPEN_FOOD_DETAILS_", "");
+            open_foodDetails(foodIdStr);
+            return;
+        }
+
         switch (command) {
             case "OPEN_WALLET":
                 WalletView walletView = new WalletView(this.view);
@@ -57,4 +70,14 @@ public class DashboardController implements ActionListener {
             default: break;
         }
     }
+
+    void open_foodDetails(String txtID) {
+        int foodId = Integer.parseInt(txtID);
+        FoodDto selectedFood = foodService.getFoodById(foodId);
+
+        FoodDetailsView detailsModal = new FoodDetailsView(view, selectedFood);
+        new FoodDetailsController(detailsModal);
+        return;
+    }
+
 }
