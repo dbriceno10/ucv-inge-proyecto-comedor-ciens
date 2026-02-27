@@ -1,7 +1,7 @@
 package Controllers.MainControllers;
 
-import DTO.Food.FoodDto;
 import DTO.Menu.MenuDto;
+import DTO.Food.FoodDto;
 import Enums.MenuOptions;
 import Model.Menu.MenuService;
 import Model.Food.FoodService;
@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class DashboardController implements ActionListener {
     private DashboardView view;
@@ -36,9 +37,20 @@ public class DashboardController implements ActionListener {
         this.view.setExtendedState(JFrame.MAXIMIZED_BOTH); // to display the interface in full screen mode.
     }
 
-    private void loadData() {
-        // MenuDto dailyMenu = menuService.getMenuOfDay();
-        MenuDto dailyMenu = menuService.getMenuById(1); //TODO: esto lo puse solo para que no se rompa, ahora getMenuOfDay trae un arreglo en lugar de un solo elemento
+   private void loadData() {
+        // 1. Pedimos la lista de TODOS los menús programados para el día de hoy
+        // Le pasamos 'null' para que no filtre por turno, sino que traiga todo lo de hoy
+        ArrayList<MenuDto> dailyMenus = menuService.getMenuOfDay(null);
+        
+        MenuDto dailyMenu = null; // Empezamos asumiendo que no hay menú
+        
+        // 2. Verificamos por seguridad que la lista no venga nula ni vacía
+        if (dailyMenus != null && !dailyMenus.isEmpty()) {
+            // 3. Agarramos el primer menú de la lista (el índice 0)
+            dailyMenu = dailyMenus.get(0); 
+        }
+        
+        // 4. Se lo pasamos a la vista (si es null, la vista ya sabe qué hacer)
         view.showDailyMenu(dailyMenu);
     }
 
