@@ -22,6 +22,8 @@ public class LoginView extends JFrame {
 
         txtEmail.setText("maria.gomez@example.com");
         txtPwd.setText("securepass");
+
+        //txtEmail.setText("pedrito123@gmail.com"); // PORTERO
         //txtEmail.setText("juan.perez@example.com");
         //txtPwd.setText("password123");
         
