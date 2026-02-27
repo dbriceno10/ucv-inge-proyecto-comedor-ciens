@@ -9,12 +9,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import Model.Common.CommonServices;
 import Utils.Dates;
-import Enums.UserRoles;
+// import Enums.UserRoles;
 import DTO.Wallet.CreateWalletDto;
 import DTO.Wallet.MovementDto;
 import DTO.Wallet.UpdateWalletDto;
 import DTO.Wallet.WalletDto;
-import Context.User.UserSession;
+// import Context.User.UserSession;
 
 public class WalletService {
   private static final String FILE_PATH = "src/Database/Wallet/wallets.json";
@@ -119,6 +119,9 @@ public class WalletService {
   public WalletDto rechargeWallet(Integer userId, Double amount, String reference, String bankName) {
     // UserSession.getInstance().isAuthenticated();
     // Integer userId = //UserSession.getInstance().getUser().getId();
+    if (amount <= 0) {
+      throw new IllegalArgumentException("Amount must be greater than zero.");
+    }
     WalletDto wallet = this.getWalletByUserId(userId);
     if (wallet == null) {
       throw new IllegalArgumentException("Wallet not found for user id: " + userId);
@@ -178,7 +181,7 @@ public class WalletService {
     if (updatedWallet == null) {
       return null;
     }
-    movementDto = new MovementDto(
+    MovementModel newMovement = new MovementModel(
         nextId,
         walletId,
         movementDto.getType(),
@@ -187,7 +190,7 @@ public class WalletService {
         movementDto.getDescription(),
         movementDto.getReference(),
         movementDto.getBankName());
-    this.saveMovement(movementDto);
+    this.saveMovement(newMovement);
     WalletModel wallet = this.getById(walletId);
     if (wallet == null) {
       return null;
@@ -298,8 +301,12 @@ public class WalletService {
     return movementDtos;
   }
 
-  private ArrayList<MovementDto> saveMovement(MovementDto movementDto) {
-    ArrayList<MovementDto> movements = this.getMovements(movementDto.getWalletId());
+  private ArrayList<MovementModel> getAllMovements() {
+    return this.commonServices.getAllElements(MOVEMENTS_FILE_PATH, MovementModel.class);
+  }
+
+  private MovementModel saveMovement(MovementModel movementDto) {
+    ArrayList<MovementModel> movements = this.getAllMovements();
     movements.add(movementDto);
     ObjectMapper mapper = new ObjectMapper();
     try {
@@ -308,7 +315,8 @@ public class WalletService {
 
     } catch (IOException e) {
       e.printStackTrace();
+      return null;
     }
-    return movements;
+    return movementDto;
   }
 }

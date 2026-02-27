@@ -1,4 +1,4 @@
-package Testing.Ingredients;
+package Examples.Ingredients;
 
 import Model.Common.CommonServices;
 import Model.Ingredient.IngredientModel;

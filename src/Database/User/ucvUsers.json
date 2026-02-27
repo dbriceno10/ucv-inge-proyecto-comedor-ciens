@@ -140,7 +140,7 @@
     "lastName": "Blanco",
     "email": "natalia.blanco@example.com",
     "type": "ADMINISTRADOR",
-    "documentId": 78901234,
+    "documentId": 78901334,
     "image": "assets/images/UCVUsers/avatar1.jpg"
   },
   {
@@ -221,7 +221,7 @@
     "lastName": "Soto",
     "email": "martin.soto@example.com",
     "type": "ESTUDIANTE",
-    "documentId": 78901234,
+    "documentId": 78401234,
     "image": "assets/images/UCVUsers/avatar5.png"
   },
   {
@@ -267,6 +267,24 @@
     "email": "monica.pena@example.com",
     "type": "PROFESOR",
     "documentId": 34567890,
+    "image": "assets/images/UCVUsers/avatar5.png"
+  },
+  {
+    "id": 31,
+    "firstName": "Prueba",
+    "lastName": "Monedero",
+    "email": "prueba_monedero@email.com",
+    "type": "ESTUDIANTE",
+    "documentId": 30117524,
+    "image": "assets/images/UCVUsers/avatar5.png"
+  },
+  {
+    "id": 32,
+    "firstName": "Prueba",
+    "lastName": "Monedero",
+    "email": "prueba_monedero2@email.com",
+    "type": "ESTUDIANTE",
+    "documentId": 33290164,
     "image": "assets/images/UCVUsers/avatar5.png"
   }
 ]

@@ -1,4 +1,4 @@
-package Testing.Food;
+package Examples.Food;
 
 import DTO.Food.CreateFoodDto;
 import DTO.Food.FoodDto;

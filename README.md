@@ -16,6 +16,13 @@ El proyecto inició con la metodología de desarrollo **Rational Unified Process
 * **Pruebas Unitarias:** JUnit Framework.
 * **Editor Sugerido:** VS Code con el *Extension Pack for Java*.
 
+## 📦 Paquetes y Dependencias (pom.xml)
+El proyecto hace uso de las siguientes librerías y plugins gestionados a través de Maven:
+* **Jackson Databind (`jackson-databind`):** Librería principal utilizada para la lectura y escritura de archivos JSON. Permite mapear (serializar y deserializar) los objetos Java hacia los archivos `.json` que actúan como la base de datos del sistema.
+* **JUnit Jupiter (`junit-jupiter`):** Framework de pruebas (JUnit 5) utilizado para escribir y ejecutar las pruebas unitarias del sistema, asegurando la calidad del código.
+* **Maven Surefire Plugin (`maven-surefire-plugin`):** Plugin de Maven encargado de reconocer y ejecutar automáticamente las pruebas unitarias durante la fase de *test* del ciclo de vida de construcción.
+* **Exec Maven Plugin (`exec-maven-plugin`):** Plugin que facilita la ejecución de la aplicación (la clase `Main`) directamente desde la línea de comandos de Maven.
+
 ---
 
 ## 📈 Nuevos Requerimientos y Reglas de Negocio
@@ -61,6 +68,44 @@ mvn clean install
 mvn exec:java
 ó
 mvn exec:java -Dexec.mainClass="com.edu.ucv.comedor.Main"
+```
+
+## 🧪 Pruebas Unitarias (Testing)
+
+El proyecto utiliza **JUnit 5** y el plugin **Maven Surefire** para la creación y ejecución de pruebas unitarias. Todas las pruebas se encuentran dentro del directorio `src/Testing/`.
+
+### Pruebas Disponibles
+Actualmente, el proyecto cuenta con las siguientes pruebas:
+* **`Testing.Wallet.GetWalletByUserIdTest`**: Verifica que el método `getWalletByUserId` obtenga correctamente los datos de la billetera (wallet) asociada a un ID de usuario específico (ej. usuario 11), validando su balance, estado y correspondencia de IDs.
+* **`Testing.Wallet.RechargeWalletTest`**: Verifica el método `rechargeWallet`, comprobando recargas exitosas (incremento de saldo), manejo de errores al intentar recargar montos negativos y validación de usuarios inexistentes.
+* **`Testing.Menu.CreateMenuTest`**: Verifica el método `create` del servicio de menús, comprobando la creación exitosa de un menú (y su posterior borrado lógico), así como el manejo de errores al intentar crear menús sin platos o con más de 3 platos.
+* **`Testing.User.RegisterUserTest`**: Verifica el método `register` del servicio de autenticación, comprobando validaciones de roles (ej. un estudiante no puede registrarse como administrador), el registro exitoso de un comensal, la prevención de correos duplicados y la limpieza de la base de datos mediante el borrado lógico.
+* **`Testing.User.GetUserByIdTest`**: Verifica el método `getUserById` del servicio de usuarios, comprobando que se obtengan correctamente los datos de un usuario existente y que retorne nulo al buscar un ID inexistente.
+* **`Testing.Config.UpdateConfigTest`**: Verifica el método `updateConfig` del servicio de configuración, comprobando las validaciones de rangos permitidos para los porcentajes de subsidio y valores de costos fijos, además de validar la actualización exitosa y restauración de los datos.
+* **`Testing.Booking.ChargeForServiceTest`**: Verifica el método `chargeForService` del servicio de reservas, comprobando el cobro exitoso de un servicio con saldo suficiente y el manejo de errores cuando el usuario no tiene saldo suficiente en su billetera.
+* **`Testing.Booking.ChargeForServiceTestWithRestore`**: Variante de la prueba de cobro de reservas que incluye la restauración automática del saldo del usuario y del estado de la reserva a sus valores originales después de cada ejecución, garantizando la idempotencia de las pruebas.
+* **`Testing.Booking.CreateBookingTest`**: Verifica el método `create` del servicio de reservas, comprobando la creación exitosa de una reserva válida y la validación que impide a un usuario tener más de una reserva para el mismo turno y día.
+
+### Ejecutar todas las pruebas
+Para ejecutar todas las pruebas unitarias del proyecto en conjunto, abre tu terminal en la raíz del proyecto y ejecuta:
+
+```bash
+mvn test
+```
+
+### Ejecutar una prueba individual
+Si deseas ejecutar únicamente una prueba específica (por ejemplo, mientras desarrollas o depuras), puedes utilizar el parámetro `-Dtest` seguido de la ruta de la clase. Ejemplos:
+
+```bash
+mvn test -Dtest=Testing.Wallet.GetWalletByUserIdTest
+mvn test -Dtest=Testing.Wallet.RechargeWalletTest
+mvn test -Dtest=Testing.Menu.CreateMenuTest
+mvn test -Dtest=Testing.User.RegisterUserTest
+mvn test -Dtest=Testing.User.GetUserByIdTest
+mvn test -Dtest=Testing.Config.UpdateConfigTest
+mvn test -Dtest=Testing.Booking.ChargeForServiceTest
+mvn test -Dtest=Testing.Booking.ChargeForServiceTestWithRestore
+mvn test -Dtest=Testing.Booking.CreateBookingTest
 ```
 
 ## 👥 Equipo de Trabajo

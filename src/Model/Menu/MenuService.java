@@ -87,6 +87,9 @@ public class MenuService {
     if (menuDto.getDate() == null || menuDto.getDate().isEmpty()) {
       throw new IllegalArgumentException("Menu date cannot be null or empty");
     }
+    if (menuDto.getQty() == null || menuDto.getQty() < 0) {
+      throw new IllegalArgumentException("Menu quantity must be a non-negative value");
+    }
     Integer nextId = this.commonServices.getLastIndex(FILE_PATH, MenuModel.class);
     String date = this.datesUtil.getCurrentDateTime();
     MenuModel newMenu = new MenuModel(menuDto, nextId, date);

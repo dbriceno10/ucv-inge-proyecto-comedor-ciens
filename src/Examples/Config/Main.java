@@ -1,4 +1,4 @@
-package Testing.Config;
+package Examples.Config;
 
 import DTO.Config.ConfigDto;
 import Model.Config.ConfigService;

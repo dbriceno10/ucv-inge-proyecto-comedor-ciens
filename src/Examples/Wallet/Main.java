@@ -1,4 +1,4 @@
-package Testing.Wallet;
+package Examples.Wallet;
 
 import Model.Common.CommonServices;
 import Model.Wallet.WalletModel;
