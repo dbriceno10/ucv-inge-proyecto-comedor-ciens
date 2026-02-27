@@ -9,11 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import Model.Common.CommonServices;
 import Utils.*;
 import Enums.BookingStatus;
-import Enums.UserRoles;
 import Enums.UserTypes;
 import DTO.Wallet.*;
 import Model.Wallet.*;
-import Context.User.UserSession;
 import DTO.Booking.BookingDto;
 import DTO.Booking.CreateBookingDto;
 import DTO.Booking.UpdateBookingDto;
@@ -287,7 +285,7 @@ public class BookingService {
     Boolean result = this.fileManager.simulateRecognition(baseUser.getImage(), routePath);
 
     if (result) {
-      this.walletService.makePayment(user.getId(), newBalance);
+      this.walletService.makePayment(user.getId(), booking.getPrice() * configPercentage);
       booking.setStatus(BookingStatus.CONFIRMED);
       booking.setUpdatedAt(this.datesUtil.getCurrentDateTime());
       this.edit(booking);
