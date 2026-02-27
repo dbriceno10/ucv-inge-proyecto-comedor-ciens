@@ -1,34 +1,44 @@
 package Model.Menu;
 
+import java.util.ArrayList;
+
 import DTO.Menu.CreateMenuDto;
 
 public class MenuModel {
   private Integer id;
   private String day; // e.g., "LUNES", "MARTES", etc.
-  private Integer[] foodIds;
+  private String type; // e.g., "DESAYUNO", "ALMUERZO", "CENA"
+  private ArrayList<Integer> foodIds;
   private String date; // e.g., "2024-06-10"
   private Boolean isActive;
   private String createdAt = null;
   private String updatedAt = null;
   private String deletedAt = null;
+  private Integer qty;
+  private Integer currentQty;
 
   public MenuModel(
       Integer id,
       String day,
-      Integer[] foodIds,
+      String type,
+      ArrayList<Integer> foodIds,
       String date,
       Boolean isActive,
       String createdAt,
       String updatedAt,
-      String deletedAt) {
+      String deleted,
+      Integer qty) {
     this.id = id;
     this.day = day;
+    this.type = type;
     this.foodIds = foodIds;
     this.date = date;
     this.isActive = isActive;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.deletedAt = deletedAt;
+    this.deletedAt = null;
+    this.qty = qty;
+    this.currentQty = qty; // Inicialmente, currentQty es igual a qty
   }
 
   public MenuModel(CreateMenuDto menuDto, Integer id, String createdAt) {
@@ -40,6 +50,9 @@ public class MenuModel {
     this.createdAt = createdAt;
     this.updatedAt = createdAt; // Inicialmente, updatedAt es igual a createdAt
     this.deletedAt = null;
+    this.type = menuDto.getType();
+    this.qty = menuDto.getQty();
+    this.currentQty = menuDto.getQty(); // Inicialmente, currentQty es igual a qty
   }
 
   public MenuModel() {
@@ -55,7 +68,7 @@ public class MenuModel {
     return day;
   }
 
-  public Integer[] getFoodIds() {
+  public ArrayList<Integer> getFoodIds() {
     return foodIds;
   }
 
@@ -79,6 +92,18 @@ public class MenuModel {
     return deletedAt;
   }
 
+  public String getType() {
+    return type;
+  }
+
+  public Integer getQty() {
+    return qty;
+  }
+
+  public Integer getCurrentQty() {
+    return currentQty;
+  }
+
   // seters
 
   public void setIsActive(Boolean isActive) {
@@ -91,6 +116,10 @@ public class MenuModel {
 
   public void setDeletedAt(String deletedAt) {
     this.deletedAt = deletedAt;
+  }
+
+  public void setCurrentQty(Integer currentQty) {
+    this.currentQty = currentQty;
   }
 
 }

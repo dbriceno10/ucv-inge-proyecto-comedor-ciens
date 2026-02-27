@@ -24,13 +24,13 @@ public class UserService {
   // TODO: manejar excepciones, se debe manejar que el email sea unico en crear y
   // editar
 
-  public List<UserModel> getAllUsers() {
-    List<UserModel> users = new ArrayList<>();
+  public ArrayList<UserModel> getAllUsers() {
+    ArrayList<UserModel> users = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_USER);
       if (file.exists()) {
-        List<UserModel> userModels = mapper.readValue(file,
+        ArrayList<UserModel> userModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, UserModel.class));
         for (UserModel userModel : userModels) {
           if (userModel.getDeletedAt() == null) { // Filtrar usuarios con deletedAt como null
@@ -45,7 +45,7 @@ public class UserService {
   }
 
   public UserModel getUserById(Integer id) {
-    List<UserModel> users = getAllUsers();
+    ArrayList<UserModel> users = getAllUsers();
     UserModel foundUser = null;
     for (UserModel user : users) {
       if (user.getId().equals(id)) {
@@ -57,7 +57,7 @@ public class UserService {
   }
 
   public UserModel getUserByEmail(String email) {
-    List<UserModel> users = getAllUsers();
+    ArrayList<UserModel> users = getAllUsers();
     UserModel foundUser = null;
     for (UserModel user : users) {
       if (user.getEmail().equalsIgnoreCase(email)) {
@@ -93,20 +93,25 @@ public class UserService {
       CreateWalletDto newWallet = new CreateWalletDto(
           0.0, createdUser.getId());
       walletService.create(newWallet);
+      return this.mapUserModelToUser(createdUser);
     }
-    return createdUser;
+    return null;
   }
 
   public UserModel update(UserModel user) {
-    UserModel existingUser = this.getUserById(user.getId());
-    if (existingUser != null) {
-      return this.edit(user);
+    UserModel existingUser = this.getById(user.getId());
+    if (existingUser == null) {
+      throw new IllegalArgumentException("User not found with id: " + user.getId());
+    }
+    UserModel editedUser = this.edit(user);
+    if (editedUser != null) {
+      return this.mapUserModelToUser(editedUser);
     }
     return null;
   }
 
   public Boolean delete(Integer id) {
-    UserModel existingUser = this.getUserById(id);
+    UserModel existingUser = this.getById(id);
     if (existingUser != null) {
       existingUser.setDeletedAt(this.datesUtil.getCurrentDateTime());
       this.edit(existingUser);
@@ -115,16 +120,27 @@ public class UserService {
     return false;
   }
 
-  public List<BaseUserModel> getAllUCVUsers() {
+  public ArrayList<BaseUserModel> getAllUCVUsers() {
     return this.commonServices.getAllElements(FILE_UCV_USERS, BaseUserModel.class);
   }
 
   public BaseUserModel getUCVUserByEmail(String email) {
-    System.out.println("Searching UCV user by email: " + email);
-    List<BaseUserModel> users = getAllUCVUsers();
+    ArrayList<BaseUserModel> users = getAllUCVUsers();
     BaseUserModel foundUser = null;
     for (BaseUserModel user : users) {
       if (user.getEmail().equalsIgnoreCase(email)) {
+        foundUser = user;
+        break;
+      }
+    }
+    return foundUser;
+  }
+
+  public BaseUserModel getUCVUserByDocumentId(Integer documentId) {
+    ArrayList<BaseUserModel> users = getAllUCVUsers();
+    BaseUserModel foundUser = null;
+    for (BaseUserModel user : users) {
+      if (user.getDocumentId().equals(documentId)) {
         foundUser = user;
         break;
       }
@@ -155,7 +171,7 @@ public class UserService {
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_USER);
-      List<UserModel> users = this.commonServices.getAllElements(FILE_USER, UserModel.class);
+      ArrayList<UserModel> users = this.commonServices.getAllElements(FILE_USER, UserModel.class);
       users.add(user);
       // Write the updated list back to the file
       mapper.writeValue(file, users);
@@ -170,7 +186,7 @@ public class UserService {
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_USER);
-      List<UserModel> users = this.commonServices.getAllElements(FILE_USER, UserModel.class);
+      ArrayList<UserModel> users = this.commonServices.getAllElements(FILE_USER, UserModel.class);
       // Find and update the user
       for (Integer i = 0; i < users.size(); i++) {
         if (users.get(i).getId().equals(user.getId())) {
@@ -185,5 +201,37 @@ public class UserService {
       return null;
     }
     return user;
+  }
+
+  private ArrayList<UserModel> getAll() {
+    ArrayList<UserModel> users = new ArrayList<>();
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      File file = new File(FILE_USER);
+      if (file.exists()) {
+        ArrayList<UserModel> userModels = mapper.readValue(file,
+            mapper.getTypeFactory().constructCollectionType(List.class, UserModel.class));
+        for (UserModel userModel : userModels) {
+          if (userModel.getDeletedAt() == null) { // Filtrar usuarios con deletedAt como null
+            users.add(userModel);
+          }
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return users;
+  }
+
+  private UserModel getById(Integer id) {
+    ArrayList<UserModel> users = getAll();
+    UserModel foundUser = null;
+    for (UserModel user : users) {
+      if (user.getId().equals(id)) {
+        foundUser = user;
+        break;
+      }
+    }
+    return foundUser;
   }
 }

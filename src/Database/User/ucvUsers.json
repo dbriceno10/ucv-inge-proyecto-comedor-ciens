@@ -5,7 +5,8 @@
     "lastName": "Pérez",
     "email": "juan.perez@example.com",
     "type": "ESTUDIANTE",
-    "documentId": 12345678
+    "documentId": 12345678,
+    "image": "assets/images/UCVUsers/avatar1.jpg"
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "lastName": "Gómez",
     "email": "maria.gomez@example.com",
     "type": "PROFESOR",
-    "documentId": 23456789
+    "documentId": 23456789,
+    "image": "assets/images/UCVUsers/avatar2.jpg"
   },
   {
     "id": 3,
@@ -21,7 +23,8 @@
     "lastName": "López",
     "email": "carlos.lopez@example.com",
     "type": "OBRERO",
-    "documentId": 34567890
+    "documentId": 34567890,
+    "image": "assets/images/UCVUsers/avatar3.jpg"
   },
   {
     "id": 4,
@@ -29,7 +32,8 @@
     "lastName": "Martínez",
     "email": "ana.martinez@example.com",
     "type": "ADMINISTRADOR",
-    "documentId": 45678901
+    "documentId": 45678901,
+    "image": "assets/images/UCVUsers/avatar4.jpg"
   },
   {
     "id": 5,
@@ -37,7 +41,8 @@
     "lastName": "Hernández",
     "email": "luis.hernandez@example.com",
     "type": "ESTUDIANTE",
-    "documentId": 56789012
+    "documentId": 56789012,
+    "image": "assets/images/UCVUsers/avatar2.jpg"
   },
   {
     "id": 6,
@@ -45,7 +50,8 @@
     "lastName": "Ramírez",
     "email": "sofia.ramirez@example.com",
     "type": "PROFESOR",
-    "documentId": 67890123
+    "documentId": 67890123,
+    "image": "assets/images/UCVUsers/avatar1.jpg"
   },
   {
     "id": 7,
@@ -53,7 +59,8 @@
     "lastName": "García",
     "email": "pedro.garcia@example.com",
     "type": "OBRERO",
-    "documentId": 78901234
+    "documentId": 78901234,
+    "image": "assets/images/UCVUsers/avatar2.jpg"
   },
   {
     "id": 8,
@@ -61,7 +68,8 @@
     "lastName": "Vargas",
     "email": "lucia.vargas@example.com",
     "type": "ADMINISTRADOR",
-    "documentId": 89012345
+    "documentId": 89012345,
+    "image": "assets/images/UCVUsers/avatar3.jpg"
   },
   {
     "id": 9,
@@ -69,7 +77,8 @@
     "lastName": "Torres",
     "email": "miguel.torres@example.com",
     "type": "ESTUDIANTE",
-    "documentId": 90123456
+    "documentId": 90123456,
+    "image": "assets/images/UCVUsers/avatar4.jpg"
   },
   {
     "id": 10,
@@ -77,7 +86,8 @@
     "lastName": "Morales",
     "email": "elena.morales@example.com",
     "type": "PROFESOR",
-    "documentId": 12345678
+    "documentId": 12345678,
+    "image": "assets/images/UCVUsers/avatar5.png"
   },
   {
     "id": 11,
@@ -85,7 +95,8 @@
     "lastName": "Castro",
     "email": "jorge.castro@example.com",
     "type": "OBRERO",
-    "documentId": 23456789
+    "documentId": 23456789,
+    "image": "assets/images/UCVUsers/avatar1.jpg"
   },
   {
     "id": 12,
@@ -93,7 +104,8 @@
     "lastName": "Rojas",
     "email": "valeria.rojas@example.com",
     "type": "ADMINISTRADOR",
-    "documentId": 34567890
+    "documentId": 34567890,
+    "image": "assets/images/UCVUsers/avatar2.jpg"
   },
   {
     "id": 13,
@@ -101,7 +113,8 @@
     "lastName": "Mendoza",
     "email": "andres.mendoza@example.com",
     "type": "ESTUDIANTE",
-    "documentId": 45678901
+    "documentId": 45678901,
+    "image": "assets/images/UCVUsers/avatar3.jpg"
   },
   {
     "id": 14,
@@ -109,7 +122,8 @@
     "lastName": "Fernández",
     "email": "gabriela.fernandez@example.com",
     "type": "PROFESOR",
-    "documentId": 56789012
+    "documentId": 56789012,
+    "image": "assets/images/UCVUsers/avatar4.jpg"
   },
   {
     "id": 15,
@@ -117,7 +131,8 @@
     "lastName": "Suárez",
     "email": "ricardo.suarez@example.com",
     "type": "OBRERO",
-    "documentId": 67890123
+    "documentId": 67890123,
+    "image": "assets/images/UCVUsers/avatar5.png"
   },
   {
     "id": 16,
@@ -125,7 +140,8 @@
     "lastName": "Blanco",
     "email": "natalia.blanco@example.com",
     "type": "ADMINISTRADOR",
-    "documentId": 78901234
+    "documentId": 78901334,
+    "image": "assets/images/UCVUsers/avatar1.jpg"
   },
   {
     "id": 17,
@@ -133,7 +149,8 @@
     "lastName": "Ortega",
     "email": "diego.ortega@example.com",
     "type": "ESTUDIANTE",
-    "documentId": 89012345
+    "documentId": 89012345,
+    "image": "assets/images/UCVUsers/avatar2.jpg"
   },
   {
     "id": 18,
@@ -141,7 +158,8 @@
     "lastName": "Vega",
     "email": "camila.vega@example.com",
     "type": "PROFESOR",
-    "documentId": 90123456
+    "documentId": 90123456,
+    "image": "assets/images/UCVUsers/avatar3.jpg"
   },
   {
     "id": 19,
@@ -149,7 +167,8 @@
     "lastName": "Lara",
     "email": "sebastian.lara@example.com",
     "type": "OBRERO",
-    "documentId": 12345678
+    "documentId": 12345678,
+    "image": "assets/images/UCVUsers/avatar4.jpg"
   },
   {
     "id": 20,
@@ -157,7 +176,8 @@
     "lastName": "Cruz",
     "email": "isabel.cruz@example.com",
     "type": "ADMINISTRADOR",
-    "documentId": 23456789
+    "documentId": 23456789,
+    "image": "assets/images/UCVUsers/avatar5.png"
   },
   {
     "id": 21,
@@ -165,7 +185,8 @@
     "lastName": "Navarro",
     "email": "tomas.navarro@example.com",
     "type": "ESTUDIANTE",
-    "documentId": 34567890
+    "documentId": 34567890,
+    "image": "assets/images/UCVUsers/avatar1.jpg"
   },
   {
     "id": 22,
@@ -173,7 +194,8 @@
     "lastName": "Silva",
     "email": "paula.silva@example.com",
     "type": "PROFESOR",
-    "documentId": 45678901
+    "documentId": 45678901,
+    "image": "assets/images/UCVUsers/avatar2.jpg"
   },
   {
     "id": 23,
@@ -181,7 +203,8 @@
     "lastName": "Moreno",
     "email": "hugo.moreno@example.com",
     "type": "OBRERO",
-    "documentId": 56789012
+    "documentId": 56789012,
+    "image": "assets/images/UCVUsers/avatar3.jpg"
   },
   {
     "id": 24,
@@ -189,7 +212,8 @@
     "lastName": "Paredes",
     "email": "carolina.paredes@example.com",
     "type": "ADMINISTRADOR",
-    "documentId": 67890123
+    "documentId": 67890123,
+    "image": "assets/images/UCVUsers/avatar4.jpg"
   },
   {
     "id": 25,
@@ -197,7 +221,8 @@
     "lastName": "Soto",
     "email": "martin.soto@example.com",
     "type": "ESTUDIANTE",
-    "documentId": 78901234
+    "documentId": 78401234,
+    "image": "assets/images/UCVUsers/avatar5.png"
   },
   {
     "id": 26,
@@ -205,7 +230,8 @@
     "lastName": "Campos",
     "email": "florencia.campos@example.com",
     "type": "PROFESOR",
-    "documentId": 89012345
+    "documentId": 89012345,
+    "image": "assets/images/UCVUsers/avatar1.jpg"
   },
   {
     "id": 27,
@@ -213,7 +239,8 @@
     "lastName": "Reyes",
     "email": "pablo.reyes@example.com",
     "type": "OBRERO",
-    "documentId": 90123456
+    "documentId": 90123456,
+    "image": "assets/images/UCVUsers/avatar2.jpg"
   },
   {
     "id": 28,
@@ -221,7 +248,8 @@
     "lastName": "Aguilar",
     "email": "samantha.aguilar@example.com",
     "type": "ADMINISTRADOR",
-    "documentId": 12345678
+    "documentId": 12345678,
+    "image": "assets/images/UCVUsers/avatar3.jpg"
   },
   {
     "id": 29,
@@ -229,7 +257,8 @@
     "lastName": "Delgado",
     "email": "felipe.delgado@example.com",
     "type": "ESTUDIANTE",
-    "documentId": 23456789
+    "documentId": 23456789,
+    "image": "assets/images/UCVUsers/avatar4.jpg"
   },
   {
     "id": 30,
@@ -237,6 +266,25 @@
     "lastName": "Peña",
     "email": "monica.pena@example.com",
     "type": "PROFESOR",
-    "documentId": 34567890
+    "documentId": 34567890,
+    "image": "assets/images/UCVUsers/avatar5.png"
+  },
+  {
+    "id": 31,
+    "firstName": "Prueba",
+    "lastName": "Monedero",
+    "email": "prueba_monedero@email.com",
+    "type": "ESTUDIANTE",
+    "documentId": 30117524,
+    "image": "assets/images/UCVUsers/avatar5.png"
+  },
+  {
+    "id": 32,
+    "firstName": "Prueba",
+    "lastName": "Monedero",
+    "email": "prueba_monedero2@email.com",
+    "type": "ESTUDIANTE",
+    "documentId": 33290164,
+    "image": "assets/images/UCVUsers/avatar5.png"
   }
 ]

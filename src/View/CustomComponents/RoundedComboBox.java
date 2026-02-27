@@ -3,42 +3,42 @@ package View.CustomComponents;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicComboBoxUI;
+
 import java.awt.*;
 
-// Usamos <E> para que sea genérico (soporte Strings, objetos, etc.)
+// <E> is used to make it generic (supports Strings, objects, etc.)
 public class RoundedComboBox<E> extends JComboBox<E> {
-    private int arcW = 20; // Curvatura ancho
-    private int arcH = 20; // Curvatura alto
+    private int arcW = 20; // Curvature width
+    private int arcH = 20; // Curvature height
 
     public RoundedComboBox(E[] items) {
         super(items);
-        setOpaque(false); // Hacemos transparente el contenedor principal
+        setOpaque(false); // The main container becomes transparent
         setFont(new Font("SansSerif", Font.PLAIN, 12));
         setBackground(Color.WHITE);
         setForeground(Color.DARK_GRAY);
-        
-        // Borde vacío para dar aire al texto interno
+        // Empty border to give space to the internal text
         setBorder(new EmptyBorder(5, 10, 5, 10));
 
-        // AQUÍ ESTÁ EL TRUCO: Reemplazamos la UI por defecto (la cuadrada)
+        // Important: The default user interface (the square one) is replaced
         setUI(new BasicComboBoxUI() {
             
             @Override
             protected JButton createArrowButton() {
-                // Creamos un botón "invisible" para la flecha
+                // An "invisible" button is created for the arrow
                 JButton btn = new JButton();
                 btn.setBorder(BorderFactory.createEmptyBorder());
                 btn.setContentAreaFilled(false);
                 btn.setFocusPainted(false);
                 
-                // Dibujamos una flechita sencilla nosotros mismos
+                // A simple arrow is drawn
                 btn.setIcon(new Icon() {
                     @Override
                     public void paintIcon(Component c, Graphics g, int x, int y) {
                         Graphics2D g2 = (Graphics2D) g.create();
                         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                         g2.setColor(Color.GRAY);
-                        // Coordenadas para un triángulo hacia abajo
+                        // Coordinates for a downward-pointing triangle
                         int size = 8;
                         int[] xPoints = {x, x + size, x + size / 2};
                         int[] yPoints = {y, y, y + size - 2};
@@ -53,29 +53,24 @@ public class RoundedComboBox<E> extends JComboBox<E> {
                 return btn;
             }
 
-            // Evitamos que pinte el fondo cuadrado estándar
+            // It prevents the painting of the standard square background.
             @Override
             public void paintCurrentValueBackground(Graphics g, Rectangle bounds, boolean hasFocus) {
-                // No hacer nada aquí para dejar ver nuestro fondo redondeado
+                // intentionally empty
             }
         });
     }
 
-    // --- PINTADO DEL FONDO REDONDEADO (IGUAL QUE EN EL TEXTFIELD) ---
+    // The rounded background is painted
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        // 1. Fondo blanco
-        g2.setColor(getBackground());
+        g2.setColor(getBackground()); // White background
         g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcW, arcH);
         
-        // (Opcional) Si quieres pintar el texto seleccionado manualmente, 
-        // super.paintComponent(g) lo hace, pero a veces trae fondo. 
-        // Al haber anulado paintCurrentValueBackground, esto debería ser seguro:
         super.paintComponent(g2); 
-        
         g2.dispose();
     }
 
@@ -84,10 +79,8 @@ public class RoundedComboBox<E> extends JComboBox<E> {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        // 2. Borde gris
-        g2.setColor(Color.LIGHT_GRAY);
+        g2.setColor(Color.LIGHT_GRAY); // Gray border
         g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcW, arcH);
-        
         g2.dispose();
     }
 }

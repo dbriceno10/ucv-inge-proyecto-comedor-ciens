@@ -1,0 +1,62 @@
+[
+  {
+    "id": 7,
+    "walletId": 11,
+    "type": "ENTRADA",
+    "amount": 50.0,
+    "date": "2026-02-26T19:56:27Z",
+    "description": "Recarga de saldo",
+    "reference": "REF123456",
+    "bankName": "Banco de Venezuela"
+  },
+  {
+    "id": 2,
+    "walletId": 11,
+    "type": "SALIDA",
+    "amount": 50.0,
+    "date": "2026-02-26T19:56:27Z",
+    "description": "Pago de comida",
+    "reference": null,
+    "bankName": null
+  },
+  {
+    "id": 3,
+    "walletId": 11,
+    "type": "ENTRADA",
+    "amount": 50.0,
+    "date": "2026-02-26T19:56:51Z",
+    "description": "Recarga de saldo",
+    "reference": "REF123456",
+    "bankName": "Banco de Venezuela"
+  },
+  {
+    "id": 4,
+    "walletId": 11,
+    "type": "SALIDA",
+    "amount": 50.0,
+    "date": "2026-02-26T19:56:51Z",
+    "description": "Pago de comida",
+    "reference": null,
+    "bankName": null
+  },
+  {
+    "id": 5,
+    "walletId": 11,
+    "type": "ENTRADA",
+    "amount": 50.0,
+    "date": "2026-02-26T20:02:24Z",
+    "description": "Recarga de saldo",
+    "reference": "REF123456",
+    "bankName": "Banco de Venezuela"
+  },
+  {
+    "id": 6,
+    "walletId": 11,
+    "type": "SALIDA",
+    "amount": 50.0,
+    "date": "2026-02-26T20:02:24Z",
+    "description": "Pago de comida",
+    "reference": null,
+    "bankName": null
+  }
+]

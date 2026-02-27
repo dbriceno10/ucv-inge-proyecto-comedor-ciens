@@ -1,17 +1,23 @@
 package Controllers.AuthControllers;
 
 import View.Auth.*;
+import View.CustomComponents.showMessageView;
+import View.Goalkeeper.GoalkeeperView;
 import View.Main.DashboardView;
-import View.Menu.MenuListView; // Importamos tu vista de Menús
+import View.Menu.MenuManagementView; 
 import DTO.User.AuthUserDto;
 import Model.User.AuthUserService;
+import Controllers.GoalkeeperControllers.GoalkeeperController;
 import Controllers.MainControllers.DashboardController;
+import Controllers.MenuControllers.MenuManagementController;
 import Utils.InputValidator;
-import Enums.UserRoles; // Importamos los roles para el IF
+import Enums.UserRoles;
 import Context.User.UserSession;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class LoginController implements ActionListener {
@@ -26,12 +32,15 @@ public class LoginController implements ActionListener {
 
         InputValidator.addInputRestriction(this.view.getComponentEmail(), "DEFAULT", 40);
         InputValidator.addInputRestriction(this.view.getComponentPwd(), "DEFAULT", 30);
+
+        this.view.setVisible(true);
+        this.view.setExtendedState(JFrame.MAXIMIZED_BOTH); // to display the interface in full screen mode.
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String button = e.getActionCommand();
-        switch (button) {
+        String command = e.getActionCommand();
+        switch (command) {
             case "Iniciar sesión":
                 processLogin();
                 break;
@@ -41,10 +50,9 @@ public class LoginController implements ActionListener {
                 new RegisterController(regView);
                 break;
             case "¿Olvidó su contraseña?":
-                // pantalla para reiniciar contraseña, no implementado
+                //
                 break;
-            default:
-                break;
+            default: break;
         }
     }
 
@@ -55,26 +63,22 @@ public class LoginController implements ActionListener {
         try {
             AuthUserService user = new AuthUserService();
             AuthUserDto auth_user = user.login(txtEmail, txtPwd);
-            
-            System.out.println("Usuario autenticado: " + auth_user.getFirstName() + " (" + auth_user.getRole() + ")");
-            
+
             UserSession.getInstance().setUser(auth_user);
-            
             showMessageView.showMsg(view, "¡Inicio de sesión exitoso!", JOptionPane.INFORMATION_MESSAGE);
             view.dispose();
 
-            // --- AQUÍ ESTÁ EL IF SIMPLE QUE PEDISTE ---
-            if (UserRoles.ADMIN.equals(auth_user.getRole())) {
-                // Si es ADMIN, solo abrimos la vista y ya
-                MenuListView adminView = new MenuListView();
-                adminView.setVisible(true); 
-            } else {
-                // Si NO es admin, abrimos el Dashboard normal
+            if (UserRoles.COMMENSAL.equals(auth_user.getRole())) {
                 DashboardView dashboardView = new DashboardView();
                 new DashboardController(dashboardView);
+            } else if (UserRoles.ADMIN.equals(auth_user.getRole())) {
+                MenuManagementView adminView = new MenuManagementView();
+                new MenuManagementController(adminView);
+            } else {
+                GoalkeeperView goalkeeperView = new GoalkeeperView();
+                new GoalkeeperController(goalkeeperView);
             }
-            // ------------------------------------------
-
+            
         } catch (IllegalArgumentException e) {
             showMessageView.showMsg(view, e.getMessage(), JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {

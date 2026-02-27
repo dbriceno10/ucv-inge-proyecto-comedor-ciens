@@ -7,50 +7,26 @@ public class FoodModel {
   private String name;
   private String description = null;
   private Double decrease;// porcentaje de merma
-  private Double valueCF;// valor de costos fijos como servicios, salarios, etc.
   private Double valueCV = null;// valor de costos variables como ingredientes, etc.
   private Boolean isActive;
   private String createdAt = null;
   private String updatedAt = null;
   private String deletedAt = null;
   private Integer[] ingredientIds;
+  private String image = null;
 
   public FoodModel(
       Integer id,
       String name,
       String description,
       Double decrease,
-      Double valueCF,
-      Boolean isActive,
-      String createdAt,
-      String updatedAt,
-      String deletedAt,
-      Integer[] ingredientIds) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.decrease = decrease;
-    this.isActive = isActive;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-    this.deletedAt = deletedAt;
-    this.ingredientIds = ingredientIds;
-    this.valueCF = valueCF;
-    this.valueCV = null;
-  }
-
-  public FoodModel(
-      Integer id,
-      String name,
-      String description,
-      Double decrease,
-      Double valueCF,
       Double valueCV,
       Boolean isActive,
       String createdAt,
       String updatedAt,
-      String deletedAt,
-      Integer[] ingredientIds) {
+      String deletedAt
+  // Integer[] ingredientIds
+  ) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -59,9 +35,10 @@ public class FoodModel {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.deletedAt = deletedAt;
-    this.ingredientIds = ingredientIds;
-    this.valueCF = valueCF;
+    // this.ingredientIds = ingredientIds;
+    this.ingredientIds = new Integer[] {};
     this.valueCV = valueCV;
+    this.image = null;
   }
 
   public FoodModel(CreateFoodDto foodDto, Integer id, String createdAt) {
@@ -72,9 +49,10 @@ public class FoodModel {
     this.isActive = true;
     this.createdAt = createdAt;
     this.updatedAt = createdAt;
-    this.ingredientIds = foodDto.getIngredientIds();
-    this.valueCF = foodDto.getValueCF();
+    // this.ingredientIds = foodDto.getIngredientIds();
+    this.ingredientIds = new Integer[] {};
     this.valueCV = 0.0;
+    this.image = null;
   }
 
   public FoodModel() {
@@ -117,12 +95,12 @@ public class FoodModel {
     return ingredientIds;
   }
 
-  public Double getValueCF() {
-    return valueCF;
-  }
-
   public Double getValueCV() {
     return valueCV;
+  }
+
+  public String getImage() {
+    return image;
   }
 
   // setters

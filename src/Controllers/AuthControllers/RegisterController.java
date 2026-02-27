@@ -1,11 +1,13 @@
 package Controllers.AuthControllers;
 
 import View.Auth.*;
-import Controllers.AuthControllers.LoginController;
+import View.CustomComponents.showMessageView;
 import Model.User.AuthUserService;
 import Utils.InputValidator;
 
 import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 
@@ -25,12 +27,15 @@ public class RegisterController implements ActionListener {
         InputValidator.addInputRestriction(this.view.getComponentEmail(), "DEFAULT", 40);
         InputValidator.addInputRestriction(this.view.getComponentPwd(), "DEFAULT", 12);
         InputValidator.addInputRestriction(this.view.getComponentPwd_repeat(), "DEFAULT", 12);
+        
+        this.view.setVisible(true);
+        this.view.setExtendedState(JFrame.MAXIMIZED_BOTH); // to display the interface in full screen mode.
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String button = e.getActionCommand();
-        switch (button) {
+        String command = e.getActionCommand();
+        switch (command) {
             case "Registrarse":
                 processRegistration();
                 break;

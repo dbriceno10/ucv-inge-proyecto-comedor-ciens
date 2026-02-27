@@ -21,13 +21,13 @@ public class IngredientSevice {
   private Dates datesUtil = new Dates();
   private Formatters formatters = new Formatters();
 
-  public List<IngredientDto> getAllIngredients() {
-    List<IngredientDto> ingredients = new ArrayList<>();
+  public ArrayList<IngredientDto> getAllIngredients() {
+    ArrayList<IngredientDto> ingredients = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
       if (file.exists()) {
-        List<IngredientModel> ingredientModels = mapper.readValue(file,
+        ArrayList<IngredientModel> ingredientModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, IngredientModel.class));
         for (IngredientModel ingredientModel : ingredientModels) {
           if (ingredientModel.getDeletedAt() == null) { // Filtrar ingredientes con deletedAt como null
@@ -112,7 +112,7 @@ public class IngredientSevice {
 
   public IngredientDto getByName(String name) {
     String formattedName = this.formatters.toUpperCase(name);
-    List<IngredientModel> ingredients = this.getAll();
+    ArrayList<IngredientModel> ingredients = this.getAll();
     IngredientModel found = null;
     for (IngredientModel ingredient : ingredients) {
       if (ingredient.getName().equalsIgnoreCase(formattedName)) {
@@ -131,7 +131,7 @@ public class IngredientSevice {
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
-      List<IngredientModel> ingredients = this.commonServices.getAllElements(FILE_PATH, IngredientModel.class);
+      ArrayList<IngredientModel> ingredients = this.commonServices.getAllElements(FILE_PATH, IngredientModel.class);
       if (ingredients == null) {
         ingredients = new ArrayList<>();
       }
@@ -148,7 +148,7 @@ public class IngredientSevice {
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
-      List<IngredientModel> ingredients = this.commonServices.getAllElements(FILE_PATH, IngredientModel.class);
+      ArrayList<IngredientModel> ingredients = this.commonServices.getAllElements(FILE_PATH, IngredientModel.class);
       // Find and update the ingredient
       for (Integer i = 0; i < ingredients.size(); i++) {
         if (ingredients.get(i).getId().equals(ingredient.getId())) {
@@ -176,13 +176,13 @@ public class IngredientSevice {
         ingredient.getQuantity());
   }
 
-  private List<IngredientModel> getAll() {
-    List<IngredientModel> ingredients = new ArrayList<>();
+  private ArrayList<IngredientModel> getAll() {
+    ArrayList<IngredientModel> ingredients = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
       if (file.exists()) {
-        List<IngredientModel> ingredientModels = mapper.readValue(file,
+        ArrayList<IngredientModel> ingredientModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, IngredientModel.class));
         for (IngredientModel ingredientModel : ingredientModels) {
           if (ingredientModel.getDeletedAt() == null) { // Filtrar ingredientes con deletedAt como null
@@ -197,7 +197,7 @@ public class IngredientSevice {
   }
 
   private IngredientModel getById(Integer id) {
-    List<IngredientModel> ingredients = this.getAll();
+    ArrayList<IngredientModel> ingredients = this.getAll();
     IngredientModel found = null;
     for (IngredientModel ingredient : ingredients) {
       if (ingredient.getId().equals(id)) {

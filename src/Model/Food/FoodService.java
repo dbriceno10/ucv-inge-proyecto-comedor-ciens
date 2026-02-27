@@ -21,13 +21,13 @@ public class FoodService {
   private Dates datesUtil = new Dates();
   private IngredientSevice ingredientSevice = new IngredientSevice();
 
-  public List<FoodDto> getAllFoods() {
-    List<FoodDto> foods = new ArrayList<>();
+  public ArrayList<FoodDto> getAllFoods() {
+    ArrayList<FoodDto> foods = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
       if (file.exists()) {
-        List<FoodModel> foodModels = mapper.readValue(file,
+        ArrayList<FoodModel> foodModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, FoodModel.class));
         for (FoodModel foodModel : foodModels) {
           if (foodModel.getDeletedAt() == null) { // Filtrar alimentos con deletedAt como null
@@ -53,15 +53,16 @@ public class FoodService {
     if (foodDto.getName() == null || foodDto.getName().isEmpty()) {
       throw new IllegalArgumentException("Food name is required.");
     }
-    if (foodDto.getDecrease() == null || foodDto.getDecrease() < 0) {
-      throw new IllegalArgumentException("Food decrease must be a non-negative number.");
+    if (foodDto.getDecrease() == null || foodDto.getDecrease() < 0 || foodDto.getDecrease() > 100) {
+      throw new IllegalArgumentException("Food decrease must be a number between 0 and 100.");
     }
     if (foodDto.getValueCF() == null || foodDto.getValueCF() < 0) {
       throw new IllegalArgumentException("Food valueCF must be a non-negative number.");
     }
-    if (foodDto.getIngredientIds() == null || foodDto.getIngredientIds().length == 0) {
-      throw new IllegalArgumentException("At least one ingredient is required.");
-    }
+    // if (foodDto.getIngredientIds() == null || foodDto.getIngredientIds().length
+    // == 0) {
+    // throw new IllegalArgumentException("At least one ingredient is required.");
+    // }
     Integer nextId = this.commonServices.getLastIndex(FILE_PATH, FoodModel.class);
     String date = this.datesUtil.getCurrentDateTime();
     FoodModel newFood = new FoodModel(foodDto, nextId, date);
@@ -79,15 +80,16 @@ public class FoodService {
     if (foodDto.getName() == null || foodDto.getName().isEmpty()) {
       throw new IllegalArgumentException("Food name is required.");
     }
-    if (foodDto.getDecrease() == null || foodDto.getDecrease() < 0) {
-      throw new IllegalArgumentException("Food decrease must be a non-negative number.");
+    if (foodDto.getDecrease() == null || foodDto.getDecrease() < 0 || foodDto.getDecrease() > 100) {
+      throw new IllegalArgumentException("Food decrease must be a number between 0 and 100.");
     }
-    if (foodDto.getValueCF() == null || foodDto.getValueCF() < 0) {
+    if (foodDto.getValueCV() == null || foodDto.getValueCV() < 0) {
       throw new IllegalArgumentException("Food valueCF must be a non-negative number.");
     }
-    if (foodDto.getIngredientIds() == null || foodDto.getIngredientIds().length == 0) {
-      throw new IllegalArgumentException("At least one ingredient is required.");
-    }
+    // if (foodDto.getIngredientIds() == null || foodDto.getIngredientIds().length
+    // == 0) {
+    // throw new IllegalArgumentException("At least one ingredient is required.");
+    // }
     FoodModel existingFood = this.getById(foodDto.getId());
     if (existingFood == null) {
       throw new IllegalArgumentException("Food not found with id: " + foodDto.getId());
@@ -97,12 +99,13 @@ public class FoodService {
         foodDto.getName(),
         foodDto.getDescription(),
         foodDto.getDecrease(),
-        foodDto.getValueCF(),
+        foodDto.getValueCV(),
         existingFood.getIsActive(),
         existingFood.getCreatedAt(),
         this.datesUtil.getCurrentDateTime(),
-        existingFood.getDeletedAt(),
-        foodDto.getIngredientIds());
+        existingFood.getDeletedAt()
+    // foodDto.getIngredientIds()
+    );
     FoodDto auxFood = this.mapToDto(updatedFood);
     Double variableCV = this.calculateVariableCost(auxFood);
     updatedFood.setValueCV(variableCV);
@@ -126,7 +129,7 @@ public class FoodService {
   // metodos privados
 
   private FoodModel save(FoodModel food) {
-    List<FoodModel> foods = this.commonServices.getAllElements(FILE_PATH, FoodModel.class);
+    ArrayList<FoodModel> foods = this.commonServices.getAllElements(FILE_PATH, FoodModel.class);
     foods.add(food);
     ObjectMapper mapper = new ObjectMapper();
     try {
@@ -139,7 +142,7 @@ public class FoodService {
   }
 
   private FoodModel edit(FoodModel food) {
-    List<FoodModel> foods = this.commonServices.getAllElements(FILE_PATH, FoodModel.class);
+    ArrayList<FoodModel> foods = this.commonServices.getAllElements(FILE_PATH, FoodModel.class);
     boolean found = false;
     for (int i = 0; i < foods.size(); i++) {
       if (foods.get(i).getId().equals(food.getId())) {
@@ -173,6 +176,7 @@ public class FoodService {
         food.getId(),
         food.getName(),
         food.getDescription(),
+        food.getValueCV(),
         food.getDecrease(),
         food.getIsActive(),
         food.getCreatedAt(),
@@ -180,13 +184,13 @@ public class FoodService {
         ingredientDtos);
   }
 
-  private List<FoodModel> getAll() {
-    List<FoodModel> foods = new ArrayList<>();
+  private ArrayList<FoodModel> getAll() {
+    ArrayList<FoodModel> foods = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     try {
       File file = new File(FILE_PATH);
       if (file.exists()) {
-        List<FoodModel> foodModels = mapper.readValue(file,
+        ArrayList<FoodModel> foodModels = mapper.readValue(file,
             mapper.getTypeFactory().constructCollectionType(List.class, FoodModel.class));
         for (FoodModel foodModel : foodModels) {
           if (foodModel.getDeletedAt() == null) { // Filtrar alimentos con deletedAt como null
@@ -201,7 +205,7 @@ public class FoodService {
   }
 
   private FoodModel getById(Integer id) {
-    List<FoodModel> foods = this.getAll();
+    ArrayList<FoodModel> foods = this.getAll();
     FoodModel found = null;
     for (FoodModel food : foods) {
       if (food.getId().equals(id)) {
