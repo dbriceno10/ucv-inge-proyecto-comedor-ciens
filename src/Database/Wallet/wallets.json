@@ -10,7 +10,7 @@
   },
   {
     "id": 2,
-    "balance": 1.000004565566E10,
+    "balance": 1000.0,
     "userId": 2,
     "isActive": true,
     "createdAt": "2026-01-02T11:00:00Z",
