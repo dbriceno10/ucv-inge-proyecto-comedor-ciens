@@ -181,7 +181,7 @@ public class WalletService {
     if (updatedWallet == null) {
       return null;
     }
-    movementDto = new MovementDto(
+    MovementModel newMovement = new MovementModel(
         nextId,
         walletId,
         movementDto.getType(),
@@ -190,7 +190,7 @@ public class WalletService {
         movementDto.getDescription(),
         movementDto.getReference(),
         movementDto.getBankName());
-    this.saveMovement(movementDto);
+    this.saveMovement(newMovement);
     WalletModel wallet = this.getById(walletId);
     if (wallet == null) {
       return null;
@@ -301,8 +301,12 @@ public class WalletService {
     return movementDtos;
   }
 
-  private ArrayList<MovementDto> saveMovement(MovementDto movementDto) {
-    ArrayList<MovementDto> movements = this.getMovements(movementDto.getWalletId());
+  private ArrayList<MovementModel> getAllMovements() {
+    return this.commonServices.getAllElements(MOVEMENTS_FILE_PATH, MovementModel.class);
+  }
+
+  private MovementModel saveMovement(MovementModel movementDto) {
+    ArrayList<MovementModel> movements = this.getAllMovements();
     movements.add(movementDto);
     ObjectMapper mapper = new ObjectMapper();
     try {
@@ -311,7 +315,8 @@ public class WalletService {
 
     } catch (IOException e) {
       e.printStackTrace();
+      return null;
     }
-    return movements;
+    return movementDto;
   }
 }
