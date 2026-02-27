@@ -137,6 +137,7 @@ public class TopUpView extends JDialog {
         // Añadimos los botones a la parte baja (SOUTH) del panel principal
         mainPanel.add(footerPanel, BorderLayout.SOUTH);
 
+        setUndecorated(true); // quita la barra superior de Windows para que se vea más moderno.
         this.setContentPane(mainPanel);
         this.setSize(900, 600); 
         this.setLocationRelativeTo(parent);

@@ -1,10 +1,13 @@
 package Controllers.AuthControllers;
 
 import View.Auth.*;
+import View.CustomComponents.showMessageView;
+import View.Goalkeeper.GoalkeeperView;
 import View.Main.DashboardView;
 import View.Menu.MenuManagementView; 
 import DTO.User.AuthUserDto;
 import Model.User.AuthUserService;
+import Controllers.GoalkeeperControllers.GoalkeeperController;
 import Controllers.MainControllers.DashboardController;
 import Controllers.MenuControllers.MenuManagementController;
 import Utils.InputValidator;
@@ -65,12 +68,15 @@ public class LoginController implements ActionListener {
             showMessageView.showMsg(view, "¡Inicio de sesión exitoso!", JOptionPane.INFORMATION_MESSAGE);
             view.dispose();
 
-            if (UserRoles.ADMIN.equals(auth_user.getRole())) {
+            if (UserRoles.COMMENSAL.equals(auth_user.getRole())) {
+                DashboardView dashboardView = new DashboardView();
+                new DashboardController(dashboardView);
+            } else if (UserRoles.ADMIN.equals(auth_user.getRole())) {
                 MenuManagementView adminView = new MenuManagementView();
                 new MenuManagementController(adminView);
             } else {
-                DashboardView dashboardView = new DashboardView();
-                new DashboardController(dashboardView);
+                GoalkeeperView goalkeeperView = new GoalkeeperView();
+                new GoalkeeperController(goalkeeperView);
             }
             
         } catch (IllegalArgumentException e) {

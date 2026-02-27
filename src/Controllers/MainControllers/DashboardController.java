@@ -1,38 +1,42 @@
 package Controllers.MainControllers;
 
-import java.util.ArrayList;
-
 import DTO.Menu.MenuDto;
+import DTO.Food.FoodDto;
 import Enums.MenuOptions;
 import Model.Menu.MenuService;
-//import Context.User.UserSession;
+import Model.Food.FoodService;
+import Context.User.UserSession;
 import View.Main.DashboardView;
+import View.Main.FoodDetailsView;
 import View.Wallet.WalletView;
 import Controllers.WalletControllers.WalletController;
 
 import java.awt.event.ActionListener;
-
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class DashboardController implements ActionListener {
     private DashboardView view;
     private MenuService menuService;
+    private FoodService foodService;
+    //private UserSession userSession;
 
     public DashboardController(DashboardView view) {
         this.view = view;
-        this.menuService = new MenuService();
-
+        menuService = new MenuService();
+        foodService = new FoodService();
+        
         this.view.menuTypeListener(this);
         this.view.walletBtnListener(this);
+        this.view.setCardListener(this);
 
         loadData();
         this.view.setVisible(true);
         this.view.setExtendedState(JFrame.MAXIMIZED_BOTH); // to display the interface in full screen mode.
     }
-// QUITAE LOS COMENTARIOS DE LOAD DATA ES NADA MAS PARA VER SI ESTA BIEN
+
    private void loadData() {
         // 1. Pedimos la lista de TODOS los menús programados para el día de hoy
         // Le pasamos 'null' para que no filtre por turno, sino que traiga todo lo de hoy
@@ -53,6 +57,14 @@ public class DashboardController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
+
+        if (command.startsWith("OPEN_FOOD_DETAILS_")) {
+            // ex. OPEN_FOOD_DETAILS_5 -> 5)
+            String foodIdStr = command.replace("OPEN_FOOD_DETAILS_", "");
+            open_foodDetails(foodIdStr);
+            return;
+        }
+
         switch (command) {
             case "OPEN_WALLET":
                 WalletView walletView = new WalletView(this.view);
@@ -70,4 +82,14 @@ public class DashboardController implements ActionListener {
             default: break;
         }
     }
+
+    void open_foodDetails(String txtID) {
+        int foodId = Integer.parseInt(txtID);
+        FoodDto selectedFood = foodService.getFoodById(foodId);
+
+        FoodDetailsView detailsModal = new FoodDetailsView(view, selectedFood);
+        new FoodDetailsController(detailsModal);
+        return;
+    }
+
 }
