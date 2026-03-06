@@ -18,8 +18,6 @@ public class ConfigService {
 
   public ConfigService(String configFilePath) {
     this.configFilePath = configFilePath;
-    System.out.println("ConfigService initialized with:");
-    System.out.println("configFilePath: " + configFilePath);
   }
 
   public ConfigDto getConfig() {

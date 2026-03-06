@@ -17,7 +17,7 @@ public class CreateMenuTest {
   private static final String INGREDIENT_FILE_PATH = "src/Model/TestDatabase/Ingredient/ingredients.json";
   private static final String FOOD_FILE_PATH = "src/Model/TestDatabase/Food/foods.json";
 
-  private MenuService menuService = new MenuService(FILE_PATH, FOOD_FILE_PATH, INGREDIENT_FILE_PATH);
+  private MenuService menuService = new MenuService(FILE_PATH, INGREDIENT_FILE_PATH, FOOD_FILE_PATH);
 
   @Test
   public void testCreateMenuSuccess() {

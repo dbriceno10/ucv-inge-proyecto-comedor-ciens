@@ -26,8 +26,6 @@ public class IngredientSevice {
 
   public IngredientSevice(String ingredientFilePath) {
     this.FILE_PATH = ingredientFilePath;
-    System.out.println("IngredientService initialized with:");
-    System.out.println("FILE_PATH: " + FILE_PATH);
   }
 
   public ArrayList<IngredientDto> getAllIngredients() {

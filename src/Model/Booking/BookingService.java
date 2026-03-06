@@ -25,50 +25,35 @@ import Model.Food.*;
 
 public class BookingService {
   private String FILE_PATH = "src/Model/Database/Booking/bookings.json";
-  private String FILE_USER = "src/Model/Database/User/users.json";
-  private String FILE_UCV_USERS = "src/Model/Database/User/ucvUsers.json";
-  private String WALLET_FILE_PATH = "src/Model/Database/Wallet/wallets.json";
-  private String MOVEMENTS_FILE_PATH = "src/Model/Database/Wallet/movements.json";
-  private String MENU_FILE_PATH = "src/Model/Database/Menu/menus.json";
-  private String INGREDIENT_FILE_PATH = "src/Model/Database/Ingredient/ingredients.json";
-  private String FOOD_FILE_PATH = "src/Model/Database/Food/foods.json";
-  private String CONFIG_FILE_PATH = "src/Model/Database/Config/config.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private FileManager fileManager = new FileManager();
+  private UserService userService;
+  private MenuService menuService;
+  private FoodService foodService;
+  private ConfigService configService;
+  private WalletService walletService;
 
   public BookingService() {
+    this.userService = new UserService();
+    this.menuService = new MenuService();
+    this.foodService = new FoodService();
+    this.configService = new ConfigService();
+    this.walletService = new WalletService();
+
   }
 
   public BookingService(String bookingFilePath, String userFilePath, String ucvUserFilePath, String walletFilePath,
       String movementsFilePath,
       String menuFilePath, String ingredientFilePath, String foodFilePath, String configFilePath) {
     this.FILE_PATH = bookingFilePath;
-    this.FILE_USER = userFilePath;
-    this.FILE_UCV_USERS = ucvUserFilePath;
-    this.WALLET_FILE_PATH = walletFilePath;
-    this.MOVEMENTS_FILE_PATH = movementsFilePath;
-    this.MENU_FILE_PATH = menuFilePath;
-    this.INGREDIENT_FILE_PATH = ingredientFilePath;
-    this.FOOD_FILE_PATH = foodFilePath;
-    this.CONFIG_FILE_PATH = configFilePath;
-    System.out.println("BookingService initialized with:");
-    System.out.println("FILE_PATH: " + FILE_PATH);
-    System.out.println("FILE_USER: " + FILE_USER);
-    System.out.println("FILE_UCV_USERS: " + FILE_UCV_USERS);
-    System.out.println("WALLET_FILE_PATH: " + WALLET_FILE_PATH);
-    System.out.println("MOVEMENTS_FILE_PATH: " + MOVEMENTS_FILE_PATH);
-    System.out.println("MENU_FILE_PATH: " + MENU_FILE_PATH);
-    System.out.println("INGREDIENT_FILE_PATH: " + INGREDIENT_FILE_PATH);
-    System.out.println("FOOD_FILE_PATH: " + FOOD_FILE_PATH);
-    System.out.println("CONFIG_FILE_PATH: " + CONFIG_FILE_PATH);
-  }
+    this.userService = new UserService(userFilePath, ucvUserFilePath, walletFilePath, movementsFilePath);
+    this.menuService = new MenuService(menuFilePath, ingredientFilePath, foodFilePath);
+    this.foodService = new FoodService(foodFilePath, ingredientFilePath);
+    this.configService = new ConfigService(configFilePath);
+    this.walletService = new WalletService(walletFilePath, movementsFilePath);
 
-  private UserService userService = new UserService(FILE_USER, FILE_UCV_USERS, WALLET_FILE_PATH, MOVEMENTS_FILE_PATH);
-  private MenuService menuService = new MenuService(MENU_FILE_PATH, INGREDIENT_FILE_PATH, FOOD_FILE_PATH);
-  private FoodService foodService = new FoodService(FOOD_FILE_PATH, INGREDIENT_FILE_PATH);
-  private ConfigService configService = new ConfigService(CONFIG_FILE_PATH);
-  private WalletService walletService = new WalletService(WALLET_FILE_PATH, MOVEMENTS_FILE_PATH);
+  }
 
   public ArrayList<BookingDto> getTodayBookings(Integer documentId, String shift) {
     // UserSession.getInstance().isAuthenticated();

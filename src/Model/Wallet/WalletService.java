@@ -28,9 +28,6 @@ public class WalletService {
   public WalletService(String walletFilePath, String movementsFilePath) {
     this.FILE_PATH = walletFilePath;
     this.MOVEMENTS_FILE_PATH = movementsFilePath;
-    System.out.println("WalletService initialized with:");
-    System.out.println("FILE_PATH: " + FILE_PATH);
-    System.out.println("MOVEMENTS_FILE_PATH: " + MOVEMENTS_FILE_PATH);
   }
 
   public ArrayList<WalletDto> getAllWallets() {
