@@ -9,7 +9,7 @@ public class UpdateMenuDto {
   private ArrayList<Integer> foodIds;
   private String date; // e.g., "2024-06-10"
   private String image;
-  private Integer qty;
+  private ArrayList<MenuQtyDto> qtys;
   private Integer currentQty;
 
   public UpdateMenuDto(
@@ -18,7 +18,7 @@ public class UpdateMenuDto {
       String type,
       ArrayList<Integer> foodIds,
       String date,
-      Integer qty,
+      ArrayList<MenuQtyDto> qtys,
       Integer currentQty) {
     this.id = id;
     this.day = day;
@@ -26,7 +26,7 @@ public class UpdateMenuDto {
     this.date = date;
     this.type = type;
     this.image = null;
-    this.qty = qty;
+    this.qtys = qtys;
     this.currentQty = currentQty;
   }
 
@@ -36,7 +36,7 @@ public class UpdateMenuDto {
       String type,
       ArrayList<Integer> foodIds,
       String date,
-      Integer qty,
+      ArrayList<MenuQtyDto> qtys,
       Integer currentQty,
       String image) {
     this.id = id;
@@ -45,7 +45,7 @@ public class UpdateMenuDto {
     this.date = date;
     this.type = type;
     this.image = image;
-    this.qty = qty;
+    this.qtys = qtys;
     this.currentQty = currentQty;
   }
 
@@ -76,8 +76,8 @@ public class UpdateMenuDto {
     return image;
   }
 
-  public Integer getQty() {
-    return qty;
+  public ArrayList<MenuQtyDto> getQtys() {
+    return qtys;
   }
 
   public Integer getCurrentQty() {

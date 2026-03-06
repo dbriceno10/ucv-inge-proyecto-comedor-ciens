@@ -8,27 +8,28 @@ public class CreateMenuDto {
   private ArrayList<Integer> foodIds;
   private String date; // e.g., "2024-06-10"
   private String image;
-  private Integer qty;
+  private ArrayList<MenuQtyDto> qtys;
 
   public CreateMenuDto() {
   }
 
-  public CreateMenuDto(String day, String type, ArrayList<Integer> foodIds, Integer qty, String date) {
+  public CreateMenuDto(String day, String type, ArrayList<Integer> foodIds, ArrayList<MenuQtyDto> qtys, String date) {
     this.day = day;
     this.foodIds = foodIds;
     this.date = date;
     this.type = type;
     this.image = null;
-    this.qty = qty;
+    this.qtys = qtys;
   }
 
-  public CreateMenuDto(String day, String type, ArrayList<Integer> foodIds, String date, Integer qty, String image) {
+  public CreateMenuDto(String day, String type, ArrayList<Integer> foodIds, String date, ArrayList<MenuQtyDto> qtys,
+      String image) {
     this.day = day;
     this.foodIds = foodIds;
     this.date = date;
     this.type = type;
     this.image = image;
-    this.qty = qty;
+    this.qtys = qtys;
   }
 
   public String getDay() {
@@ -51,7 +52,7 @@ public class CreateMenuDto {
     return image;
   }
 
-  public Integer getQty() {
-    return qty;
+  public ArrayList<MenuQtyDto> getQtys() {
+    return qtys;
   }
 }

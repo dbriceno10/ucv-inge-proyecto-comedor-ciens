@@ -13,8 +13,7 @@ public class MenuDto {
   private Boolean isActive;
   private String createdAt = null;
   private String updatedAt = null;
-  private Integer qty;
-  private Integer currentQty;
+  private ArrayList<MenuQtyDto> qtys;
 
   public MenuDto(
       Integer id,
@@ -25,8 +24,7 @@ public class MenuDto {
       Boolean isActive,
       String createdAt,
       String updatedAt,
-      Integer qty,
-      Integer currentQty) {
+      ArrayList<MenuQtyDto> qtys) {
     this.id = id;
     this.day = day;
     this.foods = foods;
@@ -35,8 +33,7 @@ public class MenuDto {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.type = type;
-    this.qty = qty;
-    this.currentQty = currentQty;
+    this.qtys = qtys;
   }
 
   public MenuDto() {
@@ -74,12 +71,7 @@ public class MenuDto {
     return type;
   }
 
-  public Integer getQty() {
-    return qty;
+  public ArrayList<MenuQtyDto> getQtys() {
+    return qtys;
   }
-
-  public Integer getCurrentQty() {
-    return currentQty;
-  }
-
 }

@@ -11,6 +11,7 @@ import Model.Common.CommonServices;
 import Model.DTO.Food.FoodDto;
 import Model.DTO.Menu.CreateMenuDto;
 import Model.DTO.Menu.MenuDto;
+import Model.DTO.Menu.MenuQtyDto;
 import Model.DTO.Menu.UpdateMenuDto;
 import Utils.Dates;
 import Model.Food.FoodService;
@@ -96,9 +97,6 @@ public class MenuService {
     if (menuDto.getDate() == null || menuDto.getDate().isEmpty()) {
       throw new IllegalArgumentException("Menu date cannot be null or empty");
     }
-    if (menuDto.getQty() == null || menuDto.getQty() < 0) {
-      throw new IllegalArgumentException("Menu quantity must be a non-negative value");
-    }
     Integer nextId = this.commonServices.getLastIndex(FILE_PATH, MenuModel.class);
     String date = this.datesUtil.getCurrentDateTime();
     MenuModel newMenu = new MenuModel(menuDto, nextId, date);
@@ -136,7 +134,7 @@ public class MenuService {
         existing.getCreatedAt(), // Mantener la fecha de creación
         this.datesUtil.getCurrentDateTime(), // Actualizar la fecha de actualización
         existing.getDeletedAt(), // Mantener la fecha de eliminación,,
-        menuDto.getQty());
+        this.mapToMenuQtyList(menuDto.getQtys())); // Mapear los MenuQtyDto a MenuQty
     MenuModel menu = this.edit(updatedMenu);
     if (menu == null) {
       return null;
@@ -161,26 +159,47 @@ public class MenuService {
     return !menus.isEmpty();
   }
 
-  public boolean validateMenu(Integer id) {
-    MenuModel menu = this.getById(id);
-    if (menu == null) {
-      throw new IllegalArgumentException("Menu not found with id: " + id);
-    }
-    if (menu.getCurrentQty() >= 1) {
-      return true;
-    }
-    throw new IllegalStateException("Menu with id " + id + " has no available quantity");
-  }
+  // public boolean validateMenu(Integer id) {
+  // MenuModel menu = this.getById(id);
+  // if (menu == null) {
+  // throw new IllegalArgumentException("Menu not found with id: " + id);
+  // }
+  // if (menu.getCurrentQty() >= 1) {
+  // return true;
+  // }
+  // throw new IllegalStateException("Menu with id " + id + " has no available
+  // quantity");
+  // }
 
-  public boolean updateCurrentQty(Integer id, Integer qty) {
+  public boolean updateCurrentQty(Integer id, Integer foodId, Integer qty, ArrayList<MenuQtyDto> qtys) {
     if (qty == null || qty < 0) {
       throw new IllegalArgumentException("Quantity must be a non-negative value");
     }
+    if (qtys == null || qtys.size() == 0) {
+      throw new IllegalArgumentException("Menu must have quantity information");
+    }
+
+    ArrayList<MenuQtyDto> updatedQtys = new ArrayList<>();
+    boolean found = false;
+
+    for (MenuQtyDto qtyDto : qtys) {
+      if (qtyDto.getFoodId().equals(foodId)) {
+        updatedQtys.add(new MenuQtyDto(qtyDto.getFoodId(), qtyDto.getQty(), qty));
+        found = true;
+      } else {
+        updatedQtys.add(qtyDto);
+      }
+    }
+
+    if (!found) {
+      throw new IllegalArgumentException("Food not found with id: " + foodId);
+    }
+
     MenuModel menu = this.getById(id);
     if (menu == null) {
       throw new IllegalArgumentException("Menu not found with id: " + id);
     }
-    menu.setCurrentQty(qty);
+    menu.setQtys(this.mapToMenuQtyList(updatedQtys));
     MenuModel updatedMenu = this.edit(menu);
     return updatedMenu != null;
   }
@@ -203,8 +222,7 @@ public class MenuService {
         menuModel.getIsActive(),
         menuModel.getCreatedAt(),
         menuModel.getUpdatedAt(),
-        menuModel.getQty(),
-        menuModel.getCurrentQty());
+        this.mapToMenuQtyDtoList(menuModel.getQtys()));
   }
 
   private ArrayList<MenuModel> getAll() {
@@ -291,4 +309,23 @@ public class MenuService {
     }
     return menu;
   }
+
+  private ArrayList<MenuQty> mapToMenuQtyList(ArrayList<MenuQtyDto> qtyDtos) {
+    ArrayList<MenuQty> qtys = new ArrayList<>();
+    for (MenuQtyDto qtyDto : qtyDtos) {
+      MenuQty menuQty = new MenuQty(qtyDto.getFoodId(), qtyDto.getQty(), qtyDto.getCurrentQty());
+      qtys.add(menuQty);
+    }
+    return qtys;
+  }
+
+  private ArrayList<MenuQtyDto> mapToMenuQtyDtoList(ArrayList<MenuQty> qtys) {
+    ArrayList<MenuQtyDto> qtyDtos = new ArrayList<>();
+    for (MenuQty menuQty : qtys) {
+      MenuQtyDto menuQtyDto = new MenuQtyDto(menuQty.getFoodId(), menuQty.getQty(), menuQty.getCurrentQty());
+      qtyDtos.add(menuQtyDto);
+    }
+    return qtyDtos;
+  }
+
 }

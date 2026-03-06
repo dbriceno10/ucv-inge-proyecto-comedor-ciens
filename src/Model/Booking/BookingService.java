@@ -125,11 +125,18 @@ public class BookingService {
       throw new IllegalArgumentException("Menu not found with ID: " + bookingDto.getMenuId());
     }
 
-    if (menu.getCurrentQty() - 1 < 0) {
+    MenuQtyDto menuQty = this.getMenuQtyByFoodId(menu.getQtys(), bookingDto.getFoodId());
+
+    if (menuQty == null) {
+      throw new IllegalArgumentException(
+          "Food with ID: " + bookingDto.getFoodId() + " not found in menu with ID: " + bookingDto.getMenuId());
+    }
+
+    if (menuQty.getCurrentQty() - 1 < 0) {
       throw new IllegalArgumentException("No hay suficiente cantidad disponible para el menú seleccionado.");
     }
 
-    Double ccb = this.calculateCCB(user.getType(), menu.getQty(), food.getDecrease(), food.getValueCV());
+    Double ccb = this.calculateCCB(user.getType(), menuQty.getQty(), food.getDecrease(), food.getValueCV());
 
     Integer newId = this.commonServices.getLastIndex(FILE_PATH,
         BookingModel.class);
@@ -153,7 +160,8 @@ public class BookingService {
       return null;
     }
 
-    this.menuService.updateCurrentQty(menu.getId(), menu.getCurrentQty() - 1);
+    this.menuService.updateCurrentQty(menu.getId(), bookingDto.getFoodId(), menuQty.getCurrentQty() - 1,
+        menu.getQtys());
 
     return mapToDto(created);
 
@@ -216,8 +224,16 @@ public class BookingService {
 
       BookingModel edited = this.edit(updatedBooking);
       if (edited == null) {
+        MenuQtyDto menuQty = this.getMenuQtyByFoodId(menu.getQtys(), existing.getFoodId());
+
+        if (menuQty == null) {
+          throw new IllegalArgumentException(
+              "Food with ID: " + existing.getFoodId() + " not found in menu with ID: " + existing.getMenuId());
+        }
+
         if (status.equals(BookingStatus.CANCELED)) {
-          this.menuService.updateCurrentQty(menu.getId(), menu.getCurrentQty() + 1);
+          this.menuService.updateCurrentQty(menu.getId(), existing.getFoodId(), menuQty.getCurrentQty() + 1,
+              menu.getQtys());
         }
         return null;
       }
@@ -414,6 +430,17 @@ public class BookingService {
     double decreasePercentage = decrease / 100.0; // pasamos a porcentaje
     Double ccb = ((config.getValueCF() + valueCV) / qty) * (1 + decreasePercentage);
     return ccb;
+  }
+
+  private MenuQtyDto getMenuQtyByFoodId(ArrayList<MenuQtyDto> menuQtyList, Integer foodId) {
+    MenuQtyDto found = null;
+    for (MenuQtyDto menuQty : menuQtyList) {
+      if (menuQty.getFoodId().equals(foodId)) {
+        found = menuQty;
+        break;
+      }
+    }
+    return found;
   }
 
 }
