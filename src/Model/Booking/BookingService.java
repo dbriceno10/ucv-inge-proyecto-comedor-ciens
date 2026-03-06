@@ -24,7 +24,7 @@ import Model.Config.*;
 import Model.Food.*;
 
 public class BookingService {
-  private static final String FILE_PATH = "src/Database/Booking/bookings.json";
+  private static final String FILE_PATH = "src/Model/Database/Booking/bookings.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private UserService userService = new UserService();

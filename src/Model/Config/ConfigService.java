@@ -10,7 +10,7 @@ import DTO.Config.ConfigDto;
 // import Enums.UserRoles;
 
 public class ConfigService {
-  private static String configFilePath = "src/Database/Config/config.json";
+  private static String configFilePath = "src/Model/Database/Config/config.json";
   private Dates datesUtil = new Dates();
 
   public ConfigDto getConfig() {
