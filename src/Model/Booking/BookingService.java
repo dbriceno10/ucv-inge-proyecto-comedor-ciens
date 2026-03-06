@@ -24,7 +24,7 @@ import Model.Config.*;
 import Model.Food.*;
 
 public class BookingService {
-  private static final String FILE_PATH = "src/Model/Database/Booking/bookings.json";
+  private String FILE_PATH = "src/Model/Database/Booking/bookings.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private UserService userService = new UserService();
@@ -33,6 +33,13 @@ public class BookingService {
   private ConfigService configService = new ConfigService();
   private WalletService walletService = new WalletService();
   private FileManager fileManager = new FileManager();
+
+  public BookingService() {
+  }
+
+  public BookingService(String bookingFilePath) {
+    this.FILE_PATH = bookingFilePath;
+  }
 
   public ArrayList<BookingDto> getTodayBookings(Integer documentId, String shift) {
     // UserSession.getInstance().isAuthenticated();

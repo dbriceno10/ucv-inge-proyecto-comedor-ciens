@@ -14,7 +14,14 @@ import Enums.UserTypes;
 
 public class AuthUserService {
   private UserService userService = new UserService();
-  private static final String FILE_USER = "src/Model/Database/User/users.json";
+  private String FILE_USER = "src/Model/Database/User/users.json";
+
+  public AuthUserService() {
+  }
+
+  public AuthUserService(String userFilePath) {
+    this.FILE_USER = userFilePath;
+  }
 
   public AuthUserDto register(String email, String role, String firstName, String lastName, String password,
       String repeatPassword, Integer documentId) {

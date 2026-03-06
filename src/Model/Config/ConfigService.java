@@ -10,11 +10,18 @@ import DTO.Config.ConfigDto;
 // import Enums.UserRoles;
 
 public class ConfigService {
-  private static String configFilePath = "src/Model/Database/Config/config.json";
+  private String configFilePath = "src/Model/Database/Config/config.json";
   private Dates datesUtil = new Dates();
 
+  public ConfigService() {
+  }
+
+  public ConfigService(String configFilePath) {
+    this.configFilePath = configFilePath;
+  }
+
   public ConfigDto getConfig() {
-    //UserSession.getInstance().isAuthenticated(); // Verificar que el usuario esté
+    // UserSession.getInstance().isAuthenticated(); // Verificar que el usuario esté
     // autenticado
     ObjectMapper mapper = new ObjectMapper();
     try {
@@ -35,7 +42,7 @@ public class ConfigService {
   }
 
   public ConfigDto createConfig(ConfigDto configDto) {
-    //UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el
+    // UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el
     // usuario tenga rol ADMIN
     ConfigDto existingConfig = this.getConfig();
     if (existingConfig != null) {
@@ -59,7 +66,7 @@ public class ConfigService {
   }
 
   public ConfigDto updateConfig(ConfigDto configDto) {
-    //UserSession.getInstance().hasRole(UserRoles.ADMIN);
+    // UserSession.getInstance().hasRole(UserRoles.ADMIN);
     this.validateConfigDto(configDto); // Validar el DTO antes de actualizar
     ObjectMapper mapper = new ObjectMapper();
     try {

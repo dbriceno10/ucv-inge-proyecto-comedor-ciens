@@ -1,0 +1,222 @@
+[
+  {
+    "id": 1,
+    "name": "TOMATO",
+    "unit": "kg",
+    "quantity": 10.0,
+    "price": 2.5,
+    "expirationDate": "2026-03-01",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 2,
+    "name": "ONION",
+    "unit": "kg",
+    "quantity": 5.0,
+    "price": 1.8,
+    "expirationDate": "2026-03-05",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 3,
+    "name": "GARLIC",
+    "unit": "kg",
+    "quantity": 2.0,
+    "price": 3.0,
+    "expirationDate": "2026-03-10",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 4,
+    "name": "CARROT",
+    "unit": "kg",
+    "quantity": 8.0,
+    "price": 1.2,
+    "expirationDate": "2026-03-15",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 5,
+    "name": "POTATO",
+    "unit": "kg",
+    "quantity": 20.0,
+    "price": 0.9,
+    "expirationDate": "2026-03-20",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 6,
+    "name": "CHICKEN BREAST",
+    "unit": "kg",
+    "quantity": 15.0,
+    "price": 5.0,
+    "expirationDate": "2026-02-28",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 7,
+    "name": "BEEF",
+    "unit": "kg",
+    "quantity": 12.0,
+    "price": 8.0,
+    "expirationDate": "2026-02-25",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 8,
+    "name": "RICE",
+    "unit": "kg",
+    "quantity": 50.0,
+    "price": 1.0,
+    "expirationDate": "2026-06-01",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 9,
+    "name": "PASTA",
+    "unit": "kg",
+    "quantity": 30.0,
+    "price": 1.5,
+    "expirationDate": "2026-05-01",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 10,
+    "name": "CHEESE",
+    "unit": "kg",
+    "quantity": 10.0,
+    "price": 6.0,
+    "expirationDate": "2026-03-10",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 11,
+    "name": "MILK",
+    "unit": "liters",
+    "quantity": 20.0,
+    "price": 1.2,
+    "expirationDate": "2026-02-15",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 12,
+    "name": "EGGS",
+    "unit": "dozen",
+    "quantity": 10.0,
+    "price": 2.0,
+    "expirationDate": "2026-02-20",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 13,
+    "name": "BUTTER",
+    "unit": "kg",
+    "quantity": 5.0,
+    "price": 4.0,
+    "expirationDate": "2026-03-01",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 14,
+    "name": "SALT",
+    "unit": "kg",
+    "quantity": 25.0,
+    "price": 0.5,
+    "expirationDate": "2027-01-01",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 15,
+    "name": "PEPPER",
+    "unit": "kg",
+    "quantity": 3.0,
+    "price": 10.0,
+    "expirationDate": "2027-01-01",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 16,
+    "name": "OLIVE OIL",
+    "unit": "liters",
+    "quantity": 10.0,
+    "price": 7.0,
+    "expirationDate": "2026-12-01",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 17,
+    "name": "FLOUR",
+    "unit": "kg",
+    "quantity": 40.0,
+    "price": 1.0,
+    "expirationDate": "2026-07-01",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 18,
+    "name": "SUGAR",
+    "unit": "kg",
+    "quantity": 30.0,
+    "price": 0.8,
+    "expirationDate": "2026-08-01",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 19,
+    "name": "BANANA",
+    "unit": "kg",
+    "quantity": 10.0,
+    "price": 1.5,
+    "expirationDate": "2026-02-10",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  },
+  {
+    "id": 20,
+    "name": "APPLE",
+    "unit": "kg",
+    "quantity": 15.0,
+    "price": 2.0,
+    "expirationDate": "2026-02-12",
+    "createdAt": "2026-02-01",
+    "updatedAt": "2026-02-02",
+    "deletedAt": null
+  }
+]

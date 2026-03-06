@@ -17,10 +17,18 @@ import DTO.Wallet.WalletDto;
 // import Context.User.UserSession;
 
 public class WalletService {
-  private static final String FILE_PATH = "src/Model/Database/Wallet/wallets.json";
-  private static final String MOVEMENTS_FILE_PATH = "src/Model/Database/Wallet/movements.json";
+  private String FILE_PATH = "src/Model/Database/Wallet/wallets.json";
+  private String MOVEMENTS_FILE_PATH = "src/Model/Database/Wallet/movements.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
+
+  public WalletService() {
+  }
+
+  public WalletService(String walletFilePath, String movementsFilePath) {
+    this.FILE_PATH = walletFilePath;
+    this.MOVEMENTS_FILE_PATH = movementsFilePath;
+  }
 
   public ArrayList<WalletDto> getAllWallets() {
     // UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el

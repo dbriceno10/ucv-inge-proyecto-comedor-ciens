@@ -14,11 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
-  private static final String FILE_USER = "src/Model/Database/User/users.json";
-  private static final String FILE_UCV_USERS = "src/Model/Database/User/ucvUsers.json";
+  private String FILE_USER = "src/Model/Database/User/users.json";
+  private String FILE_UCV_USERS = "src/Model/Database/User/ucvUsers.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private WalletService walletService = new WalletService();
+
+  public UserService() {
+  }
+
+  public UserService(String userFilePath, String ucvUserFilePath) {
+    this.FILE_USER = userFilePath;
+    this.FILE_UCV_USERS = ucvUserFilePath;
+  }
 
   // Métodos para manejar usuarios (crear, leer, actualizar, eliminar)
   // TODO: manejar excepciones, se debe manejar que el email sea unico en crear y

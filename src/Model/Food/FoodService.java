@@ -16,10 +16,17 @@ import Model.Ingredient.IngredientSevice;
 import DTO.Ingredient.IngredientDto;
 
 public class FoodService {
-  private static final String FILE_PATH = "src/Model/Database/Food/foods.json";
+  private String FILE_PATH = "src/Model/Database/Food/foods.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private IngredientSevice ingredientSevice = new IngredientSevice();
+
+  public FoodService() {
+  }
+
+  public FoodService(String foodFilePath) {
+    this.FILE_PATH = foodFilePath;
+  }
 
   public ArrayList<FoodDto> getAllFoods() {
     ArrayList<FoodDto> foods = new ArrayList<>();

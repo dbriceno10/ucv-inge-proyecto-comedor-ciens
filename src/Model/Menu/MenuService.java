@@ -16,10 +16,17 @@ import DTO.Food.FoodDto;
 import DTO.Menu.UpdateMenuDto;
 
 public class MenuService {
-  private static final String FILE_PATH = "src/Model/Database/Menu/menus.json";
+  private String FILE_PATH = "src/Model/Database/Menu/menus.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private FoodService foodService = new FoodService();
+
+  public MenuService() {
+  }
+
+  public MenuService(String menuFilePath) {
+    this.FILE_PATH = menuFilePath;
+  }
 
   public ArrayList<MenuDto> getAllMenus() {
     ArrayList<MenuDto> menus = new ArrayList<>();
