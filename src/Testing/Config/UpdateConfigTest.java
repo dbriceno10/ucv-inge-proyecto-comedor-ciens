@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import Model.Config.ConfigService;
-import DTO.Config.ConfigDto;
+import Model.DTO.Config.ConfigDto;
 
 public class UpdateConfigTest {
   private static final String TEST_CONFIG_FILE = "src/Model/TestDatabase/Config/config.json";

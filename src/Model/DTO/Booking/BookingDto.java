@@ -1,4 +1,4 @@
-package DTO.Booking;
+package Model.DTO.Booking;
 
 public class BookingDto {
   private Integer id;

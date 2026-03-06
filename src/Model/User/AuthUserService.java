@@ -1,7 +1,5 @@
 package Model.User;
 
-import DTO.User.AuthUserDto;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import Enums.UserRoles;
 import Enums.UserTypes;
+import Model.DTO.User.AuthUserDto;
 
 public class AuthUserService {
   private String FILE_USER = "src/Model/Database/User/users.json";

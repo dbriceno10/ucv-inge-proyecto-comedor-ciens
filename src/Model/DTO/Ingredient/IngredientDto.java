@@ -1,4 +1,4 @@
-package DTO.Ingredient;
+package Model.DTO.Ingredient;
 
 public class IngredientDto {
   private Integer id;

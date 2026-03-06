@@ -3,7 +3,7 @@ package Controllers.GoalkeeperControllers;
 import View.Goalkeeper.GoalkeeperView;
 import View.CustomComponents.showMessageView;
 import Model.Booking.BookingService;
-import DTO.Booking.BookingDto;
+import Model.DTO.Booking.BookingDto;
 import Utils.InputValidator;
 import Utils.FileManager;
 

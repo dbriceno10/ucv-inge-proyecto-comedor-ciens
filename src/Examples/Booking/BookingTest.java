@@ -1,9 +1,9 @@
 package Examples.Booking;
 
-import DTO.Booking.BookingDto;
-import DTO.Booking.CreateBookingDto;
-import DTO.Booking.UpdateBookingDto;
 import Model.Booking.BookingService;
+import Model.DTO.Booking.BookingDto;
+import Model.DTO.Booking.CreateBookingDto;
+import Model.DTO.Booking.UpdateBookingDto;
 import Enums.*;
 
 import java.util.ArrayList;

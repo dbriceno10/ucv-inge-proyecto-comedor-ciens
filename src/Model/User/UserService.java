@@ -3,8 +3,8 @@ package Model.User;
 // import Model.User.UserModel;
 // import Model.User.BaseUserModel;
 import Model.Common.CommonServices;
+import Model.DTO.Wallet.CreateWalletDto;
 import Utils.Dates;
-import DTO.Wallet.CreateWalletDto;
 import Model.Wallet.WalletService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

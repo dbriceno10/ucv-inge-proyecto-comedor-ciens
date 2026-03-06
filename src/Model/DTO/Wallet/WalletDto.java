@@ -1,4 +1,4 @@
-package DTO.Wallet;
+package Model.DTO.Wallet;
 
 import java.util.ArrayList;
 

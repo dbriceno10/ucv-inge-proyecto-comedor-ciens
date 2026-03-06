@@ -1,4 +1,4 @@
-package DTO.User;
+package Model.DTO.User;
 
 public class AuthUserDto {
   protected Integer id;

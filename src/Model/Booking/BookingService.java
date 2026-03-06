@@ -10,17 +10,17 @@ import Model.Common.CommonServices;
 import Utils.*;
 import Enums.BookingStatus;
 import Enums.UserTypes;
-import DTO.Wallet.*;
 import Model.Wallet.*;
-import DTO.Booking.BookingDto;
-import DTO.Booking.CreateBookingDto;
-import DTO.Booking.UpdateBookingDto;
-import DTO.Config.ConfigDto;
-import DTO.Food.FoodDto;
-import DTO.Menu.*;
 import Model.User.*;
 import Model.Menu.*;
 import Model.Config.*;
+import Model.DTO.Booking.BookingDto;
+import Model.DTO.Booking.CreateBookingDto;
+import Model.DTO.Booking.UpdateBookingDto;
+import Model.DTO.Config.ConfigDto;
+import Model.DTO.Food.FoodDto;
+import Model.DTO.Menu.*;
+import Model.DTO.Wallet.*;
 import Model.Food.*;
 
 public class BookingService {

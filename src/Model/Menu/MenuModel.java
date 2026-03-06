@@ -2,7 +2,7 @@ package Model.Menu;
 
 import java.util.ArrayList;
 
-import DTO.Menu.CreateMenuDto;
+import Model.DTO.Menu.CreateMenuDto;
 
 public class MenuModel {
   private Integer id;

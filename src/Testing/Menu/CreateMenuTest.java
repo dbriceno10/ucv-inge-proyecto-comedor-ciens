@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import Model.DTO.Menu.CreateMenuDto;
+import Model.DTO.Menu.MenuDto;
 import Model.Menu.MenuService;
-import DTO.Menu.CreateMenuDto;
-import DTO.Menu.MenuDto;
 import Enums.*;
 
 public class CreateMenuTest {

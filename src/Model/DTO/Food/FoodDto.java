@@ -1,7 +1,8 @@
-package DTO.Food;
+package Model.DTO.Food;
 
 import java.util.ArrayList;
-import DTO.Ingredient.IngredientDto;
+
+import Model.DTO.Ingredient.IngredientDto;
 
 public class FoodDto {
   private Integer id;

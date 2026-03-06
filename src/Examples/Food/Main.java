@@ -1,8 +1,8 @@
 package Examples.Food;
 
-import DTO.Food.CreateFoodDto;
-import DTO.Food.FoodDto;
-import DTO.Food.UpdateFoodDto;
+import Model.DTO.Food.CreateFoodDto;
+import Model.DTO.Food.FoodDto;
+import Model.DTO.Food.UpdateFoodDto;
 import Model.Food.FoodService;
 
 import java.util.ArrayList;

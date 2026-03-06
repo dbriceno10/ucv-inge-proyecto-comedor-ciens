@@ -1,7 +1,6 @@
-package DTO.Booking;
+package Model.DTO.Booking;
 
-public class UpdateBookingDto {
-  private Integer id;
+public class CreateBookingDto {
   private Integer userId;
   private Integer menuId;
   private Integer foodId;
@@ -9,18 +8,16 @@ public class UpdateBookingDto {
   private String date; // fecha del turno
   private String day;
 
-  public UpdateBookingDto() {
+  public CreateBookingDto() {
   }
 
-  public UpdateBookingDto(Integer id, Integer userId, Integer menuId, Integer foodId, String shift, String date,
-      String day) {
+  public CreateBookingDto(Integer userId, Integer menuId, Integer foodId, String shift, String date, String day) {
     this.userId = userId;
     this.menuId = menuId;
     this.foodId = foodId;
     this.shift = shift;
     this.date = date;
     this.day = day;
-    this.id = id;
   }
 
   // getters
@@ -47,9 +44,5 @@ public class UpdateBookingDto {
 
   public String getDay() {
     return day;
-  }
-
-  public Integer getId() {
-    return id;
   }
 }

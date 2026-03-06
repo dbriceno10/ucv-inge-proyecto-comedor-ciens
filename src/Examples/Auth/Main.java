@@ -1,6 +1,6 @@
 package Examples.Auth;
 
-import DTO.User.AuthUserDto;
+import Model.DTO.User.AuthUserDto;
 import Model.User.AuthUserService;
 import Enums.UserRoles;
 

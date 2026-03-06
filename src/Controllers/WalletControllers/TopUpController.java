@@ -1,9 +1,8 @@
 package Controllers.WalletControllers;
 
-import Context.User.UserSession; 
-import DTO.User.AuthUserDto;
-
+import Context.User.UserSession;
 import View.Wallet.TopUpView;
+import Model.DTO.User.AuthUserDto;
 import Model.Wallet.WalletService;
 import Utils.InputValidator;
 

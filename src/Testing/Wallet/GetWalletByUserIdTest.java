@@ -3,8 +3,8 @@ package Testing.Wallet;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import Model.DTO.Wallet.WalletDto;
 import Model.Wallet.WalletService;
-import DTO.Wallet.WalletDto;
 
 public class GetWalletByUserIdTest {
 

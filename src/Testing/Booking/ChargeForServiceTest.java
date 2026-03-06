@@ -6,9 +6,9 @@ import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 import Model.Booking.BookingService;
-import DTO.Booking.BookingDto;
+import Model.DTO.Booking.BookingDto;
+import Model.DTO.Wallet.WalletDto;
 import Model.Wallet.WalletService;
-import DTO.Wallet.WalletDto;
 import Enums.BookingStatus;
 
 public class ChargeForServiceTest {

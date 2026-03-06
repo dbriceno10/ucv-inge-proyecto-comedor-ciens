@@ -3,12 +3,11 @@ package Controllers.WalletControllers;
 
 import View.Wallet.WalletView;
 import View.Wallet.TopUpView;
+import Model.DTO.User.AuthUserDto;
+import Model.DTO.Wallet.MovementDto;
+import Model.DTO.Wallet.WalletDto;
 import Model.Wallet.WalletService;
-import DTO.Wallet.WalletDto;
-import DTO.User.AuthUserDto; 
 import Context.User.UserSession;
-
-import DTO.Wallet.MovementDto;
 import Enums.TypeMovement;
 import java.util.ArrayList;
 

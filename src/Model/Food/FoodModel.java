@@ -1,6 +1,6 @@
 package Model.Food;
 
-import DTO.Food.CreateFoodDto;
+import Model.DTO.Food.CreateFoodDto;
 
 public class FoodModel {
   private Integer id;

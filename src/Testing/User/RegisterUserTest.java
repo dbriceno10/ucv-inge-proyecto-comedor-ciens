@@ -3,9 +3,9 @@ package Testing.User;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import Model.DTO.User.AuthUserDto;
 import Model.User.AuthUserService;
 import Model.User.UserService;
-import DTO.User.AuthUserDto;
 import Enums.UserRoles;
 
 public class RegisterUserTest {

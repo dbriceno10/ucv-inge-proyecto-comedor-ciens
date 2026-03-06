@@ -1,7 +1,7 @@
 package Examples.Config;
 
-import DTO.Config.ConfigDto;
 import Model.Config.ConfigService;
+import Model.DTO.Config.ConfigDto;
 
 public class Main {
   public static void main(String[] args) {

@@ -1,8 +1,8 @@
 package Examples.Menu;
 
-import DTO.Menu.CreateMenuDto;
-import DTO.Menu.MenuDto;
-import DTO.Menu.UpdateMenuDto;
+import Model.DTO.Menu.CreateMenuDto;
+import Model.DTO.Menu.MenuDto;
+import Model.DTO.Menu.UpdateMenuDto;
 import Model.Menu.MenuService;
 import Enums.Days;
 import Enums.MenuTypes;

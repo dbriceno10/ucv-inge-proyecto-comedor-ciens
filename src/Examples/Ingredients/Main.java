@@ -1,14 +1,13 @@
 package Examples.Ingredients;
 
 import Model.Common.CommonServices;
+import Model.DTO.Ingredient.CreateIngredientDto;
+import Model.DTO.Ingredient.IngredientDto;
+import Model.DTO.Ingredient.UpdateIngredientDto;
 import Model.Ingredient.IngredientModel;
 import Model.Ingredient.IngredientSevice;
 
 import java.util.ArrayList;
-
-import DTO.Ingredient.CreateIngredientDto;
-import DTO.Ingredient.IngredientDto;
-import DTO.Ingredient.UpdateIngredientDto;
 
 public class Main {
   public static void main(String[] args) {

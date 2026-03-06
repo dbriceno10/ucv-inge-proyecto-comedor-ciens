@@ -1,4 +1,4 @@
-package DTO.Menu;
+package Model.DTO.Menu;
 
 import java.util.ArrayList;
 

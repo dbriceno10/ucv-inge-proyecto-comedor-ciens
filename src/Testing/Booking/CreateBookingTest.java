@@ -6,8 +6,8 @@ import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 import Model.Booking.BookingService;
-import DTO.Booking.BookingDto;
-import DTO.Booking.CreateBookingDto;
+import Model.DTO.Booking.BookingDto;
+import Model.DTO.Booking.CreateBookingDto;
 import Enums.Days;
 import Enums.MenuTypes;
 

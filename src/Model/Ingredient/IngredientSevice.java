@@ -7,10 +7,10 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import DTO.Ingredient.CreateIngredientDto;
-import DTO.Ingredient.IngredientDto;
-import DTO.Ingredient.UpdateIngredientDto;
 import Model.Common.CommonServices;
+import Model.DTO.Ingredient.CreateIngredientDto;
+import Model.DTO.Ingredient.IngredientDto;
+import Model.DTO.Ingredient.UpdateIngredientDto;
 // import Model.Ingredient.IngredientModel;
 import Utils.Dates;
 import Utils.Formatters;

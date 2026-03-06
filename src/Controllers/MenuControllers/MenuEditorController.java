@@ -1,8 +1,8 @@
 package Controllers.MenuControllers;
 
 import View.Menu.*;
-import DTO.Food.FoodDto;
-import DTO.Menu.CreateMenuDto;
+import Model.DTO.Food.FoodDto;
+import Model.DTO.Menu.CreateMenuDto;
 import Model.Food.FoodService;
 import Model.Menu.MenuService;
 import Enums.Days;

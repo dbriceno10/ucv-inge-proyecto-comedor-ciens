@@ -1,7 +1,7 @@
 package Controllers.FoodControllers;
 
 import View.Food.DishEditorView;
-import DTO.Food.CreateFoodDto;
+import Model.DTO.Food.CreateFoodDto;
 import Model.Food.FoodService;
 
 import java.awt.event.ActionEvent;

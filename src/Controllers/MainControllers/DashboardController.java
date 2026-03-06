@@ -1,9 +1,9 @@
 package Controllers.MainControllers;
 
-import DTO.Menu.MenuDto;
-import DTO.Food.FoodDto;
 import Enums.MenuOptions;
 import Model.Menu.MenuService;
+import Model.DTO.Food.FoodDto;
+import Model.DTO.Menu.MenuDto;
 import Model.Food.FoodService;
 import Context.User.UserSession;
 import View.Main.DashboardView;

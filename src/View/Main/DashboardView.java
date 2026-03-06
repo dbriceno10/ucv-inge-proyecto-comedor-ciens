@@ -1,11 +1,11 @@
 package View.Main;
 
 import Enums.MenuOptions;
+import Model.DTO.Food.FoodDto;
+import Model.DTO.Menu.MenuDto;
+import Model.DTO.User.AuthUserDto;
 import View.CustomComponents.*;
 import Context.User.UserSession;
-import DTO.Food.FoodDto;
-import DTO.Menu.MenuDto;
-import DTO.User.AuthUserDto;
 
 import java.awt.*;
 import java.awt.event.*;

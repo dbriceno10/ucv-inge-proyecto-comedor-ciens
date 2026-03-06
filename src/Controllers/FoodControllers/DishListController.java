@@ -3,8 +3,8 @@ package Controllers.FoodControllers;
 import View.Food.DishListView;
 import View.Ingredient.IngredientListView;
 import View.Food.DishEditorView;
+import Model.DTO.Food.FoodDto;
 import Model.Food.FoodService;
-import DTO.Food.FoodDto;
 import Controllers.IngredientControllers.IngredientListController;
 
 import javax.swing.*;
