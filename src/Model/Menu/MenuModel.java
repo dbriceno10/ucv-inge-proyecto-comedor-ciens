@@ -49,6 +49,17 @@ public class MenuModel {
     this.updatedAt = createdAt; // Inicialmente, updatedAt es igual a createdAt
     this.deletedAt = null;
     this.type = menuDto.getType();
+
+    // Mapear los Dtos a modelos internos MenuQty
+    this.qtys = new ArrayList<>();
+    System.out.println("Debug: MenuDto qtys size = " + (menuDto.getQtys() != null ? menuDto.getQtys().size() : "null"));
+    if (menuDto.getQtys() != null) {
+      for (Model.DTO.Menu.MenuQtyDto qtyDto : menuDto.getQtys()) {
+        this.qtys.add(new MenuQty(qtyDto.getFoodId(), qtyDto.getQty(), qtyDto.getCurrentQty()));
+      }
+    } else {
+      System.out.println("Warning: MenuDto does not contain qtys. Initializing with empty list.");
+    }
   }
 
   public MenuModel() {
