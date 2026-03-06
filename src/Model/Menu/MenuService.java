@@ -16,7 +16,7 @@ import DTO.Food.FoodDto;
 import DTO.Menu.UpdateMenuDto;
 
 public class MenuService {
-  private static final String FILE_PATH = "src/Database/Menu/menus.json";
+  private static final String FILE_PATH = "src/Model/Database/Menu/menus.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private FoodService foodService = new FoodService();

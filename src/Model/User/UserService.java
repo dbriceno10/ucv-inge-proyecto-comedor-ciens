@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
-  private static final String FILE_USER = "src/Database/User/users.json";
-  private static final String FILE_UCV_USERS = "src/Database/User/ucvUsers.json";
+  private static final String FILE_USER = "src/Model/Database/User/users.json";
+  private static final String FILE_UCV_USERS = "src/Model/Database/User/ucvUsers.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private WalletService walletService = new WalletService();

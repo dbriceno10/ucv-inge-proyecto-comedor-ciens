@@ -16,7 +16,7 @@ import Utils.Dates;
 import Utils.Formatters;
 
 public class IngredientSevice {
-  private static final String FILE_PATH = "src/Database/Ingredient/ingredients.json";
+  private static final String FILE_PATH = "src/Model/Database/Ingredient/ingredients.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
   private Formatters formatters = new Formatters();

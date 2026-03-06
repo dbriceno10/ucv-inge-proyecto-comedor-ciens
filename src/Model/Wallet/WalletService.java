@@ -17,7 +17,7 @@ import DTO.Wallet.WalletDto;
 // import Context.User.UserSession;
 
 public class WalletService {
-  private static final String FILE_PATH = "src/Database/Wallet/wallets.json";
+  private static final String FILE_PATH = "src/Model/Database/Wallet/wallets.json";
   private static final String MOVEMENTS_FILE_PATH = "src/Database/Wallet/movements.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
