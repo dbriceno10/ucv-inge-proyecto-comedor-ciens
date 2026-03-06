@@ -1,7 +1,5 @@
 package Model.User;
 
-import DTO.User.AuthUserDto;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,10 +9,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import Enums.UserRoles;
 import Enums.UserTypes;
+import Model.DTO.User.AuthUserDto;
 
 public class AuthUserService {
-  private UserService userService = new UserService();
-  private static final String FILE_USER = "src/Database/User/users.json";
+  private String FILE_USER = "src/Model/Database/User/users.json";
+  private UserService userService;
+
+  public AuthUserService() {
+    this.userService = new UserService();
+  }
+
+  public AuthUserService(String userFilePath, String ucvUserFilePath, String walletFilePath, String movementsFilePath) {
+    this.FILE_USER = userFilePath;
+    this.userService = new UserService(userFilePath, ucvUserFilePath, walletFilePath, movementsFilePath);
+  }
 
   public AuthUserDto register(String email, String role, String firstName, String lastName, String password,
       String repeatPassword, Integer documentId) {
@@ -29,7 +37,7 @@ public class AuthUserService {
     BaseUserModel existingUCV = userService.getUCVUserByDocumentId(documentId);
 
     if (existingUCV == null) { // No se encontró el usuario en la base de datos UCV
-      throw new IllegalArgumentException("User not found with the provided email: " + email);
+      throw new IllegalArgumentException("User not found with the provided documentId: " + email);
     }
 
     String type = existingUCV.getType();

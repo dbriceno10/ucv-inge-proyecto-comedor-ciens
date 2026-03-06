@@ -1,7 +1,7 @@
 package Controllers.IngredientControllers;
 
 import View.Ingredient.*;
-import DTO.Ingredient.CreateIngredientDto;
+import Model.DTO.Ingredient.CreateIngredientDto;
 import Model.Ingredient.IngredientSevice;
 
 import java.awt.event.ActionEvent;

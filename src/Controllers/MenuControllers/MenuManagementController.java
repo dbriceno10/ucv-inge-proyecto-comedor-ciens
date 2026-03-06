@@ -4,7 +4,7 @@ import View.Menu.*;
 import View.Config.ConfigView;
 import View.Food.*;
 import View.Ingredient.IngredientListView;
-import DTO.Menu.*;
+import Model.DTO.Menu.*;
 import Model.Menu.*;
 
 import javax.swing.*;

@@ -2,7 +2,7 @@ package Controllers.ConfigControllers;
 
 import View.Config.ConfigView;
 import Model.Config.ConfigService;
-import DTO.Config.ConfigDto;
+import Model.DTO.Config.ConfigDto;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;

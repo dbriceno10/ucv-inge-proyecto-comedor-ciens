@@ -1,10 +1,12 @@
 package View.Main;
 
-import DTO.Food.FoodDto;
 import View.CustomComponents.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import Model.DTO.Food.FoodDto;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 

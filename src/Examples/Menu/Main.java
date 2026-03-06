@@ -1,8 +1,9 @@
 package Examples.Menu;
 
-import DTO.Menu.CreateMenuDto;
-import DTO.Menu.MenuDto;
-import DTO.Menu.UpdateMenuDto;
+import Model.DTO.Menu.CreateMenuDto;
+import Model.DTO.Menu.MenuDto;
+import Model.DTO.Menu.MenuQtyDto;
+import Model.DTO.Menu.UpdateMenuDto;
 import Model.Menu.MenuService;
 import Enums.Days;
 import Enums.MenuTypes;
@@ -47,11 +48,17 @@ public class Main {
     // Test 3: Crear un nuevo menú
     System.out.println("Test 3: Create a new menu");
     ArrayList<Integer> foodIds = new ArrayList<>(java.util.Arrays.asList(1, 2, 3));
+    ArrayList<MenuQtyDto> qtys = new ArrayList<>(java.util.Arrays.asList(
+        new MenuQtyDto(1, 10, 10),
+        new MenuQtyDto(2, 10, 10),
+        new MenuQtyDto(3, 10, 10)
+    ));
     try {
       CreateMenuDto newMenu = new CreateMenuDto(
           Days.MONDAY,
           MenuTypes.BREACKFAST,
-          foodIds, 10,
+          foodIds,
+          qtys,
           "2026-02-08");
       MenuDto createdMenu = menuService.create(newMenu);
       System.out.println("Menu created: " + createdMenu.getDay());
@@ -62,13 +69,20 @@ public class Main {
     // Test 4: Actualizar un menú
     System.out.println("Test 4: Update a menu");
     ArrayList<Integer> updatedFoodIds = new ArrayList<>(java.util.Arrays.asList(4, 5, 6));
+    ArrayList<MenuQtyDto> updatedQtys = new ArrayList<>(java.util.Arrays.asList(
+        new MenuQtyDto(4, 20, 20),
+        new MenuQtyDto(5, 20, 20),
+        new MenuQtyDto(6, 20, 20)
+    ));
     try {
       UpdateMenuDto updatedMenu = new UpdateMenuDto(
           1,
           Days.TUESDAY,
           MenuTypes.LUNCH,
           updatedFoodIds,
-          "2026-02-09", 10, 10);
+          "2026-02-09",
+          updatedQtys,
+          20);
       MenuDto result = menuService.update(updatedMenu);
       System.out.println("Menu updated: " + result.getDay() + ", New Foods: " + result.getFoods().size());
     } catch (Exception e) {

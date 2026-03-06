@@ -3,8 +3,8 @@ package Model.User;
 // import Model.User.UserModel;
 // import Model.User.BaseUserModel;
 import Model.Common.CommonServices;
+import Model.DTO.Wallet.CreateWalletDto;
 import Utils.Dates;
-import DTO.Wallet.CreateWalletDto;
 import Model.Wallet.WalletService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,11 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
-  private static final String FILE_USER = "src/Database/User/users.json";
-  private static final String FILE_UCV_USERS = "src/Database/User/ucvUsers.json";
+  private String FILE_USER = "src/Model/Database/User/users.json";
+  private String FILE_UCV_USERS = "src/Model/Database/User/ucvUsers.json";
   private CommonServices commonServices = new CommonServices();
+  private WalletService walletService;
   private Dates datesUtil = new Dates();
-  private WalletService walletService = new WalletService();
+
+  public UserService() {
+    this.walletService = new WalletService();
+  }
+
+  public UserService(String userFilePath, String ucvUserFilePath, String walletFilePath, String movementsFilePath) {
+    this.FILE_USER = userFilePath;
+    this.FILE_UCV_USERS = ucvUserFilePath;
+    this.walletService = new WalletService(walletFilePath, movementsFilePath);
+  }
 
   // Métodos para manejar usuarios (crear, leer, actualizar, eliminar)
   // TODO: manejar excepciones, se debe manejar que el email sea unico en crear y
@@ -45,6 +55,7 @@ public class UserService {
   }
 
   public UserModel getUserById(Integer id) {
+    System.out.println("Getting user by ID: " + id);
     ArrayList<UserModel> users = getAllUsers();
     UserModel foundUser = null;
     for (UserModel user : users) {

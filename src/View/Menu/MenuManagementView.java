@@ -4,7 +4,7 @@ import View.CustomComponents.*;
 import View.Food.DishListView;           
 import View.Ingredient.IngredientListView; 
 import Context.User.UserSession;
-import DTO.User.AuthUserDto;
+import Model.DTO.User.AuthUserDto;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

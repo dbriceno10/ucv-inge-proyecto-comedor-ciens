@@ -1,6 +1,6 @@
 package Context.User;
 
-import DTO.User.AuthUserDto;
+import Model.DTO.User.AuthUserDto;
 
 public class UserSession {
   private static UserSession instance;

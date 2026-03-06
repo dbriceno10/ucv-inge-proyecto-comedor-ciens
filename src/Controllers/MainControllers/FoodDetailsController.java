@@ -2,7 +2,7 @@ package Controllers.MainControllers;
 
 import View.Main.FoodDetailsView;
 import Model.Booking.BookingService;
-import DTO.Booking.BookingDto;
+import Model.DTO.Booking.BookingDto;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

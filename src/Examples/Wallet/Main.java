@@ -1,14 +1,13 @@
 package Examples.Wallet;
 
 import Model.Common.CommonServices;
+import Model.DTO.Wallet.CreateWalletDto;
+import Model.DTO.Wallet.UpdateWalletDto;
+import Model.DTO.Wallet.WalletDto;
 import Model.Wallet.WalletModel;
 import Model.Wallet.WalletService;
 
 import java.util.ArrayList;
-
-import DTO.Wallet.CreateWalletDto;
-import DTO.Wallet.WalletDto;
-import DTO.Wallet.UpdateWalletDto;
 
 public class Main {
   public static void main(String[] args) {
