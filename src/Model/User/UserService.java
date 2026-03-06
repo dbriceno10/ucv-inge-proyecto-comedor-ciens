@@ -16,16 +16,27 @@ import java.util.List;
 public class UserService {
   private String FILE_USER = "src/Model/Database/User/users.json";
   private String FILE_UCV_USERS = "src/Model/Database/User/ucvUsers.json";
+  private String WALLET_FILE_PATH = "src/Model/Database/Wallet/wallets.json";
+  private String MOVEMENTS_FILE_PATH = "src/Model/Database/Wallet/movements.json";
   private CommonServices commonServices = new CommonServices();
+  private WalletService walletService;
   private Dates datesUtil = new Dates();
-  private WalletService walletService = new WalletService();
 
   public UserService() {
+    this.walletService = new WalletService();
   }
 
-  public UserService(String userFilePath, String ucvUserFilePath) {
+  public UserService(String userFilePath, String ucvUserFilePath, String walletFilePath, String movementsFilePath) {
     this.FILE_USER = userFilePath;
     this.FILE_UCV_USERS = ucvUserFilePath;
+    this.WALLET_FILE_PATH = walletFilePath;
+    this.MOVEMENTS_FILE_PATH = movementsFilePath;
+    System.out.println("UserService initialized with:");
+    System.out.println("FILE_USER: " + FILE_USER);
+    System.out.println("FILE_UCV_USERS: " + FILE_UCV_USERS);
+    System.out.println("WALLET_FILE_PATH: " + WALLET_FILE_PATH);
+    System.out.println("MOVEMENTS_FILE_PATH: " + MOVEMENTS_FILE_PATH);
+    this.walletService = new WalletService(walletFilePath, movementsFilePath);
   }
 
   // Métodos para manejar usuarios (crear, leer, actualizar, eliminar)
@@ -53,6 +64,7 @@ public class UserService {
   }
 
   public UserModel getUserById(Integer id) {
+    System.out.println("Getting user by ID: " + id);
     ArrayList<UserModel> users = getAllUsers();
     UserModel foundUser = null;
     for (UserModel user : users) {

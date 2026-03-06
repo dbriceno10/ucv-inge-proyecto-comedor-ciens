@@ -13,9 +13,14 @@ import Enums.*;
 
 public class CreateMenuTest {
 
+  private static final String FILE_PATH = "src/Model/TestDatabase/Menu/menus.json";
+  private static final String INGREDIENT_FILE_PATH = "src/Model/TestDatabase/Ingredient/ingredients.json";
+  private static final String FOOD_FILE_PATH = "src/Model/TestDatabase/Food/foods.json";
+
+  private MenuService menuService = new MenuService(FILE_PATH, FOOD_FILE_PATH, INGREDIENT_FILE_PATH);
+
   @Test
   public void testCreateMenuSuccess() {
-    MenuService menuService = new MenuService();
 
     // Usamos IDs de comida que existen en foods.json (ej. 1, 2, 3)
     ArrayList<Integer> foodIds = new ArrayList<>(Arrays.asList(1, 2, 3));
@@ -45,7 +50,6 @@ public class CreateMenuTest {
 
   @Test
   public void testCreateMenuNoFoods() {
-    MenuService menuService = new MenuService();
 
     // Lista de comidas vacía
     ArrayList<Integer> emptyFoodIds = new ArrayList<>();
@@ -55,8 +59,7 @@ public class CreateMenuTest {
         MenuTypes.BREACKFAST,
         emptyFoodIds,
         30,
-        "2026-03-02"
-      );
+        "2026-03-02");
 
     // Verificar que se lanza la excepción esperada
     IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -68,7 +71,6 @@ public class CreateMenuTest {
 
   @Test
   public void testCreateMenuTooManyFoods() {
-    MenuService menuService = new MenuService();
 
     // Lista con más de 3 comidas (usando IDs existentes en foods.json)
     ArrayList<Integer> tooManyFoodIds = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
@@ -78,8 +80,7 @@ public class CreateMenuTest {
         MenuTypes.BREACKFAST,
         tooManyFoodIds,
         40,
-        "2026-03-03"
-      );
+        "2026-03-03");
 
     // Verificar que se lanza la excepción esperada
     IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {

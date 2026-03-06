@@ -8,9 +8,12 @@ import DTO.Wallet.WalletDto;
 
 public class GetWalletByUserIdTest {
 
+  private static final String FILE_PATH = "src/Model/TestDatabase/Wallet/wallets.json";
+  private static final String MOVEMENTS_FILE_PATH = "src/Model/TestDatabase/Wallet/movements.json";
+  private WalletService walletService = new WalletService(FILE_PATH, MOVEMENTS_FILE_PATH);
+
   @Test
   public void testGetWalletByUserId11() {
-    WalletService walletService = new WalletService();
     Integer userId = 11;
 
     WalletDto wallet = walletService.getWalletByUserId(userId);
@@ -24,7 +27,6 @@ public class GetWalletByUserIdTest {
 
   @Test
   public void testGetWalletByUserId12() {
-    WalletService walletService = new WalletService();
     Integer userId = 12;
 
     WalletDto wallet = walletService.getWalletByUserId(userId);

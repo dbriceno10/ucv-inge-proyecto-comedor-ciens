@@ -12,6 +12,15 @@ import DTO.Wallet.WalletDto;
 import Enums.BookingStatus;
 
 public class ChargeForServiceTestWithRestore {
+  private static final String FILE_PATH = "src/Model/TestDatabase/Booking/bookings.json";
+  private static final String FILE_USER = "src/Model/TestDatabase/User/users.json";
+  private static final String FILE_UCV_USERS = "src/Model/TestDatabase/User/ucvUsers.json";
+  private static final String WALLET_FILE_PATH = "src/Model/TestDatabase/Wallet/wallets.json";
+  private static final String MOVEMENTS_FILE_PATH = "src/Model/TestDatabase/Wallet/movements.json";
+  private static final String MENU_FILE_PATH = "src/Model/TestDatabase/Menu/menus.json";
+  private static final String INGREDIENT_FILE_PATH = "src/Model/TestDatabase/Ingredient/ingredients.json";
+  private static final String FOOD_FILE_PATH = "src/Model/TestDatabase/Food/foods.json";
+  private static final String CONFIG_FILE_PATH = "src/Model/TestDatabase/Config/config.json";
 
   private BookingService bookingService;
   private WalletService walletService;
@@ -24,8 +33,8 @@ public class ChargeForServiceTestWithRestore {
 
   @BeforeEach
   public void setUp() {
-    bookingService = new BookingService();
-    walletService = new WalletService();
+    bookingService = new BookingService(FILE_PATH, FILE_USER, FILE_UCV_USERS, WALLET_FILE_PATH, MOVEMENTS_FILE_PATH, MENU_FILE_PATH, INGREDIENT_FILE_PATH, FOOD_FILE_PATH, CONFIG_FILE_PATH);
+    walletService = new WalletService(WALLET_FILE_PATH, MOVEMENTS_FILE_PATH);
 
     // Guardar el balance inicial para restaurarlo después
     WalletDto wallet = walletService.getWalletByUserId(USER_ID);

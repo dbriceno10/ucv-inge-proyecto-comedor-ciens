@@ -17,16 +17,25 @@ import DTO.Menu.UpdateMenuDto;
 
 public class MenuService {
   private String FILE_PATH = "src/Model/Database/Menu/menus.json";
+  private String INGREDIENT_FILE_PATH = "src/Model/Database/Ingredient/ingredients.json";
+  private String FOOD_FILE_PATH = "src/Model/Database/Food/foods.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
-  private FoodService foodService = new FoodService();
 
   public MenuService() {
   }
 
-  public MenuService(String menuFilePath) {
+  public MenuService(String menuFilePath, String ingredientFilePath, String foodFilePath) {
     this.FILE_PATH = menuFilePath;
+    this.INGREDIENT_FILE_PATH = ingredientFilePath;
+    this.FOOD_FILE_PATH = foodFilePath;
+    System.out.println("MenuService initialized with:");
+    System.out.println("FILE_PATH: " + FILE_PATH);
+    System.out.println("INGREDIENT_FILE_PATH: " + INGREDIENT_FILE_PATH);
+    System.out.println("FOOD_FILE_PATH: " + FOOD_FILE_PATH);
   }
+
+  private FoodService foodService = new FoodService(FOOD_FILE_PATH, INGREDIENT_FILE_PATH);
 
   public ArrayList<MenuDto> getAllMenus() {
     ArrayList<MenuDto> menus = new ArrayList<>();

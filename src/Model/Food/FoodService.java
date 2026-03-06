@@ -17,16 +17,22 @@ import DTO.Ingredient.IngredientDto;
 
 public class FoodService {
   private String FILE_PATH = "src/Model/Database/Food/foods.json";
+  private String INGREDIENT_FILE_PATH = "src/Model/Database/Ingredient/ingredients.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
-  private IngredientSevice ingredientSevice = new IngredientSevice();
 
   public FoodService() {
   }
 
-  public FoodService(String foodFilePath) {
+  public FoodService(String foodFilePath, String ingredientFilePath) {
     this.FILE_PATH = foodFilePath;
+    this.INGREDIENT_FILE_PATH = ingredientFilePath;
+    System.out.println("FoodService initialized with:");
+    System.out.println("FILE_PATH: " + FILE_PATH);
+    System.out.println("INGREDIENT_FILE_PATH: " + INGREDIENT_FILE_PATH);
   }
+
+  private IngredientSevice ingredientSevice = new IngredientSevice(INGREDIENT_FILE_PATH);
 
   public ArrayList<FoodDto> getAllFoods() {
     ArrayList<FoodDto> foods = new ArrayList<>();
