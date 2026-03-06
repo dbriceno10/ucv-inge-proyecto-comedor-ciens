@@ -38,7 +38,7 @@ public class AuthUserService {
     BaseUserModel existingUCV = userService.getUCVUserByDocumentId(documentId);
 
     if (existingUCV == null) { // No se encontró el usuario en la base de datos UCV
-      throw new IllegalArgumentException("User not found with the provided email: " + email);
+      throw new IllegalArgumentException("User not found with the provided documentId: " + email);
     }
 
     String type = existingUCV.getType();
