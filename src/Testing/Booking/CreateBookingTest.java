@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import Model.Booking.BookingService;
 import Model.DTO.Booking.BookingDto;
 import Model.DTO.Booking.CreateBookingDto;
+import Enums.BookingStatus;
 import Enums.Days;
 import Enums.MenuTypes;
 
@@ -33,10 +34,10 @@ public class CreateBookingTest {
 
   @AfterEach
   public void tearDown() {
-    // Limpiar la reserva creada para no afectar futuras pruebas
+    // Cancelar la reserva creada para que se reintegre la cantidad de producto al menú
     if (createdBookingId != null) {
       try {
-        bookingService.delete(createdBookingId);
+        bookingService.updateStatus(createdBookingId, BookingStatus.CANCELED);
       } catch (Exception e) {
         // Ignorar si falla
       }

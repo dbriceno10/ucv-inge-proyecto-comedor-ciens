@@ -5,4 +5,6 @@ public class UserTypes {
   public static final String PROFESSOR = "PROFESOR";
   public static final String WORKER = "OBRERO";
   public static final String ADMIN = "ADMINISTRADOR";
+  public static final String SCHOLAR = "BECARIO";
+  public static final String EXONERATED = "EXONERADO";
 }

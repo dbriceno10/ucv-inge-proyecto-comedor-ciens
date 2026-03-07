@@ -223,21 +223,18 @@ public class BookingService {
           status);
 
       BookingModel edited = this.edit(updatedBooking);
-      if (edited == null) {
-        MenuQtyDto menuQty = this.getMenuQtyByFoodId(menu.getQtys(), existing.getFoodId());
-
-        if (menuQty == null) {
-          throw new IllegalArgumentException(
-              "Food with ID: " + existing.getFoodId() + " not found in menu with ID: " + existing.getMenuId());
-        }
-
+      if (edited != null) {
         if (status.equals(BookingStatus.CANCELED)) {
-          this.menuService.updateCurrentQty(menu.getId(), existing.getFoodId(), menuQty.getCurrentQty() + 1,
-              menu.getQtys());
+          MenuQtyDto menuQty = this.getMenuQtyByFoodId(menu.getQtys(), existing.getFoodId());
+
+          if (menuQty != null) {
+            this.menuService.updateCurrentQty(menu.getId(), existing.getFoodId(), menuQty.getCurrentQty() + 1,
+                menu.getQtys());
+          }
         }
-        return null;
+        return mapToDto(edited);
       }
-      return mapToDto(edited);
+      return null;
     } else {
       throw new IllegalArgumentException("Invalid status value: " + status);
     }
@@ -311,6 +308,10 @@ public class BookingService {
       configPercentage = config.getStudentPercentage() / 100.0;
     } else if (user.getType().equals(UserTypes.WORKER)) {
       configPercentage = config.getWorkerPercentage() / 100.0;
+    } else if (user.getType().equals(UserTypes.SCHOLAR)) {
+      configPercentage = config.getScholarPercentage() / 100.0;
+    } else if (user.getType().equals(UserTypes.EXONERATED)) {
+      configPercentage = 0.0;
     }
 
     Double newBalance = wallet.getBalance() - (booking.getPrice() * configPercentage);

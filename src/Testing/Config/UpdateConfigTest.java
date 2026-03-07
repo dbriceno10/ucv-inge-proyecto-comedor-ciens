@@ -10,10 +10,9 @@ public class UpdateConfigTest {
   private static final String TEST_CONFIG_FILE = "src/Model/TestDatabase/Config/config.json";
   private ConfigService configService = new ConfigService(TEST_CONFIG_FILE);
 
-
   @Test
   public void testUpdateConfigInvalidCF() {
-    ConfigDto invalidDto = new ConfigDto(-500.0, 75.0, 25.0, 100.0, null);
+    ConfigDto invalidDto = new ConfigDto(-500.0, 75.0, 25.0, 100.0, 10.0, null);
 
     RuntimeException exception = assertThrows(RuntimeException.class, () -> {
       configService.updateConfig(invalidDto);
@@ -24,7 +23,7 @@ public class UpdateConfigTest {
   @Test
   public void testUpdateConfigInvalidTeacherPercentage() {
     // Porcentaje de profesor fuera del rango (70-90)
-    ConfigDto invalidDto = new ConfigDto(10000.0, 95.0, 25.0, 100.0, null);
+    ConfigDto invalidDto = new ConfigDto(10000.0, 95.0, 25.0, 100.0, 10.0, null);
 
     RuntimeException exception = assertThrows(RuntimeException.class, () -> {
       configService.updateConfig(invalidDto);
@@ -35,7 +34,7 @@ public class UpdateConfigTest {
   @Test
   public void testUpdateConfigInvalidStudentPercentage() {
     // Porcentaje de estudiante fuera del rango (20-30)
-    ConfigDto invalidDto = new ConfigDto(10000.0, 75.0, 15.0, 100.0, null);
+    ConfigDto invalidDto = new ConfigDto(10000.0, 75.0, 15.0, 100.0, 10.0, null);
 
     RuntimeException exception = assertThrows(RuntimeException.class, () -> {
       configService.updateConfig(invalidDto);
@@ -46,7 +45,7 @@ public class UpdateConfigTest {
   @Test
   public void testUpdateConfigInvalidWorkerPercentage() {
     // Porcentaje de trabajador fuera del rango (90-110)
-    ConfigDto invalidDto = new ConfigDto(10000.0, 75.0, 25.0, 120.0, null);
+    ConfigDto invalidDto = new ConfigDto(10000.0, 75.0, 25.0, 120.0, 10.0, null);
 
     RuntimeException exception = assertThrows(RuntimeException.class, () -> {
       configService.updateConfig(invalidDto);
@@ -58,7 +57,7 @@ public class UpdateConfigTest {
   public void testUpdateConfigSuccessAndRestore() {
 
     // 1. Actualizar con datos válidos nuevos
-    ConfigDto newValidDto = new ConfigDto(15000.0, 80.0, 25.0, 100.0, null);
+    ConfigDto newValidDto = new ConfigDto(15000.0, 80.0, 25.0, 100.0, 10.0, null);
     ConfigDto updatedConfig = configService.updateConfig(newValidDto);
 
     assertNotNull(updatedConfig, "La configuración actualizada no debería ser nula");
@@ -68,7 +67,7 @@ public class UpdateConfigTest {
     assertEquals(100.0, updatedConfig.getWorkerPercentage(), "El porcentaje de trabajador debería haberse actualizado");
 
     // 2. Restaurar al estado original solicitado
-    ConfigDto originalDto = new ConfigDto(10000.0, 70.0, 20.0, 90.0, null);
+    ConfigDto originalDto = new ConfigDto(10000.0, 70.0, 20.0, 90.0, 5.0, null);
     ConfigDto restoredConfig = configService.updateConfig(originalDto);
 
     assertNotNull(restoredConfig, "La configuración restaurada no debería ser nula");
@@ -76,5 +75,6 @@ public class UpdateConfigTest {
     assertEquals(70.0, restoredConfig.getTeacherPercentage(), "El porcentaje de profesor debería haberse restaurado");
     assertEquals(20.0, restoredConfig.getStudentPercentage(), "El porcentaje de estudiante debería haberse restaurado");
     assertEquals(90.0, restoredConfig.getWorkerPercentage(), "El porcentaje de trabajador debería haberse restaurado");
+    assertEquals(5.0, restoredConfig.getScholarPercentage(), "El porcentaje de becarios debería haberse restaurado");
   }
 }
