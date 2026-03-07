@@ -67,6 +67,18 @@ public class UserService {
     return foundUser;
   }
 
+  public Integer getUserIdByDocument(Integer documentId) {
+    System.out.println("Buscando ID interno para la cédula: " + documentId);
+    ArrayList<UserModel> users = getAllUsers();
+    
+    for (UserModel user : users) {
+      if (user.getDocumentId().equals(documentId)) {
+        return user.getId();
+      }
+    }
+    return null;
+  }
+
   public UserModel getUserByEmail(String email) {
     ArrayList<UserModel> users = getAllUsers();
     UserModel foundUser = null;

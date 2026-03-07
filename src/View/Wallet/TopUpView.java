@@ -9,8 +9,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class TopUpView extends JDialog { 
-    private RoundedButton btnSubmit, btnCancel;
-    private RoundedTextField txtDate, txtAmount, txtReference;
+    private RoundedButton btnSubmit, btnCancel, btnBuddyPay;
+    private RoundedTextField txtDate, txtAmount, txtReference, txtBuddyId;
+    JLabel lblMainTitle, lblBuddyTitle, lblBuddyId;
     private RoundedComboBox<String> cmbBank;
     
     private Colors color = new Colors();
@@ -28,7 +29,7 @@ public class TopUpView extends JDialog {
         headerPanel.setBackground(color.BACKGROUND);
         headerPanel.setBorder(new EmptyBorder(0, 0, 15, 0));
         
-        JLabel lblMainTitle = new JLabel("Recargar Billetera (Pago Móvil)");
+        lblMainTitle = new JLabel("Recargar Billetera (Pago Móvil)");
         lblMainTitle.setFont(new Font("SansSerif", Font.BOLD, 22));
         lblMainTitle.setForeground(color.OXFORD_BLUE);
         headerPanel.add(lblMainTitle);
@@ -68,9 +69,58 @@ public class TopUpView extends JDialog {
         txtHelp.setBackground(color.WHITE);
         txtHelp.setForeground(color.DARK_GRAY);
         txtHelp.setFont(new Font("SansSerif", Font.ITALIC, 12));
-        txtHelp.setBorder(new EmptyBorder(30, 0, 0, 0));
+        txtHelp.setBorder(new EmptyBorder(15, 0, 0, 0));
         txtHelp.setAlignmentX(Component.LEFT_ALIGNMENT);
         leftPanel.add(txtHelp);
+
+        // --- BUDDY PAY (SALDO PANA)
+        leftPanel.add(Box.createVerticalStrut(25));
+        
+        JSeparator buddySeparator = new JSeparator();
+        buddySeparator.setForeground(color.LIGHT_GRAY);
+        buddySeparator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
+        buddySeparator.setAlignmentX(Component.LEFT_ALIGNMENT);
+        leftPanel.add(buddySeparator);
+        
+        leftPanel.add(Box.createVerticalStrut(15)); 
+        
+        lblBuddyTitle = new JLabel("¿Quieres recargar a un pana?");
+        lblBuddyTitle.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblBuddyTitle.setForeground(color.OXFORD_BLUE);
+        lblBuddyTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
+        leftPanel.add(lblBuddyTitle);
+        
+        leftPanel.add(Box.createVerticalStrut(10));
+        
+        btnBuddyPay = new RoundedButton("Enviar Saldo Pana");
+        btnBuddyPay.setFont(new Font("SansSerif", Font.BOLD, 13));
+        btnBuddyPay.setBackground(new Color(40, 167, 69)); 
+        btnBuddyPay.setForeground(color.WHITE);
+        btnBuddyPay.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnBuddyPay.setActionCommand("BUDDY_TOPUP");
+        
+        Dimension btnBuddySize = new Dimension(250, 40);
+        btnBuddyPay.setPreferredSize(btnBuddySize);
+        btnBuddyPay.setMaximumSize(btnBuddySize);
+        btnBuddyPay.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        leftPanel.add(btnBuddyPay);
+
+        // --- campos ocultos: se muestran al activar Saldo Pana
+        lblBuddyId = new JLabel("CÉDULA DEL PANA");
+        lblBuddyId.setFont(new Font("SansSerif", Font.BOLD, 10));
+        lblBuddyId.setForeground(color.DARK_GRAY);
+        lblBuddyId.setAlignmentX(Component.LEFT_ALIGNMENT);
+        lblBuddyId.setVisible(false);
+        
+        txtBuddyId = new RoundedTextField();
+        txtBuddyId.setPreferredSize(new Dimension(250, 35));
+        txtBuddyId.setMaximumSize(new Dimension(250, 35));
+        txtBuddyId.setAlignmentX(Component.LEFT_ALIGNMENT);
+        txtBuddyId.setVisible(false);
+        
+        leftPanel.add(lblBuddyId);
+        leftPanel.add(txtBuddyId);
 
         // --- DERECHA: Formulario ---
         JPanel rightPanel = new JPanel();
@@ -116,7 +166,7 @@ public class TopUpView extends JDialog {
         whiteCard.add(rightPanel);
         mainPanel.add(whiteCard, BorderLayout.CENTER);
 
-        // --- NUEVO: FOOTER CON BOTONES (Anclados abajo del todo) ---
+        // --- FOOTER CON BOTONES (Anclados abajo del todo) ---
         JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
         footerPanel.setBackground(color.BACKGROUND);
         footerPanel.setBorder(new EmptyBorder(15, 0, 0, 0));
@@ -125,22 +175,55 @@ public class TopUpView extends JDialog {
         btnSubmit.setBackground(color.OXFORD_BLUE);
         btnSubmit.setForeground(color.WHITE);
         btnSubmit.setPreferredSize(new Dimension(120, 40));
+        btnSubmit.setActionCommand("SUBMIT");
 
         btnCancel = new RoundedButton("Cancelar");
         btnCancel.setBackground(color.YELLOW);
         btnCancel.setForeground(color.BLACK);
         btnCancel.setPreferredSize(new Dimension(120, 40));
+        btnCancel.setActionCommand("CANCEL");
 
         footerPanel.add(btnSubmit);
         footerPanel.add(btnCancel);
 
         // Añadimos los botones a la parte baja (SOUTH) del panel principal
         mainPanel.add(footerPanel, BorderLayout.SOUTH);
-
+        
         setUndecorated(true); // quita la barra superior de Windows para que se vea más moderno.
         this.setContentPane(mainPanel);
         this.setSize(900, 600); 
-        this.setLocationRelativeTo(parent);
+
+        //--- posicionamiento de la ventana ---
+        int paddingRight = 10;  // Empuja hacia atrás (izquierda)
+        int paddingBottom = 10; // Empuja hacia arriba
+
+        int x = parent.getX() + parent.getWidth() - this.getWidth() - paddingRight;
+        int y = parent.getY() + parent.getHeight() - this.getHeight() - paddingBottom;
+        this.setLocation(x, y);
+    }
+
+    public void activateBuddyMode() {
+        btnBuddyPay.setVisible(false);
+        
+        lblBuddyTitle.setText("Datos del Pana (Destinatario)");
+        lblMainTitle.setText("Recargar Billetera (Saldo Pana)");
+        
+        lblBuddyId.setVisible(true);
+        txtBuddyId.setVisible(true);
+        
+        btnSubmit.setText("Mandar Saldo Pana");
+        btnSubmit.setBackground(new Color(40, 167, 69));
+        
+        this.revalidate();
+        this.repaint();
+    }
+
+    // Método para que el controlador sepa si estamos en modo Pana y obtenga la cédula
+    public String getTxtBuddyId() {
+        if (txtBuddyId.isVisible() && !txtBuddyId.getText().trim().isEmpty()) {
+            return txtBuddyId.getText().trim();
+        }
+        return null; // Retorna nulo si es una recarga normal o está vacío
     }
 
     private JLabel createLabel(String text) {
@@ -179,7 +262,9 @@ public class TopUpView extends JDialog {
     public JTextField getComponentDate() { return txtDate; }
     public JTextField getComponentAmount() { return txtAmount; }
     public JTextField getComponentReference() { return txtReference; }
+    public JTextField getComponentBuddyDocument() { return txtBuddyId; }
 
     public void submitListener(ActionListener listener) { btnSubmit.addActionListener(listener); }
     public void cancelListener(ActionListener listener) { btnCancel.addActionListener(listener); }
+    public void buddyPayListener(ActionListener listener) { btnBuddyPay.addActionListener(listener); }
 }
