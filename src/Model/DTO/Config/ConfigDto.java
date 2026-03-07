@@ -6,17 +6,20 @@ public class ConfigDto {
   private Double studentPercentage;
   private Double workerPercentage;
   private String updateAt;
+  private Double scholarPercentage;
 
   public ConfigDto() {
   }
 
   public ConfigDto(Double valueCF, Double teacherPercentage, Double studentPercentage, Double workerPercentage,
+      Double scholarPercentage,
       String updateAt) {
     this.valueCF = valueCF;
     this.teacherPercentage = teacherPercentage;
     this.studentPercentage = studentPercentage;
     this.workerPercentage = workerPercentage;
     this.updateAt = updateAt;
+    this.scholarPercentage = scholarPercentage;
   }
 
   // getters
@@ -38,6 +41,10 @@ public class ConfigDto {
 
   public String getUpdateAt() {
     return updateAt;
+  }
+
+  public Double getScholarPercentage() {
+    return scholarPercentage;
   }
 
 }

@@ -8,6 +8,9 @@ import Utils.Dates;
 import Model.Wallet.WalletService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import Enums.UserTypes;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +58,6 @@ public class UserService {
   }
 
   public UserModel getUserById(Integer id) {
-    System.out.println("Getting user by ID: " + id);
     ArrayList<UserModel> users = getAllUsers();
     UserModel foundUser = null;
     for (UserModel user : users) {
@@ -77,6 +79,30 @@ public class UserService {
       }
     }
     return foundUser;
+  }
+
+  public ArrayList<UserModel> getAllStudents() {
+    ArrayList<UserModel> users = getAllUsers();
+    ArrayList<UserModel> students = new ArrayList<>();
+    for (UserModel user : users) {
+      if (user.getIsStudent() != null && user.getIsStudent()) {
+        students.add(user);
+      }
+    }
+    return students;
+  }
+
+  public UserModel changeTypeStudent(Integer userId, String newType) {
+    UserModel user = this.getUserById(userId);
+    if (user == null) {
+      throw new IllegalArgumentException("User not found with id: " + userId);
+    }
+    if (newType == UserTypes.STUDENT || newType == UserTypes.SCHOLAR || newType == UserTypes.EXONERATED) {
+      user.setType(newType);
+    } else {
+      throw new IllegalArgumentException("Invalid type. Type must be STUDENT, SCHOLAR or EXONERATED.");
+    }
+    return this.update(user);
   }
 
   public UserModel create(UserModel user) {

@@ -30,6 +30,7 @@ public class Main {
           80.0,
           20.0,
           100.0,
+          10.0,
           "2026-02-22T00:00:00Z");
       ConfigDto createdConfig = configService.createConfig(newConfig);
       System.out.println("Config created: CF Value: " + createdConfig.getValueCF());
@@ -45,6 +46,7 @@ public class Main {
           75.0,
           25.0,
           100.0,
+          15.0,
           "2026-02-22T12:00:00Z");
       ConfigDto result = configService.updateConfig(updatedConfig);
       System.out.println("Config updated: CF Value: " + result.getValueCF());
