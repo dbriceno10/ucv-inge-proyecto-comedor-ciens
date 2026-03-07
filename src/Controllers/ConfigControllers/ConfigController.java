@@ -60,8 +60,8 @@ public class ConfigController implements ActionListener {
             Double studentPct = Double.parseDouble(view.getTxtStudentPct());
             Double teacherPct = Double.parseDouble(view.getTxtTeacherPct());
             Double workerPct = Double.parseDouble(view.getTxtWorkerPct());
-
-            ConfigDto updatedConfig = new ConfigDto(cf, teacherPct, studentPct, workerPct, null);
+          //TODO: Jean aca debes agregar en la vista un campo nuevo para el porcentaje de becarios y obtener su valor aquí, luego pasarlo al DTO y al servicio
+            ConfigDto updatedConfig = new ConfigDto(cf, teacherPct, studentPct, workerPct, 5.0, null);
             service.updateConfig(updatedConfig);
 
             JOptionPane.showMessageDialog(view, "Configuración actualizada.");
