@@ -30,7 +30,7 @@ public class ConfigService {
         return this.mapToDto(config);
       } else {
         // Crear el archivo JSON con el elemento predeterminado si no existe
-        ConfigModel defaultConfig = new ConfigModel(1000.0, 70.0, 20.0, 90.0, "2026-01-01T00:00:00Z");
+        ConfigModel defaultConfig = new ConfigModel(1000.0, 70.0, 20.0, 90.0, 5.0, "2026-01-01T00:00:00Z");
         mapper.writerWithDefaultPrettyPrinter().writeValue(file, defaultConfig);
         return this.mapToDto(defaultConfig);
       }
@@ -55,6 +55,7 @@ public class ConfigService {
           configDto.getTeacherPercentage(),
           configDto.getStudentPercentage(),
           configDto.getWorkerPercentage(),
+          configDto.getScholarPercentage(),
           datesUtil.getCurrentDateTime());
       mapper.writerWithDefaultPrettyPrinter().writeValue(new File(configFilePath), newConfig);
       return this.mapToDto(newConfig);
@@ -74,6 +75,7 @@ public class ConfigService {
           configDto.getTeacherPercentage(),
           configDto.getStudentPercentage(),
           configDto.getWorkerPercentage(),
+          configDto.getScholarPercentage(),
           datesUtil.getCurrentDateTime());
       mapper.writerWithDefaultPrettyPrinter().writeValue(new File(configFilePath), updatedConfig);
       return this.mapToDto(updatedConfig);
@@ -91,6 +93,7 @@ public class ConfigService {
         model.getTeacherPercentage(),
         model.getStudentPercentage(),
         model.getWorkerPercentage(),
+        model.getScholarPercentage(),
         model.getUpdateAt());
   }
 
@@ -109,6 +112,10 @@ public class ConfigService {
     if (configDto.getWorkerPercentage() == null || configDto.getWorkerPercentage() < 90
         || configDto.getWorkerPercentage() > 110) {
       throw new RuntimeException("El porcentaje para trabajadores debe estar entre 90 y 110");
+    }
+    if (configDto.getScholarPercentage() == null || configDto.getScholarPercentage() < 0
+        || configDto.getScholarPercentage() > 100) {
+      throw new RuntimeException("El porcentaje para becarios debe estar entre 0 y 100");
     }
   }
 

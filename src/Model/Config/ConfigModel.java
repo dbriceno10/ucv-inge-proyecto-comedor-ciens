@@ -5,18 +5,21 @@ public class ConfigModel {
   private Double teacherPercentage;
   private Double studentPercentage;
   private Double workerPercentage;
+  private Double scholarPercentage;
   private String updateAt;
 
   public ConfigModel() {
   }
 
   public ConfigModel(Double valueCF, Double teacherPercentage, Double studentPercentage, Double workerPercentage,
+      Double scholarPercentage,
       String updateAt) {
     this.valueCF = valueCF;
     this.teacherPercentage = teacherPercentage;
     this.studentPercentage = studentPercentage;
     this.workerPercentage = workerPercentage;
     this.updateAt = updateAt;
+    this.scholarPercentage = scholarPercentage;
   }
 
   // getters
@@ -34,6 +37,10 @@ public class ConfigModel {
 
   public Double getWorkerPercentage() {
     return workerPercentage;
+  }
+
+  public Double getScholarPercentage() {
+    return scholarPercentage;
   }
 
   public String getUpdateAt() {
@@ -59,6 +66,10 @@ public class ConfigModel {
 
   public void setUpdateAt(String updateAt) {
     this.updateAt = updateAt;
+  }
+
+  public void setScholarPercentage(Double scholarPercentage) {
+    this.scholarPercentage = scholarPercentage;
   }
 
 }
