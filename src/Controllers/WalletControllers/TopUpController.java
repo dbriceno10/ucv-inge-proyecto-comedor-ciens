@@ -4,6 +4,7 @@ import Context.User.UserSession;
 import View.Wallet.TopUpView;
 import Model.DTO.User.AuthUserDto;
 import Model.Wallet.WalletService;
+import Model.User.UserService;
 import Utils.InputValidator;
 
 import javax.swing.*;
@@ -14,19 +15,41 @@ import java.awt.event.KeyEvent;
 
 public class TopUpController implements ActionListener {
     private TopUpView view;
-    private WalletService service;
+    private WalletService walletService;
+    private UserService userService;
 
     public TopUpController(TopUpView view) {
         this.view = view;
-        this.service = new WalletService();
+        walletService = new WalletService();
+        userService = new UserService();
 
         // Aplicamos los efectos visuales y validaciones a los campos
         setupValidations();
 
         this.view.submitListener(this);
         this.view.cancelListener(this);
+        this.view.buddyPayListener(this);
 
         this.view.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+
+        switch (command) {
+            case "SUBMIT": 
+                processTopUp();
+                break;
+            case "BUDDY_TOPUP":
+                view.activateBuddyMode();
+                break;
+            case "CANCEL":
+                view.dispose();
+                break;
+            default:
+                break;
+        }
     }
 
     // --- LÓGICA DE VALIDACIÓN Y EFECTOS TIPO APP DE BANCO ---
@@ -94,22 +117,9 @@ public class TopUpController implements ActionListener {
                 }
             }
         });
-    }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String command = e.getActionCommand();
-
-        switch (command) {
-            case "Mandar": // <--- Escuchamos el botón "Mandar"
-                processTopUp();
-                break;
-            case "Cancelar":
-                view.dispose();
-                break;
-            default:
-                break;
-        }
+        //4. CAMPO DE SALDO PANA (DOCUMENTO)
+        InputValidator.addInputRestriction(view.getComponentBuddyDocument(), "ONLY_NUMBERS", 8);
     }
 
     private void processTopUp() {
@@ -118,9 +128,10 @@ public class TopUpController implements ActionListener {
             String reference = view.getTxtReference();
             String bank = view.getCmbBank();
             String date = view.getTxtDate(); 
+            String buddyIdSrt = view.getTxtBuddyId();
 
             // Validar campos vacíos
-            if (amountStr.equals("0.00") || reference.isEmpty() || date.isEmpty()) {
+            if (reference.isEmpty() || date.isEmpty()) {
                 JOptionPane.showMessageDialog(view, "Por favor complete todos los campos.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
@@ -132,7 +143,6 @@ public class TopUpController implements ActionListener {
             }
 
             Double amount = Double.parseDouble(amountStr);
-
             if (amount <= 0) {
                 JOptionPane.showMessageDialog(view, "El monto debe ser mayor a 0.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -145,12 +155,22 @@ public class TopUpController implements ActionListener {
                 return;
             }
 
-            // Enviamos la recarga incluyendo el ID del usuario, como exigen los nuevos cambios
-            service.rechargeWallet(currentUser.getId(), amount, reference, bank);
+            if (buddyIdSrt != null) {
+                Integer buddyDocumentId = Integer.parseInt(buddyIdSrt);
 
-            JOptionPane.showMessageDialog(view, "¡Recarga registrada con éxito! El saldo ha sido actualizado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            
-            // Cerramos la ventana modal
+                if (buddyDocumentId.equals(currentUser.getDocumentId())) {
+                    JOptionPane.showMessageDialog(view, "No puedes recargarte a ti mismo usando el Saldo Pana.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                // utilizamos el mismo servicio de recarga, en banco especificamos "Saldo pana" junto al documentId del usuario qué realizó la acción.
+                Integer buddyId = userService.getUserIdByDocument(buddyDocumentId);
+                walletService.rechargeWallet(buddyId, amount, reference, "Saldo Pana" + "(" + Integer.toString(currentUser.getDocumentId()) + ")");
+                JOptionPane.showMessageDialog(view, "¡Recarga Pana enviada con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                walletService.rechargeWallet(currentUser.getId(), amount, reference, bank);
+                JOptionPane.showMessageDialog(view, "¡Recarga registrada con éxito! El saldo ha sido actualizado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
             view.dispose();
 
         } catch (NumberFormatException ex) {
