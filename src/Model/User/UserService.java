@@ -104,6 +104,43 @@ public class UserService {
     return students;
   }
 
+  public ArrayList<String> getDinerStatistics(ArrayList<Integer> attendeeUserIds) {
+    int studentCount = 0;
+    int scholarCount = 0;
+    int exoneratedCount = 0;
+    int professorCount = 0;
+    int workerCount = 0;
+    int adminCount = 0;
+
+    for (Integer userId : attendeeUserIds) {
+      UserModel user = this.getUserById(userId);
+      if (user != null && user.getType() != null) {
+        String type = user.getType();
+        if (type.equals(UserTypes.STUDENT)) studentCount++;
+        else if (type.equals(UserTypes.SCHOLAR)) scholarCount++;
+        else if (type.equals(UserTypes.EXONERATED)) exoneratedCount++;
+        else if (type.equals(UserTypes.PROFESSOR)) professorCount++;
+        else if (type.equals(UserTypes.WORKER)) workerCount++;
+        else if (type.equals(UserTypes.ADMIN)) adminCount++;
+      }
+    }
+    
+    ArrayList<String> stats = new ArrayList<>();
+    stats.add(UserTypes.STUDENT + ": " + studentCount);
+    stats.add(UserTypes.SCHOLAR + ": " + scholarCount);
+    stats.add(UserTypes.EXONERATED + ": " + exoneratedCount);
+    stats.add(UserTypes.PROFESSOR + ": " + professorCount);
+    stats.add(UserTypes.WORKER + ": " + workerCount);
+    stats.add(UserTypes.ADMIN + ": " + adminCount);
+
+    System.out.println("Estadísticas de comensales:");
+    for (String stat : stats) {
+      System.out.println("- " + stat);
+    }
+
+    return stats;
+  }
+
   public UserModel changeTypeStudent(Integer userId, String newType) {
     UserModel user = this.getUserById(userId);
     if (user == null) {
