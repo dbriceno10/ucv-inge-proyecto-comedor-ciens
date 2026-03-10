@@ -31,7 +31,7 @@ public class GetDinerStatisticsTest {
 
   @Test
   public void testGetDinerStatistics() {
-    ArrayList<String> stats = bookingService.getDinerStatistics("2026-02-26", "ALMUERZO");
+    ArrayList<String> stats = bookingService.getDinerStatistics("ALMUERZO");
 
     assertNotNull(stats, "La lista de estadísticas no debería ser nula");
     assertEquals(6, stats.size(), "La lista debería contener 6 elementos (uno por cada tipo)");

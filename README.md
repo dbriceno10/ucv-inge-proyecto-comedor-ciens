@@ -102,10 +102,10 @@ mvn test -Dtest=Testing.Wallet.RechargeWalletTest
 mvn test -Dtest=Testing.Menu.CreateMenuTest
 mvn test -Dtest=Testing.User.RegisterUserTest
 mvn test -Dtest=Testing.User.GetUserByIdTest
-mvn test -Dtest=Testing.User.GetDinerStatisticsTest
 mvn test -Dtest=Testing.Config.UpdateConfigTest
 mvn test -Dtest=Testing.Booking.ChargeForServiceTest
 mvn test -Dtest=Testing.Booking.CreateBookingTest
+mvn test -Dtest=Testing.Booking.GetDinerStatisticsTest
 ```
 
 ## 👥 Equipo de Trabajo
