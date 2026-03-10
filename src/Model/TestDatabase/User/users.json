@@ -60,7 +60,7 @@
     "createdAt": "2026-01-04T13:00:00Z",
     "updatedAt": "2026-01-14T18:00:00Z",
     "deletedAt": null,
-    "role": null,
+    "role": "ADMINISTRADOR",
     "isStudent": false
   },
   {
@@ -88,10 +88,10 @@
     "documentId": 67890123,
     "image": null,
     "password": "sofiapass",
-    "isActive": false,
+    "isActive": true,
     "createdAt": "2026-01-06T15:00:00Z",
     "updatedAt": "2026-01-16T20:00:00Z",
-    "deletedAt": "2026-01-25T21:00:00Z",
+    "deletedAt": null,
     "role": "COMENSAL",
     "isStudent": true
   },

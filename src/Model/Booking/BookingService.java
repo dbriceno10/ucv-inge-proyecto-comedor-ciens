@@ -136,7 +136,7 @@ public class BookingService {
       throw new IllegalArgumentException("No hay suficiente cantidad disponible para el menú seleccionado.");
     }
 
-    Double ccb = this.calculateCCB(user.getType(), menuQty.getQty(), food.getDecrease(), food.getValueCV());
+    Double ccb = this.calculateCCB(menuQty.getQty(), food.getDecrease(), food.getValueCV());
 
     Integer newId = this.commonServices.getLastIndex(FILE_PATH,
         BookingModel.class);
@@ -333,6 +333,59 @@ public class BookingService {
     throw new IllegalArgumentException("Facial recognition failed for user id: " + booking.getUserId());
   }
 
+  public ArrayList<String> getDinerStatistics(String shift) {
+    int studentCount = 0;
+    int scholarCount = 0;
+    int exoneratedCount = 0;
+    int professorCount = 0;
+    int workerCount = 0;
+    int adminCount = 0;
+
+    ArrayList<BookingModel> bookings = this.getAll();
+    for (BookingModel booking : bookings) {
+      if (BookingStatus.CONFIRMED.equals(booking.getStatus()) && booking.getShift().equals(shift)) {
+        UserModel user = this.userService.getUserById(booking.getUserId());
+        if (user != null && user.getType() != null) {
+          String type = user.getType();
+          if (type.equals(UserTypes.STUDENT))
+            studentCount++;
+          else if (type.equals(UserTypes.SCHOLAR))
+            scholarCount++;
+          else if (type.equals(UserTypes.EXONERATED))
+            exoneratedCount++;
+          else if (type.equals(UserTypes.PROFESSOR))
+            professorCount++;
+          else if (type.equals(UserTypes.WORKER))
+            workerCount++;
+          else if (type.equals(UserTypes.ADMIN))
+            adminCount++;
+        }
+      }
+    }
+
+    ArrayList<String> stats = new ArrayList<>();
+    stats.add(UserTypes.STUDENT + ": " + studentCount);
+    stats.add(UserTypes.SCHOLAR + ": " + scholarCount);
+    stats.add(UserTypes.EXONERATED + ": " + exoneratedCount);
+    stats.add(UserTypes.PROFESSOR + ": " + professorCount);
+    stats.add(UserTypes.WORKER + ": " + workerCount);
+    stats.add(UserTypes.ADMIN + ": " + adminCount);
+
+    System.out.println("Estadísticas de comensales para el turno " + shift + " :");
+    for (String stat : stats) {
+      System.out.println("- " + stat);
+    }
+
+    return stats;
+  }
+
+  public Double calculateCCB(Integer qty, Double decrease, Double valueCV) {
+    ConfigDto config = this.configService.getConfig();
+    double decreasePercentage = decrease / 100.0; // pasamos a porcentaje
+    Double ccb = ((config.getValueCF() + valueCV) / qty) * (1 + decreasePercentage);
+    return ccb;
+  }
+
   // metodos privados
   private BookingDto mapToDto(BookingModel model) {
     return new BookingDto(
@@ -424,13 +477,6 @@ public class BookingService {
       return null;
     }
     return booking;
-  }
-
-  private Double calculateCCB(String type, Integer qty, Double decrease, Double valueCV) {
-    ConfigDto config = this.configService.getConfig();
-    double decreasePercentage = decrease / 100.0; // pasamos a porcentaje
-    Double ccb = ((config.getValueCF() + valueCV) / qty) * (1 + decreasePercentage);
-    return ccb;
   }
 
   private MenuQtyDto getMenuQtyByFoodId(ArrayList<MenuQtyDto> menuQtyList, Integer foodId) {
