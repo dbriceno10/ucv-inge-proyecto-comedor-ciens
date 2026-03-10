@@ -333,6 +333,49 @@ public class BookingService {
     throw new IllegalArgumentException("Facial recognition failed for user id: " + booking.getUserId());
   }
 
+  public ArrayList<String> getDinerStatistics(String date, String shift) {
+    int studentCount = 0;
+    int scholarCount = 0;
+    int exoneratedCount = 0;
+    int professorCount = 0;
+    int workerCount = 0;
+    int adminCount = 0;
+
+    ArrayList<BookingModel> bookings = this.getAll();
+    for (BookingModel booking : bookings) {
+      if (BookingStatus.CONFIRMED.equals(booking.getStatus()) 
+          && booking.getDate().equals(date) 
+          && booking.getShift().equals(shift)) {
+        
+        UserModel user = this.userService.getUserById(booking.getUserId());
+        if (user != null && user.getType() != null) {
+          String type = user.getType();
+          if (type.equals(UserTypes.STUDENT)) studentCount++;
+          else if (type.equals(UserTypes.SCHOLAR)) scholarCount++;
+          else if (type.equals(UserTypes.EXONERATED)) exoneratedCount++;
+          else if (type.equals(UserTypes.PROFESSOR)) professorCount++;
+          else if (type.equals(UserTypes.WORKER)) workerCount++;
+          else if (type.equals(UserTypes.ADMIN)) adminCount++;
+        }
+      }
+    }
+    
+    ArrayList<String> stats = new ArrayList<>();
+    stats.add(UserTypes.STUDENT + ": " + studentCount);
+    stats.add(UserTypes.SCHOLAR + ": " + scholarCount);
+    stats.add(UserTypes.EXONERATED + ": " + exoneratedCount);
+    stats.add(UserTypes.PROFESSOR + ": " + professorCount);
+    stats.add(UserTypes.WORKER + ": " + workerCount);
+    stats.add(UserTypes.ADMIN + ": " + adminCount);
+
+    System.out.println("Estadísticas de comensales para el turno " + shift + " del día " + date + ":");
+    for (String stat : stats) {
+      System.out.println("- " + stat);
+    }
+
+    return stats;
+  }
+
   // metodos privados
   private BookingDto mapToDto(BookingModel model) {
     return new BookingDto(
