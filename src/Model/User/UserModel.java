@@ -29,7 +29,7 @@ public class UserModel extends BaseUserModel {
     this.updatedAt = updatedAt;
     this.deletedAt = deletedAt;
     this.documentId = documentId;
-    if (type == UserTypes.STUDENT || type == UserTypes.SCHOLAR || type == UserTypes.EXONERATED) {
+   if (UserTypes.STUDENT.equals(type) || UserTypes.SCHOLAR.equals(type) || UserTypes.EXONERATED.equals(type)) {
       this.isStudent = true;
     } else {
       this.isStudent = false;
@@ -49,7 +49,7 @@ public class UserModel extends BaseUserModel {
     this.updatedAt = user.updatedAt;
     this.deletedAt = user.deletedAt;
     this.documentId = user.documentId;
-    if (user.type == UserTypes.STUDENT || user.type == UserTypes.SCHOLAR || user.type == UserTypes.EXONERATED) {
+    if (UserTypes.STUDENT.equals(user.type) || UserTypes.SCHOLAR.equals(user.type) || UserTypes.EXONERATED.equals(user.type)) {
       this.isStudent = true;
     } else {
       this.isStudent = false;
@@ -65,7 +65,7 @@ public class UserModel extends BaseUserModel {
     this.role = role;
     this.type = type;
     this.documentId = documentId;
-    if (type == UserTypes.STUDENT || type == UserTypes.SCHOLAR || type == UserTypes.EXONERATED) {
+    if (UserTypes.STUDENT.equals(type) || UserTypes.SCHOLAR.equals(type) || UserTypes.EXONERATED.equals(type)) {
       this.isStudent = true;
     } else {
       this.isStudent = false;
@@ -108,7 +108,7 @@ public class UserModel extends BaseUserModel {
 
   public void setType(String type) {
     this.type = type;
-    if (type == UserTypes.STUDENT || type == UserTypes.SCHOLAR || type == UserTypes.EXONERATED) {
+   if (UserTypes.STUDENT.equals(type) || UserTypes.SCHOLAR.equals(type) || UserTypes.EXONERATED.equals(type)) {
       this.isStudent = true;
     } else {
       this.isStudent = false;

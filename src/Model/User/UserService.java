@@ -109,7 +109,7 @@ public class UserService {
     if (user == null) {
       throw new IllegalArgumentException("User not found with id: " + userId);
     }
-    if (newType == UserTypes.STUDENT || newType == UserTypes.SCHOLAR || newType == UserTypes.EXONERATED) {
+   if (UserTypes.STUDENT.equals(newType) || UserTypes.SCHOLAR.equals(newType) || UserTypes.EXONERATED.equals(newType)) {
       user.setType(newType);
     } else {
       throw new IllegalArgumentException("Invalid type. Type must be STUDENT, SCHOLAR or EXONERATED.");

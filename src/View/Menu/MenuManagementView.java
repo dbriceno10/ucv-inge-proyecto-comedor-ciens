@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MenuManagementView extends JFrame {
-    private RoundedButton btnCreateMenu, btnInventory, btnDishes, btnConfig;
+    private RoundedButton btnCreateMenu, btnInventory, btnDishes, btnConfig, btnStudents;
     private RoundedTextField txtDateFrom, txtDateUntil;
     private JPanel menuContainer;
     private Colors color = new Colors();
@@ -53,11 +53,13 @@ public class MenuManagementView extends JFrame {
         btnConfig.setPreferredSize(new Dimension(200, 38)); 
 
         btnConfig.setActionCommand("Configurar CCB");
-        navPanel.add(btnConfig);
 
-        navPanel.add(btnConfig); // Añadimos el tuyo primero (opcional, para que salga a la izquierda)
-        navPanel.add(btnInventory);
-        navPanel.add(btnDishes);
+        btnStudents = new RoundedButton("Estudiantes");
+        stylize_button(btnStudents, color.LIGHT_BLUE);
+        btnStudents.setActionCommand("Estudiantes");
+
+        navPanel.add(btnConfig); 
+        navPanel.add(btnStudents); 
         navPanel.add(btnInventory);
         navPanel.add(btnDishes);
 
@@ -204,6 +206,7 @@ public class MenuManagementView extends JFrame {
     public void InventoryListener(ActionListener listener) { btnInventory.addActionListener(listener);}
     public void DishesListener(ActionListener listener) { btnDishes.addActionListener(listener);} 
     public void configListener(ActionListener listener) { btnConfig.addActionListener(listener);} 
+    public void StudentsListener(ActionListener listener) { btnStudents.addActionListener(listener);} 
 
     // component getters, not text
     public JPanel getComponentMenuContainer() { return menuContainer; }
