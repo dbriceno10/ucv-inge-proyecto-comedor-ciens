@@ -13,6 +13,9 @@ import Controllers.ConfigControllers.ConfigController;
 import Controllers.FoodControllers.DishListController;
 import Controllers.IngredientControllers.IngredientListController;
 
+import View.User.StudentListView; // Linea añadida
+import Controllers.UserControllers.StudentListController; // Linea añadida
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ public class MenuManagementController implements ActionListener {
         this.view.InventoryListener(this);
         this.view.DishesListener(this);
         this.view.configListener(this);
+        this.view.StudentsListener(this); // Linea añadida
 
         loadMenus();
         this.view.setVisible(true);
@@ -38,24 +42,37 @@ public class MenuManagementController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String button = e.getActionCommand();
-        switch (button) {
-            case "Crear Menú":
-                MenuEditorView menuEdit = new MenuEditorView();
-                new MenuEditorController(menuEdit);
-                break;
-            case "Inventario":
-                IngredientListView ingredientView = new IngredientListView();
-                new IngredientListController(ingredientView);
-                break;
-            case "Platos":
-                DishListView dishView = new DishListView();
-                new DishListController(dishView);
-                break;
-            case "Configurar CCB":
-                ConfigView configView = new ConfigView(this.view); 
-                new ConfigController(configView);
-                break;
-            default: break;
+        System.out.println("➡️ Clic detectado en el botón: [" + button + "]");
+        
+        try {
+            switch (button) {
+                case "Crear Menú":
+                    MenuEditorView menuEdit = new MenuEditorView();
+                    new MenuEditorController(menuEdit);
+                    break;
+                case "Inventario":
+                    IngredientListView ingredientView = new IngredientListView();
+                    new IngredientListController(ingredientView);
+                    break;
+                case "Platos":
+                    DishListView dishView = new DishListView();
+                    new DishListController(dishView);
+                    break;
+                case "Configurar CCB":
+                    ConfigView configView = new ConfigView(this.view); 
+                    new ConfigController(configView);
+                    break;
+                case "Estudiantes": 
+                    StudentListView studentView = new StudentListView(); 
+                    new StudentListController(studentView); 
+                    break; 
+                default: 
+                    System.out.println("Comando no reconocido.");
+                    break;
+            }
+        } catch (Throwable ex) {
+            System.out.println("💥 ¡ERROR CRÍTICO AL ABRIR LA VISTA! 💥");
+            ex.printStackTrace(); // Esto nos mostrará el culpable en rojo
         }
     }
 
