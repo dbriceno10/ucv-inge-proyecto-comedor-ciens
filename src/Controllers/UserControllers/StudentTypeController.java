@@ -20,7 +20,7 @@ public class StudentTypeController implements ActionListener {
         this.view.saveListener(this);
         this.view.cancelListener(this);
         
-        this.view.setVisible(true); // Esto hace que la ventanita aparezca
+        this.view.setVisible(true); 
     }
 
     @Override
@@ -39,7 +39,7 @@ public class StudentTypeController implements ActionListener {
                 userService.changeTypeStudent(studentId, newType);
                 
                 JOptionPane.showMessageDialog(view, "¡Beneficio actualizado!");
-                view.dispose(); // Cierra la ventanita
+                view.dispose(); 
                 
                 // Refresca la lista de atrás para que la tarjeta cambie de color
                 parentController.loadStudents();

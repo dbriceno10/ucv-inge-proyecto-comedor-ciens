@@ -6,19 +6,17 @@ import Model.User.UserService;
 import Model.User.UserModel; 
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 
 public class StudentListController implements ActionListener {
     private StudentListView view;
     private UserService userService;
-    private String currentSearch = ""; // Guarda lo que estamos buscando
+    private String currentSearch = ""; 
 
     public StudentListController(StudentListView view) {
         this.view = view;
@@ -27,30 +25,14 @@ public class StudentListController implements ActionListener {
         this.view.volverListener(this);
         this.view.setCardListener(this);
 
-        // --- MAGIA DEL BUSCADOR ---
-        // 1. Quitar el texto por defecto al hacer clic
-        this.view.getSearchField().addFocusListener(new FocusAdapter() {
-            public void focusGained(FocusEvent e) {
-                if (view.getSearchField().getText().trim().equals("Buscar por cédula...")) {
-                    view.getSearchField().setText("");
-                }
-            }
-            public void focusLost(FocusEvent e) {
-                if (view.getSearchField().getText().trim().isEmpty()) {
-                    view.getSearchField().setText(" Buscar por cédula...");
-                }
-            }
-        });
-
-        // 2. Filtrar cada vez que se presiona una tecla
+        // El buscador solo escucha el teclado
         this.view.getSearchField().addKeyListener(new KeyAdapter() {
             public void keyReleased(KeyEvent e) {
                 currentSearch = view.getSearchField().getText().trim();
                 if (currentSearch.equals("Buscar por cédula...")) currentSearch = "";
-                loadStudents(); // Recarga la lista aplicando el filtro
+                loadStudents(); 
             }
         });
-        // --------------------------
 
         loadStudents(); 
         this.view.setVisible(true);
@@ -64,15 +46,14 @@ public class StudentListController implements ActionListener {
             view.dispose(); 
         } 
         else if (command.startsWith("OPEN_MODAL_")) {
-            String idString = command.replace("OPEN_MODAL_", "");
-            Integer studentId = Integer.parseInt(idString);
+            Integer studentId = Integer.parseInt(command.replace("OPEN_MODAL_", ""));
             openStudentModal(studentId); 
         }
     }
 
     public void loadStudents() {
-        JPanel panel = view.getComponent_gridPanel();
-        panel.removeAll(); 
+        // Le decimos a la vista que se limpie sola
+        view.limpiarCuadricula();
         
         try {
             ArrayList<UserModel> students = userService.getAllStudents();
@@ -82,7 +63,6 @@ public class StudentListController implements ActionListener {
                     String docId = String.valueOf(student.getDocumentId());
                     String type = student.getType();
                     
-                    // FILTRO DE BÚSQUEDA: Si escribimos algo y no coincide ni la cédula ni el nombre, lo saltamos
                     if (!currentSearch.isEmpty() && 
                         !docId.contains(currentSearch) && 
                         !fullName.toLowerCase().contains(currentSearch.toLowerCase())) {
@@ -93,11 +73,11 @@ public class StudentListController implements ActionListener {
                 }
             }
         } catch (Exception ex) {
-            System.out.println("Error cargando estudiantes: " + ex.getMessage());
+           JOptionPane.showMessageDialog(view, "Error al cargar los estudiantes: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         
-        panel.revalidate();
-        panel.repaint();
+        // Le decimos a la vista que se refresque sola
+        view.refrescarPantalla();
     }
 
     private void openStudentModal(Integer studentId) {
@@ -105,8 +85,7 @@ public class StudentListController implements ActionListener {
             StudentTypeModal modal = new StudentTypeModal(this.view, studentId);
             new StudentTypeController(modal, this); 
         } catch (Exception ex) {
-            System.out.println("💥 Error al abrir el modal 💥");
-            ex.printStackTrace();
+           JOptionPane.showMessageDialog(view, "Error al abrir opciones: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

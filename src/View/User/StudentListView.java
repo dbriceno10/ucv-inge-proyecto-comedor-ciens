@@ -6,7 +6,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 
 public class StudentListView extends JFrame {
     private RoundedButton btnVolver;
@@ -74,6 +73,17 @@ public class StudentListView extends JFrame {
         txtSearch.setForeground(color.DARK_GRAY);
         txtSearch.setPreferredSize(new Dimension(220, 38));
 
+        // --- MAGIA DEL BUSCADOR (Lógica Visual) ---
+        txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (txtSearch.getText().trim().equals("Buscar por cédula...")) txtSearch.setText("");
+            }
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (txtSearch.getText().trim().isEmpty()) txtSearch.setText(" Buscar por cédula...");
+            }
+        });
+        // ------------------------------------------
+
         JLabel searchIcon = new JLabel(new SearchIcon());
         searchIcon.setBorder(new EmptyBorder(0, 8, 0, 0));
 
@@ -102,6 +112,17 @@ public class StudentListView extends JFrame {
         this.setContentPane(mainPanel);
         setMinimumSize(new Dimension(1024, 768));
         setLocationRelativeTo(null);
+    }
+
+    // --- MÉTODOS PARA EL CONTROLADOR ---
+
+    public void limpiarCuadricula() {
+        gridPanel.removeAll();
+    }
+
+    public void refrescarPantalla() {
+        gridPanel.revalidate();
+        gridPanel.repaint();
     }
 
     // --- MÉTODO PARA DIBUJAR A LOS ESTUDIANTES ---
@@ -195,6 +216,5 @@ public class StudentListView extends JFrame {
     // Listeners y Getters
     public void volverListener(ActionListener listener) { btnVolver.addActionListener(listener); }
     public void setCardListener(ActionListener listener) { this.cardListener = listener; }
-    public JPanel getComponent_gridPanel() { return gridPanel; }
     public RoundedTextField getSearchField() { return txtSearch; }
 }
