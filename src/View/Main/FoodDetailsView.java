@@ -1,18 +1,17 @@
 package View.Main;
 
 import View.CustomComponents.*;
+import Model.DTO.Food.FoodDto;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import Model.DTO.Food.FoodDto;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class FoodDetailsView extends JDialog {
     private Colors color = new Colors();
     private JButton btnClose, btnReserve;
+    private JLabel lblCost;
 
     // Recibe el JFrame padre (Dashboard) y los datos del plato (FoodDto)
     public FoodDetailsView(JFrame parent, FoodDto food) {
@@ -63,7 +62,7 @@ public class FoodDetailsView extends JDialog {
         // --- 4. Descripción ---
         // Usamos JTextArea en lugar de JLabel para permitir saltos de línea automáticos
         JTextArea txtDesc = new JTextArea();
-        txtDesc.setText("desc.");
+        txtDesc.setText(food.getDescription());
         txtDesc.setFont(new Font("SansSerif", Font.PLAIN, 15));
         txtDesc.setForeground(color.BLACK);
         txtDesc.setLineWrap(true);        // Activa el salto de línea
@@ -76,7 +75,7 @@ public class FoodDetailsView extends JDialog {
 
         // --- 5. Costo ---
         // ajustar lógica de costo
-        JLabel lblCost = new JLabel("Costo: $0.00 (Pendiente)"); 
+        lblCost = new JLabel("Calculando costo..."); 
         lblCost.setFont(new Font("SansSerif", Font.BOLD, 22));
         lblCost.setForeground(new Color(40, 167, 69)); 
         lblCost.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -108,6 +107,18 @@ public class FoodDetailsView extends JDialog {
         mainPanel.add(btnReserve);
 
         this.add(mainPanel);
+    }
+
+    public void setCost(Double calculatedCost) {
+        if (calculatedCost == 0.0) {
+            lblCost.setText("Agotado / No disponible");
+            lblCost.setForeground(color.RED);
+            btnReserve.setEnabled(false);
+        } else {
+            String costFormatted = String.format("Costo: Bs. %.2f", calculatedCost);
+            lblCost.setText(costFormatted);
+            lblCost.setForeground(new Color(40, 167, 69));
+        }
     }
 
     public void closeListener(ActionListener listener) { btnClose.addActionListener(listener); }

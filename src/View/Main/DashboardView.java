@@ -216,7 +216,7 @@ public class DashboardView extends JFrame {
             ImageIcon checkIcon = new ImageIcon(imgPath);
 
             // Default image in case of incorrect path or no image for the menu
-            if (checkIcon.getIconWidth() == -1) { checkIcon = new ImageIcon("assets/images/Menu/default.png"); } 
+            if (checkIcon.getIconWidth() == -1) { imgPath = "assets/images/Menu/default.png"; } 
             
             lblImg.setIcon(Utils.ImageUtils.getRoundedIcon(imgPath, 180, 120, 30));
             

@@ -6,9 +6,11 @@ import Model.DTO.Booking.CreateBookingDto;
 import Model.DTO.User.AuthUserDto;
 import Model.DTO.Food.FoodDto;
 import Model.DTO.Menu.MenuDto;
+import Model.DTO.Menu.MenuQtyDto;
 import Context.User.UserSession;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -27,6 +29,8 @@ public class FoodDetailsController implements ActionListener {
         this.foodData = foodData;
         this.menuData = menuData;
         bookingService = new BookingService();
+
+        updateData();
 
         this.view.closeListener(this);
         this.view.reserveListener(this);
@@ -70,6 +74,34 @@ public class FoodDetailsController implements ActionListener {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(view, "Error al crear la reservación: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void updateData() {
+        Double decrease = foodData.getDecrease();
+        Double valueCV = foodData.getValueCV();
+        Integer currentQty = 0;
+
+        ArrayList<MenuQtyDto> listQtys = menuData.getQtys();
+        
+        if (listQtys != null) {
+            for (MenuQtyDto qty : listQtys) {
+                if (qty.getFoodId().equals(foodData.getId())) {
+                    currentQty = qty.getCurrentQty();
+                    break;
+                }
+            }
+        }
+
+        try {
+            if (currentQty > 0) {
+                Double finalCost = bookingService.calculateCCB(currentQty, decrease, valueCV);
+                view.setCost(finalCost);
+            } else {
+                view.setCost(0.0);
+            }
+        } catch (Exception ex) {
+            view.setCost(0.0);
         }
     }
 }
