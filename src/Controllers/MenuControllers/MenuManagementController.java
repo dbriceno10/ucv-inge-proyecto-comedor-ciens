@@ -32,7 +32,8 @@ public class MenuManagementController implements ActionListener {
         this.view.InventoryListener(this);
         this.view.DishesListener(this);
         this.view.configListener(this);
-        this.view.StudentsListener(this); // Linea añadida
+        this.view.StudentsListener(this); 
+        this.view.StatisticsListener(this);
 
         loadMenus();
         this.view.setVisible(true);
@@ -41,11 +42,8 @@ public class MenuManagementController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String button = e.getActionCommand();
-        System.out.println("➡️ Clic detectado en el botón: [" + button + "]");
-        
-        try {
-            switch (button) {
+        String command = e.getActionCommand();
+            switch (command) {
                 case "Crear Menú":
                     MenuEditorView menuEdit = new MenuEditorView();
                     new MenuEditorController(menuEdit);
@@ -66,14 +64,12 @@ public class MenuManagementController implements ActionListener {
                     StudentListView studentView = new StudentListView(); 
                     new StudentListController(studentView); 
                     break; 
-                default: 
-                    System.out.println("Comando no reconocido.");
+                case "Estadísticas":
+                    ReportModalView reportView = new ReportModalView(this.view);
+                    new ReportModalController(reportView);
                     break;
+                default: break;
             }
-        } catch (Throwable ex) {
-            System.out.println("💥 ¡ERROR CRÍTICO AL ABRIR LA VISTA! 💥");
-            ex.printStackTrace(); // Esto nos mostrará el culpable en rojo
-        }
     }
 
     private void loadMenus() {
