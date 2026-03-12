@@ -3,6 +3,9 @@ package View.Menu;
 import View.CustomComponents.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import Enums.MenuTypes;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -33,7 +36,7 @@ public class ReportModalView extends JDialog {
         headerPanel.add(lblTitle, BorderLayout.WEST);
 
         // Selector de turno (Desayuno, Almuerzo, Cena)
-        String[] shifts = {"Desayuno", "Almuerzo", "Cena"};
+        String[] shifts = {MenuTypes.BREACKFAST, MenuTypes.LUNCH, MenuTypes.DINNER};
         cmbShift = new RoundedComboBox<>(shifts);
         cmbShift.setPreferredSize(new Dimension(150, 35));
         cmbShift.setActionCommand("SHIFT_CHANGED");
