@@ -63,9 +63,9 @@ public class MenuEditorView extends JFrame {
         txtDate.setText("08/12/2025");
         txtDate.setPreferredSize(new Dimension(110, 35));
 
-        // 4. Campo de Cantidad de bandejas
+        // 4. Campo de Cantidad de bandejas (Se mantiene por el diseño, aunque la cantidad real ahora va por plato)
         txtQty = new RoundedTextField();
-        txtQty.setText("10"); // Valor por defecto
+        txtQty.setText("10"); 
         txtQty.setPreferredSize(new Dimension(70, 35));
         
         // Añadimos todo al panel usando un método auxiliar para ponerles títulos
@@ -129,7 +129,7 @@ public class MenuEditorView extends JFrame {
 
         // AÑADIR AL FRAME
         mainPanel.add(whiteCard, BorderLayout.CENTER);
-        this.setContentPane(mainPanel); // Asegura que el fondo gris se vea
+        this.setContentPane(mainPanel); 
         
         // Finalizar
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -144,14 +144,14 @@ public class MenuEditorView extends JFrame {
         badge.setBackground(color.WHITE);
         badge.setBorder(BorderFactory.createLineBorder(color.LIGHT_GRAY, 1));
         
-        // Cargar foto de perfil (admin_profile.png)
+        // Cargar foto de perfil
         JLabel iconLbl = new JLabel();
         ImageIcon icon = loadScaledImage("assets/images/admin_profile.png", 40, 40);
         
         if (icon != null) {
             iconLbl.setIcon(icon);
         } else {
-            iconLbl.setText("●"); // Fallback si no hay imagen
+            iconLbl.setText("●"); 
             iconLbl.setForeground(color.DARK_GRAY);
         }
         
@@ -164,10 +164,11 @@ public class MenuEditorView extends JFrame {
         return badge;
     }
 
-    private void addPlatoRow(String nombrePlato) {
+    public void addPlatoRow(String nombrePlato, Integer foodId) {
         JPanel row = new JPanel(new GridBagLayout());
         row.setBackground(color.WHITE);
         row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
+        row.setName("row_" + foodId); // <--- Etiquetamos la fila con el ID
         
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 0, 5, 0);
@@ -206,12 +207,13 @@ public class MenuEditorView extends JFrame {
         lblQty.setFont(new Font("SansSerif", Font.BOLD, 9));
         lblQty.setForeground(color.DARK_GRAY);
         
-        RoundedTextField txtQty = new RoundedTextField();
-        txtQty.setText("0");
-        txtQty.setPreferredSize(new Dimension(160, 35));
+        RoundedTextField txtQtyLocal = new RoundedTextField(); // <-- Renombrado para no confundir
+        txtQtyLocal.setText("1"); // Empezamos con 1 bandeja mínimo
+        txtQtyLocal.setPreferredSize(new Dimension(160, 35));
+        txtQtyLocal.setName("qty_" + foodId); // <--- Etiquetamos el texto con el ID
         
         inputStack.add(lblQty, BorderLayout.NORTH);
-        inputStack.add(txtQty, BorderLayout.CENTER);
+        inputStack.add(txtQtyLocal, BorderLayout.CENTER);
 
         RoundedButton btnPlus = createCircularButton("+");
 
@@ -220,10 +222,10 @@ public class MenuEditorView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    int currentQty = Integer.parseInt(txtQty.getText());
-                    txtQty.setText(String.valueOf(currentQty + 1));
+                    int currentQty = Integer.parseInt(txtQtyLocal.getText());
+                    txtQtyLocal.setText(String.valueOf(currentQty + 1));
                 } catch (NumberFormatException ex) {
-                    txtQty.setText("1"); // Si hay error o está vacío, pone 1
+                    txtQtyLocal.setText("1");
                 }
             }
         });
@@ -232,12 +234,12 @@ public class MenuEditorView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    int currentQty = Integer.parseInt(txtQty.getText());
-                    if (currentQty > 0) {
-                        txtQty.setText(String.valueOf(currentQty - 1));
+                    int currentQty = Integer.parseInt(txtQtyLocal.getText());
+                    if (currentQty > 1) { // No permitimos que baje a 0
+                        txtQtyLocal.setText(String.valueOf(currentQty - 1));
                     }
                 } catch (NumberFormatException ex) {
-                    txtQty.setText("0"); // Si hay error, lo devuelve a 0
+                    txtQtyLocal.setText("1");
                 }
             }
         });
@@ -320,6 +322,35 @@ public class MenuEditorView extends JFrame {
         return panel;
     }
 
+    // --- MÉTODOS PARA QUE EL CONTROLADOR LEA LOS PLATOS (Imprescindibles) ---
+    public java.util.ArrayList<Model.DTO.Menu.MenuQtyDto> getPlatosSeleccionados() {
+        java.util.ArrayList<Model.DTO.Menu.MenuQtyDto> lista = new java.util.ArrayList<>();
+        Component[] filas = listPanel.getComponents();
+        for (Component fila : filas) {
+            if (fila instanceof JPanel && fila.getName() != null && fila.getName().startsWith("row_")) {
+                int foodId = Integer.parseInt(fila.getName().replace("row_", ""));
+                JTextField txt = findTextField((JPanel) fila, "qty_" + foodId);
+                if (txt != null) {
+                    int qty = Integer.parseInt(txt.getText());
+                    lista.add(new Model.DTO.Menu.MenuQtyDto(foodId, qty, qty));
+                }
+            }
+        }
+        return lista;
+    }
+
+    private JTextField findTextField(Container container, String name) {
+        for (Component c : container.getComponents()) {
+            if (c instanceof JTextField && name.equals(c.getName())) return (JTextField) c;
+            if (c instanceof Container) {
+                JTextField f = findTextField((Container) c, name);
+                if (f != null) return f;
+            }
+        }
+        return null;
+    }
+
+    // Listeners
     public void saveListener(ActionListener listener) { btnSave.addActionListener(listener);}
     public void cancelListener(ActionListener listener) { btnCancel.addActionListener(listener);}
     public void addDishListener(ActionListener listener) { btnAddDish.addActionListener(listener);} 
