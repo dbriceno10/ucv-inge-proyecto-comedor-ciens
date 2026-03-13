@@ -3,10 +3,9 @@ package Controllers.MenuControllers;
 import View.Menu.*;
 import Model.DTO.Food.FoodDto;
 import Model.DTO.Menu.CreateMenuDto;
+import Model.DTO.Menu.MenuQtyDto;
 import Model.Food.FoodService;
 import Model.Menu.MenuService;
-import Enums.Days;
-import Enums.MenuTypes;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -16,23 +15,20 @@ import java.util.ArrayList;
 
 public class MenuEditorController implements ActionListener {
     private MenuEditorView view;
-    private ArrayList<Integer> tempFoodIds;
     private MenuService menuService;
     private FoodService foodService;
         
     public MenuEditorController(MenuEditorView view) { 
         this.view = view;
-
-        tempFoodIds = new ArrayList<>();
-        menuService = new MenuService();
-        foodService = new FoodService();
+        this.menuService = new MenuService();
+        this.foodService = new FoodService();
 
         this.view.saveListener(this);
         this.view.cancelListener(this);
         this.view.addDishListener(this);
 
         this.view.setVisible(true);
-        this.view.setExtendedState(JFrame.MAXIMIZED_BOTH); // to display the interface in full screen mode.
+        this.view.setExtendedState(JFrame.MAXIMIZED_BOTH); 
     }
 
     @Override
@@ -54,41 +50,48 @@ public class MenuEditorController implements ActionListener {
 
     void processMenuSave() {
         try {
-            if (tempFoodIds.isEmpty()) { 
-                JOptionPane.showMessageDialog(view, "Añada un plato.");
+            // 1. Le pedimos a la Vista la lista de todo lo que el usuario configuró con los botones + y -
+            ArrayList<MenuQtyDto> menuQuantities = view.getPlatosSeleccionados();
+
+            if (menuQuantities.isEmpty()) { 
+                JOptionPane.showMessageDialog(view, "Debe añadir al menos un plato a la lista.", "Alerta", JOptionPane.WARNING_MESSAGE);
                 return; 
             }
+
+            // (Extraemos los IDs para mantener compatibilidad con la base de datos vieja)
+            ArrayList<Integer> tempFoodIds = new ArrayList<>();
+            for(MenuQtyDto item : menuQuantities) tempFoodIds.add(item.getFoodId());
             
             String day = view.getCmbDay();
             String type = view.getCmbType();
             String date = view.getTxtDate();
-            Integer qty = Integer.parseInt(view.getTxtQty()); 
-           
-            //TODO: Se debe ajustar el CreateMenuDto para que reciba una lista de MenuQtyDto, no un Integer qty. Esto implica modificar la vista para permitir ingresar cantidades por plato, y luego construir la lista de MenuQtyDto a partir de esa información. Por el momento dejo comentado.
-
-            // CreateMenuDto newMenu = new CreateMenuDto(day, type, tempFoodIds, qty, date);
-            // menuService.create(newMenu);
+            
+            // 2. Armamos el paquete
+            CreateMenuDto newMenu = new CreateMenuDto(day, type, tempFoodIds, menuQuantities, date);
+            
+            // 3. ¡Guardamos!
+            menuService.create(newMenu);
             
             JOptionPane.showMessageDialog(view, "¡Menú guardado exitosamente!");
             view.dispose(); 
 
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(view, "La cantidad de bandejas debe ser un número entero válido.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) { 
-            JOptionPane.showMessageDialog(view, "Error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(view, "Error crítico al guardar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }
 
     void showFoodSelector() {
         ArrayList<FoodDto> foods = foodService.getAllFoods();
         if (foods.isEmpty()) {
-            JOptionPane.showMessageDialog(view, "No hay platos creados.");
+            JOptionPane.showMessageDialog(view, "No hay platos creados en el inventario.");
             return;
         }
 
         String[] foodNames = new String[foods.size()];
         for (int i = 0; i < foods.size(); i++) foodNames[i] = foods.get(i).getName();
 
+        // Preguntamos qué plato quiere añadir
         String selectedName = (String) JOptionPane.showInputDialog(
             view, "Seleccione plato:", "Añadir",
             JOptionPane.QUESTION_MESSAGE, null, foodNames, foodNames[0]);
@@ -96,16 +99,11 @@ public class MenuEditorController implements ActionListener {
         if (selectedName != null) {
             for (FoodDto food : foods) {
                 if (food.getName().equals(selectedName)) {
-                    tempFoodIds.add(food.getId());
-                    try {
-                        java.lang.reflect.Method m = view.getClass().getDeclaredMethod("addPlatoRow", String.class);
-                        m.setAccessible(true);
-                        m.invoke(view, food.getName());
-                    } catch (Exception ex) {}
+                    // ¡Dibujamos la fila y le pasamos el ID para poder rastrearlo!
+                    view.addPlatoRow(food.getName(), food.getId());
                     break;
                 }
             }
         }
     }
 }
-  

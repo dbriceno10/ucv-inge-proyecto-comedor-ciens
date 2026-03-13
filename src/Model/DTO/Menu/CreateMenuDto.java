@@ -3,56 +3,37 @@ package Model.DTO.Menu;
 import java.util.ArrayList;
 
 public class CreateMenuDto {
-  private String day; // e.g., "LUNES", "MARTES", etc.
-  private String type; // e.g., "DESAYUNO", "ALMUERZO", "CENA"
-  private ArrayList<Integer> foodIds;
-  private String date; // e.g., "2024-06-10"
+  private String day; 
+  private String type; 
+  private ArrayList<Integer> foodIds; 
+  private String date;
   private String image;
-  private ArrayList<MenuQtyDto> qtys;
+  private ArrayList<MenuQtyDto> qtys; 
 
-  public CreateMenuDto() {
-  }
+  public CreateMenuDto() {}
 
   public CreateMenuDto(String day, String type, ArrayList<Integer> foodIds, ArrayList<MenuQtyDto> qtys, String date) {
     this.day = day;
-    this.foodIds = foodIds;
-    this.date = date;
     this.type = type;
+    this.foodIds = foodIds;
+    this.qtys = qtys;
+    this.date = date;
     this.image = null;
-    this.qtys = qtys;
   }
 
-  public CreateMenuDto(String day, String type, ArrayList<Integer> foodIds, String date, ArrayList<MenuQtyDto> qtys,
-      String image) {
+  public CreateMenuDto(String day, String type, ArrayList<Integer> foodIds, String date, ArrayList<MenuQtyDto> qtys, String image) {
     this.day = day;
+    this.type = type;
     this.foodIds = foodIds;
     this.date = date;
-    this.type = type;
-    this.image = image;
     this.qtys = qtys;
+    this.image = image;
   }
 
-  public String getDay() {
-    return day;
-  }
-
-  public ArrayList<Integer> getFoodIds() {
-    return foodIds;
-  }
-
-  public String getDate() {
-    return date;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public String getImage() {
-    return image;
-  }
-
-  public ArrayList<MenuQtyDto> getQtys() {
-    return qtys;
-  }
+  public String getDay() { return day; }
+  public String getType() { return type; }
+  public ArrayList<Integer> getFoodIds() { return foodIds; }
+  public String getDate() { return date; }
+  public String getImage() { return image; }
+  public ArrayList<MenuQtyDto> getQtys() { return qtys; }
 }
