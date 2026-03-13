@@ -3,22 +3,35 @@ package Model.User;
 // import Model.User.UserModel;
 // import Model.User.BaseUserModel;
 import Model.Common.CommonServices;
+import Model.DTO.Wallet.CreateWalletDto;
 import Utils.Dates;
-import DTO.Wallet.CreateWalletDto;
 import Model.Wallet.WalletService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import Enums.UserTypes;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
-  private static final String FILE_USER = "src/Database/User/users.json";
-  private static final String FILE_UCV_USERS = "src/Database/User/ucvUsers.json";
+  private String FILE_USER = "src/Model/Database/User/users.json";
+  private String FILE_UCV_USERS = "src/Model/Database/User/ucvUsers.json";
   private CommonServices commonServices = new CommonServices();
+  private WalletService walletService;
   private Dates datesUtil = new Dates();
-  private WalletService walletService = new WalletService();
+
+  public UserService() {
+    this.walletService = new WalletService();
+  }
+
+  public UserService(String userFilePath, String ucvUserFilePath, String walletFilePath, String movementsFilePath) {
+    this.FILE_USER = userFilePath;
+    this.FILE_UCV_USERS = ucvUserFilePath;
+    this.walletService = new WalletService(walletFilePath, movementsFilePath);
+  }
 
   // Métodos para manejar usuarios (crear, leer, actualizar, eliminar)
   // TODO: manejar excepciones, se debe manejar que el email sea unico en crear y
@@ -56,6 +69,18 @@ public class UserService {
     return foundUser;
   }
 
+  public Integer getUserIdByDocument(Integer documentId) {
+    System.out.println("Buscando ID interno para la cédula: " + documentId);
+    ArrayList<UserModel> users = getAllUsers();
+    
+    for (UserModel user : users) {
+      if (user.getDocumentId().equals(documentId)) {
+        return user.getId();
+      }
+    }
+    return null;
+  }
+
   public UserModel getUserByEmail(String email) {
     ArrayList<UserModel> users = getAllUsers();
     UserModel foundUser = null;
@@ -66,6 +91,30 @@ public class UserService {
       }
     }
     return foundUser;
+  }
+
+  public ArrayList<UserModel> getAllStudents() {
+    ArrayList<UserModel> users = getAllUsers();
+    ArrayList<UserModel> students = new ArrayList<>();
+    for (UserModel user : users) {
+      if (user.getIsStudent() != null && user.getIsStudent()) {
+        students.add(user);
+      }
+    }
+    return students;
+  }
+
+  public UserModel changeTypeStudent(Integer userId, String newType) {
+    UserModel user = this.getUserById(userId);
+    if (user == null) {
+      throw new IllegalArgumentException("User not found with id: " + userId);
+    }
+   if (UserTypes.STUDENT.equals(newType) || UserTypes.SCHOLAR.equals(newType) || UserTypes.EXONERATED.equals(newType)) {
+      user.setType(newType);
+    } else {
+      throw new IllegalArgumentException("Invalid type. Type must be STUDENT, SCHOLAR or EXONERATED.");
+    }
+    return this.update(user);
   }
 
   public UserModel create(UserModel user) {

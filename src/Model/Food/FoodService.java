@@ -8,18 +8,27 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import Model.Common.CommonServices;
+import Model.DTO.Food.CreateFoodDto;
+import Model.DTO.Food.FoodDto;
+import Model.DTO.Food.UpdateFoodDto;
+import Model.DTO.Ingredient.IngredientDto;
 import Utils.Dates;
-import DTO.Food.CreateFoodDto;
-import DTO.Food.UpdateFoodDto;
-import DTO.Food.FoodDto;
 import Model.Ingredient.IngredientSevice;
-import DTO.Ingredient.IngredientDto;
 
 public class FoodService {
-  private static final String FILE_PATH = "src/Database/Food/foods.json";
+  private String FILE_PATH = "src/Model/Database/Food/foods.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
-  private IngredientSevice ingredientSevice = new IngredientSevice();
+  private IngredientSevice ingredientSevice;
+
+  public FoodService() {
+    this.ingredientSevice = new IngredientSevice();
+  }
+
+  public FoodService(String foodFilePath, String ingredientFilePath) {
+    this.FILE_PATH = foodFilePath;
+    this.ingredientSevice = new IngredientSevice(ingredientFilePath);
+  }
 
   public ArrayList<FoodDto> getAllFoods() {
     ArrayList<FoodDto> foods = new ArrayList<>();

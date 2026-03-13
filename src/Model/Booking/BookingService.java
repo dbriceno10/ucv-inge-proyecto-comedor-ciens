@@ -10,29 +10,50 @@ import Model.Common.CommonServices;
 import Utils.*;
 import Enums.BookingStatus;
 import Enums.UserTypes;
-import DTO.Wallet.*;
 import Model.Wallet.*;
-import DTO.Booking.BookingDto;
-import DTO.Booking.CreateBookingDto;
-import DTO.Booking.UpdateBookingDto;
-import DTO.Config.ConfigDto;
-import DTO.Food.FoodDto;
-import DTO.Menu.*;
 import Model.User.*;
 import Model.Menu.*;
 import Model.Config.*;
+import Model.DTO.Booking.BookingDto;
+import Model.DTO.Booking.CreateBookingDto;
+import Model.DTO.Booking.UpdateBookingDto;
+import Model.DTO.Config.ConfigDto;
+import Model.DTO.Food.FoodDto;
+import Model.DTO.Menu.*;
+import Model.DTO.Wallet.*;
 import Model.Food.*;
 
 public class BookingService {
-  private static final String FILE_PATH = "src/Database/Booking/bookings.json";
+  private String FILE_PATH = "src/Model/Database/Booking/bookings.json";
   private CommonServices commonServices = new CommonServices();
   private Dates datesUtil = new Dates();
-  private UserService userService = new UserService();
-  private MenuService menuService = new MenuService();
-  private FoodService foodService = new FoodService();
-  private ConfigService configService = new ConfigService();
-  private WalletService walletService = new WalletService();
   private FileManager fileManager = new FileManager();
+  private UserService userService;
+  private MenuService menuService;
+  private FoodService foodService;
+  private ConfigService configService;
+  private WalletService walletService;
+
+  public BookingService() {
+    this.userService = new UserService();
+    this.menuService = new MenuService();
+    this.foodService = new FoodService();
+    this.configService = new ConfigService();
+    this.walletService = new WalletService();
+
+  }
+
+  public BookingService(String bookingFilePath, String userFilePath, String ucvUserFilePath, String walletFilePath,
+      String movementsFilePath,
+      String menuFilePath, String ingredientFilePath, String foodFilePath, String configFilePath) {
+    this.FILE_PATH = bookingFilePath;
+    this.userService = new UserService(userFilePath, ucvUserFilePath, walletFilePath, movementsFilePath);
+    this.menuService = new MenuService(menuFilePath, ingredientFilePath, foodFilePath);
+    this.foodService = new FoodService(foodFilePath, ingredientFilePath);
+    this.configService = new ConfigService(configFilePath);
+    this.walletService = new WalletService(walletFilePath, movementsFilePath);
+
+  }
 
   public ArrayList<BookingDto> getTodayBookings(Integer documentId, String shift) {
     // UserSession.getInstance().isAuthenticated();
@@ -104,11 +125,18 @@ public class BookingService {
       throw new IllegalArgumentException("Menu not found with ID: " + bookingDto.getMenuId());
     }
 
-    if (menu.getCurrentQty() - 1 < 0) {
+    MenuQtyDto menuQty = this.getMenuQtyByFoodId(menu.getQtys(), bookingDto.getFoodId());
+
+    if (menuQty == null) {
+      throw new IllegalArgumentException(
+          "Food with ID: " + bookingDto.getFoodId() + " not found in menu with ID: " + bookingDto.getMenuId());
+    }
+
+    if (menuQty.getCurrentQty() - 1 < 0) {
       throw new IllegalArgumentException("No hay suficiente cantidad disponible para el menú seleccionado.");
     }
 
-    Double ccb = this.calculateCCB(user.getType(), menu.getQty(), food.getDecrease(), food.getValueCV());
+    Double ccb = this.calculateCCB(menuQty.getQty(), food.getDecrease(), food.getValueCV());
 
     Integer newId = this.commonServices.getLastIndex(FILE_PATH,
         BookingModel.class);
@@ -132,7 +160,8 @@ public class BookingService {
       return null;
     }
 
-    this.menuService.updateCurrentQty(menu.getId(), menu.getCurrentQty() - 1);
+    this.menuService.updateCurrentQty(menu.getId(), bookingDto.getFoodId(), menuQty.getCurrentQty() - 1,
+        menu.getQtys());
 
     return mapToDto(created);
 
@@ -194,13 +223,18 @@ public class BookingService {
           status);
 
       BookingModel edited = this.edit(updatedBooking);
-      if (edited == null) {
+      if (edited != null) {
         if (status.equals(BookingStatus.CANCELED)) {
-          this.menuService.updateCurrentQty(menu.getId(), menu.getCurrentQty() + 1);
+          MenuQtyDto menuQty = this.getMenuQtyByFoodId(menu.getQtys(), existing.getFoodId());
+
+          if (menuQty != null) {
+            this.menuService.updateCurrentQty(menu.getId(), existing.getFoodId(), menuQty.getCurrentQty() + 1,
+                menu.getQtys());
+          }
         }
-        return null;
+        return mapToDto(edited);
       }
-      return mapToDto(edited);
+      return null;
     } else {
       throw new IllegalArgumentException("Invalid status value: " + status);
     }
@@ -274,6 +308,10 @@ public class BookingService {
       configPercentage = config.getStudentPercentage() / 100.0;
     } else if (user.getType().equals(UserTypes.WORKER)) {
       configPercentage = config.getWorkerPercentage() / 100.0;
+    } else if (user.getType().equals(UserTypes.SCHOLAR)) {
+      configPercentage = config.getScholarPercentage() / 100.0;
+    } else if (user.getType().equals(UserTypes.EXONERATED)) {
+      configPercentage = 0.0;
     }
 
     Double newBalance = wallet.getBalance() - (booking.getPrice() * configPercentage);
@@ -293,6 +331,59 @@ public class BookingService {
     }
 
     throw new IllegalArgumentException("Facial recognition failed for user id: " + booking.getUserId());
+  }
+
+  public ArrayList<String> getDinerStatistics(String shift) {
+    int studentCount = 0;
+    int scholarCount = 0;
+    int exoneratedCount = 0;
+    int professorCount = 0;
+    int workerCount = 0;
+    int adminCount = 0;
+
+    ArrayList<BookingModel> bookings = this.getAll();
+    for (BookingModel booking : bookings) {
+      if (BookingStatus.CONFIRMED.equals(booking.getStatus()) && booking.getShift().equals(shift)) {
+        UserModel user = this.userService.getUserById(booking.getUserId());
+        if (user != null && user.getType() != null) {
+          String type = user.getType();
+          if (type.equals(UserTypes.STUDENT))
+            studentCount++;
+          else if (type.equals(UserTypes.SCHOLAR))
+            scholarCount++;
+          else if (type.equals(UserTypes.EXONERATED))
+            exoneratedCount++;
+          else if (type.equals(UserTypes.PROFESSOR))
+            professorCount++;
+          else if (type.equals(UserTypes.WORKER))
+            workerCount++;
+          else if (type.equals(UserTypes.ADMIN))
+            adminCount++;
+        }
+      }
+    }
+
+    ArrayList<String> stats = new ArrayList<>();
+    stats.add(UserTypes.STUDENT + ": " + studentCount);
+    stats.add(UserTypes.SCHOLAR + ": " + scholarCount);
+    stats.add(UserTypes.EXONERATED + ": " + exoneratedCount);
+    stats.add(UserTypes.PROFESSOR + ": " + professorCount);
+    stats.add(UserTypes.WORKER + ": " + workerCount);
+    stats.add(UserTypes.ADMIN + ": " + adminCount);
+
+    System.out.println("Estadísticas de comensales para el turno " + shift + " :");
+    for (String stat : stats) {
+      System.out.println("- " + stat);
+    }
+
+    return stats;
+  }
+
+  public Double calculateCCB(Integer qty, Double decrease, Double valueCV) {
+    ConfigDto config = this.configService.getConfig();
+    double decreasePercentage = decrease / 100.0; // pasamos a porcentaje
+    Double ccb = ((config.getValueCF() + valueCV) / qty) * (1 + decreasePercentage);
+    return ccb;
   }
 
   // metodos privados
@@ -388,11 +479,15 @@ public class BookingService {
     return booking;
   }
 
-  private Double calculateCCB(String type, Integer qty, Double decrease, Double valueCV) {
-    ConfigDto config = this.configService.getConfig();
-    double decreasePercentage = decrease / 100.0; // pasamos a porcentaje
-    Double ccb = ((config.getValueCF() + valueCV) / qty) * (1 + decreasePercentage);
-    return ccb;
+  private MenuQtyDto getMenuQtyByFoodId(ArrayList<MenuQtyDto> menuQtyList, Integer foodId) {
+    MenuQtyDto found = null;
+    for (MenuQtyDto menuQty : menuQtyList) {
+      if (menuQty.getFoodId().equals(foodId)) {
+        found = menuQty;
+        break;
+      }
+    }
+    return found;
   }
 
 }

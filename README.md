@@ -81,9 +81,9 @@ Actualmente, el proyecto cuenta con las siguientes pruebas:
 * **`Testing.Menu.CreateMenuTest`**: Verifica el método `create` del servicio de menús, comprobando la creación exitosa de un menú (y su posterior borrado lógico), así como el manejo de errores al intentar crear menús sin platos o con más de 3 platos.
 * **`Testing.User.RegisterUserTest`**: Verifica el método `register` del servicio de autenticación, comprobando validaciones de roles (ej. un estudiante no puede registrarse como administrador), el registro exitoso de un comensal, la prevención de correos duplicados y la limpieza de la base de datos mediante el borrado lógico.
 * **`Testing.User.GetUserByIdTest`**: Verifica el método `getUserById` del servicio de usuarios, comprobando que se obtengan correctamente los datos de un usuario existente y que retorne nulo al buscar un ID inexistente.
+* **`Testing.User.GetDinerStatisticsTest`**: Verifica el método `getDinerStatistics` del servicio de usuarios, comprobando el correcto conteo y agrupación de los distintos tipos de usuarios basándose en una lista de IDs de comensales asistentes que acudieron a un servicio.
 * **`Testing.Config.UpdateConfigTest`**: Verifica el método `updateConfig` del servicio de configuración, comprobando las validaciones de rangos permitidos para los porcentajes de subsidio y valores de costos fijos, además de validar la actualización exitosa y restauración de los datos.
-* **`Testing.Booking.ChargeForServiceTest`**: Verifica el método `chargeForService` del servicio de reservas, comprobando el cobro exitoso de un servicio con saldo suficiente y el manejo de errores cuando el usuario no tiene saldo suficiente en su billetera.
-* **`Testing.Booking.ChargeForServiceTestWithRestore`**: Variante de la prueba de cobro de reservas que incluye la restauración automática del saldo del usuario y del estado de la reserva a sus valores originales después de cada ejecución, garantizando la idempotencia de las pruebas.
+* **`Testing.Booking.ChargeForServiceTest`**: Verifica el método `chargeForService` del servicio de reservas, comprobando el cobro exitoso de un servicio con saldo suficiente y el manejo de errores cuando el usuario no tiene saldo suficiente en su billetera. Incluye la restauración automática del saldo del usuario y del estado de la reserva a sus valores originales después de cada ejecución, garantizando la idempotencia de las pruebas.
 * **`Testing.Booking.CreateBookingTest`**: Verifica el método `create` del servicio de reservas, comprobando la creación exitosa de una reserva válida y la validación que impide a un usuario tener más de una reserva para el mismo turno y día.
 
 ### Ejecutar todas las pruebas
@@ -104,8 +104,8 @@ mvn test -Dtest=Testing.User.RegisterUserTest
 mvn test -Dtest=Testing.User.GetUserByIdTest
 mvn test -Dtest=Testing.Config.UpdateConfigTest
 mvn test -Dtest=Testing.Booking.ChargeForServiceTest
-mvn test -Dtest=Testing.Booking.ChargeForServiceTestWithRestore
 mvn test -Dtest=Testing.Booking.CreateBookingTest
+mvn test -Dtest=Testing.Booking.GetDinerStatisticsTest
 ```
 
 ## 👥 Equipo de Trabajo

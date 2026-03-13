@@ -1,10 +1,11 @@
 package Model.User;
 
-// import Model.User.BaseUserModel;
+import Enums.UserTypes;
 
 public class UserModel extends BaseUserModel {
   private String password;
   private Boolean isActive;
+  private Boolean isStudent;
   private String createdAt = null;
   private String updatedAt = null;
   private String deletedAt = null;
@@ -28,6 +29,11 @@ public class UserModel extends BaseUserModel {
     this.updatedAt = updatedAt;
     this.deletedAt = deletedAt;
     this.documentId = documentId;
+   if (UserTypes.STUDENT.equals(type) || UserTypes.SCHOLAR.equals(type) || UserTypes.EXONERATED.equals(type)) {
+      this.isStudent = true;
+    } else {
+      this.isStudent = false;
+    }
   }
 
   public UserModel(UserModel user) {
@@ -43,6 +49,11 @@ public class UserModel extends BaseUserModel {
     this.updatedAt = user.updatedAt;
     this.deletedAt = user.deletedAt;
     this.documentId = user.documentId;
+    if (UserTypes.STUDENT.equals(user.type) || UserTypes.SCHOLAR.equals(user.type) || UserTypes.EXONERATED.equals(user.type)) {
+      this.isStudent = true;
+    } else {
+      this.isStudent = false;
+    }
   }
 
   public UserModel(String firstName, String lastName, String email, String password, String role,
@@ -54,6 +65,11 @@ public class UserModel extends BaseUserModel {
     this.role = role;
     this.type = type;
     this.documentId = documentId;
+    if (UserTypes.STUDENT.equals(type) || UserTypes.SCHOLAR.equals(type) || UserTypes.EXONERATED.equals(type)) {
+      this.isStudent = true;
+    } else {
+      this.isStudent = false;
+    }
   }
 
   // getters
@@ -81,8 +97,21 @@ public class UserModel extends BaseUserModel {
     return role;
   }
 
+  public Boolean getIsStudent() {
+    return isStudent;
+  }
+
   // setters
   public void setDeletedAt(String deletedAt) {
     this.deletedAt = deletedAt;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+   if (UserTypes.STUDENT.equals(type) || UserTypes.SCHOLAR.equals(type) || UserTypes.EXONERATED.equals(type)) {
+      this.isStudent = true;
+    } else {
+      this.isStudent = false;
+    }
   }
 }

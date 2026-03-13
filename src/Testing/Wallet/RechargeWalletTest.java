@@ -3,14 +3,16 @@ package Testing.Wallet;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import Model.DTO.Wallet.WalletDto;
 import Model.Wallet.WalletService;
-import DTO.Wallet.WalletDto;
 
 public class RechargeWalletTest {
+  private static final String FILE_PATH = "src/Model/TestDatabase/Wallet/wallets.json";
+  private static final String MOVEMENTS_FILE_PATH = "src/Model/TestDatabase/Wallet/movements.json";
+  private WalletService walletService = new WalletService(FILE_PATH, MOVEMENTS_FILE_PATH);
 
   @Test
   public void testRechargeWalletSuccess() {
-    WalletService walletService = new WalletService();
     Integer userId = 11;
     Double amount = 50.0;
     String reference = "REF123456";
@@ -35,7 +37,6 @@ public class RechargeWalletTest {
 
   @Test
   public void testRechargeWalletNegativeAmount() {
-    WalletService walletService = new WalletService();
     Integer userId = 12;
     Double amount = -10.0;
     String reference = "REF789012";
@@ -51,7 +52,6 @@ public class RechargeWalletTest {
 
   @Test
   public void testRechargeWalletUserNotFound() {
-    WalletService walletService = new WalletService();
     Integer userId = 999; // Usuario inexistente
     Double amount = 100.0;
     String reference = "REF345678";

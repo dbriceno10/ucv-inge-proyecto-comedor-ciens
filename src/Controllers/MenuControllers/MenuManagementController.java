@@ -4,7 +4,7 @@ import View.Menu.*;
 import View.Config.ConfigView;
 import View.Food.*;
 import View.Ingredient.IngredientListView;
-import DTO.Menu.*;
+import Model.DTO.Menu.*;
 import Model.Menu.*;
 
 import javax.swing.*;
@@ -12,6 +12,9 @@ import javax.swing.*;
 import Controllers.ConfigControllers.ConfigController;
 import Controllers.FoodControllers.DishListController;
 import Controllers.IngredientControllers.IngredientListController;
+
+import View.User.StudentListView; // Linea añadida
+import Controllers.UserControllers.StudentListController; // Linea añadida
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +32,8 @@ public class MenuManagementController implements ActionListener {
         this.view.InventoryListener(this);
         this.view.DishesListener(this);
         this.view.configListener(this);
+        this.view.StudentsListener(this); 
+        this.view.StatisticsListener(this);
 
         loadMenus();
         this.view.setVisible(true);
@@ -37,26 +42,34 @@ public class MenuManagementController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String button = e.getActionCommand();
-        switch (button) {
-            case "Crear Menú":
-                MenuEditorView menuEdit = new MenuEditorView();
-                new MenuEditorController(menuEdit);
-                break;
-            case "Inventario":
-                IngredientListView ingredientView = new IngredientListView();
-                new IngredientListController(ingredientView);
-                break;
-            case "Platos":
-                DishListView dishView = new DishListView();
-                new DishListController(dishView);
-                break;
-            case "Configurar CCB":
-                ConfigView configView = new ConfigView(this.view); 
-                new ConfigController(configView);
-                break;
-            default: break;
-        }
+        String command = e.getActionCommand();
+            switch (command) {
+                case "Crear Menú":
+                    MenuEditorView menuEdit = new MenuEditorView();
+                    new MenuEditorController(menuEdit);
+                    break;
+                case "Inventario":
+                    IngredientListView ingredientView = new IngredientListView();
+                    new IngredientListController(ingredientView);
+                    break;
+                case "Platos":
+                    DishListView dishView = new DishListView();
+                    new DishListController(dishView);
+                    break;
+                case "Configurar CCB":
+                    ConfigView configView = new ConfigView(this.view); 
+                    new ConfigController(configView);
+                    break;
+                case "Estudiantes": 
+                    StudentListView studentView = new StudentListView(); 
+                    new StudentListController(studentView); 
+                    break; 
+                case "Estadísticas":
+                    ReportModalView reportView = new ReportModalView(this.view);
+                    new ReportModalController(reportView);
+                    break;
+                default: break;
+            }
     }
 
     private void loadMenus() {

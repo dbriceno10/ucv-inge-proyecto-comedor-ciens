@@ -1,8 +1,8 @@
 package Controllers.MenuControllers;
 
 import View.Menu.*;
-import DTO.Food.FoodDto;
-import DTO.Menu.CreateMenuDto;
+import Model.DTO.Food.FoodDto;
+import Model.DTO.Menu.CreateMenuDto;
 import Model.Food.FoodService;
 import Model.Menu.MenuService;
 import Enums.Days;
@@ -64,8 +64,10 @@ public class MenuEditorController implements ActionListener {
             String date = view.getTxtDate();
             Integer qty = Integer.parseInt(view.getTxtQty()); 
            
-            CreateMenuDto newMenu = new CreateMenuDto(day, type, tempFoodIds, qty, date);
-            menuService.create(newMenu);
+            //TODO: Se debe ajustar el CreateMenuDto para que reciba una lista de MenuQtyDto, no un Integer qty. Esto implica modificar la vista para permitir ingresar cantidades por plato, y luego construir la lista de MenuQtyDto a partir de esa información. Por el momento dejo comentado.
+
+            // CreateMenuDto newMenu = new CreateMenuDto(day, type, tempFoodIds, qty, date);
+            // menuService.create(newMenu);
             
             JOptionPane.showMessageDialog(view, "¡Menú guardado exitosamente!");
             view.dispose(); 

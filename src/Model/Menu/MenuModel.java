@@ -2,7 +2,7 @@ package Model.Menu;
 
 import java.util.ArrayList;
 
-import DTO.Menu.CreateMenuDto;
+import Model.DTO.Menu.CreateMenuDto;
 
 public class MenuModel {
   private Integer id;
@@ -14,8 +14,7 @@ public class MenuModel {
   private String createdAt = null;
   private String updatedAt = null;
   private String deletedAt = null;
-  private Integer qty;
-  private Integer currentQty;
+  private ArrayList<MenuQty> qtys;
 
   public MenuModel(
       Integer id,
@@ -27,7 +26,7 @@ public class MenuModel {
       String createdAt,
       String updatedAt,
       String deleted,
-      Integer qty) {
+      ArrayList<MenuQty> qtys) {
     this.id = id;
     this.day = day;
     this.type = type;
@@ -37,8 +36,7 @@ public class MenuModel {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.deletedAt = null;
-    this.qty = qty;
-    this.currentQty = qty; // Inicialmente, currentQty es igual a qty
+    this.qtys = qtys;
   }
 
   public MenuModel(CreateMenuDto menuDto, Integer id, String createdAt) {
@@ -51,8 +49,17 @@ public class MenuModel {
     this.updatedAt = createdAt; // Inicialmente, updatedAt es igual a createdAt
     this.deletedAt = null;
     this.type = menuDto.getType();
-    this.qty = menuDto.getQty();
-    this.currentQty = menuDto.getQty(); // Inicialmente, currentQty es igual a qty
+
+    // Mapear los Dtos a modelos internos MenuQty
+    this.qtys = new ArrayList<>();
+    System.out.println("Debug: MenuDto qtys size = " + (menuDto.getQtys() != null ? menuDto.getQtys().size() : "null"));
+    if (menuDto.getQtys() != null) {
+      for (Model.DTO.Menu.MenuQtyDto qtyDto : menuDto.getQtys()) {
+        this.qtys.add(new MenuQty(qtyDto.getFoodId(), qtyDto.getQty(), qtyDto.getCurrentQty()));
+      }
+    } else {
+      System.out.println("Warning: MenuDto does not contain qtys. Initializing with empty list.");
+    }
   }
 
   public MenuModel() {
@@ -96,12 +103,8 @@ public class MenuModel {
     return type;
   }
 
-  public Integer getQty() {
-    return qty;
-  }
-
-  public Integer getCurrentQty() {
-    return currentQty;
+  public ArrayList<MenuQty> getQtys() {
+    return qtys;
   }
 
   // seters
@@ -118,8 +121,7 @@ public class MenuModel {
     this.deletedAt = deletedAt;
   }
 
-  public void setCurrentQty(Integer currentQty) {
-    this.currentQty = currentQty;
+  public void setQtys(ArrayList<MenuQty> qtys) {
+    this.qtys = qtys;
   }
-
 }

@@ -4,17 +4,23 @@ import java.io.File;
 import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import Model.DTO.Config.ConfigDto;
 // import Context.User.UserSession;
 import Utils.Dates;
-import DTO.Config.ConfigDto;
-// import Enums.UserRoles;
 
 public class ConfigService {
-  private static String configFilePath = "src/Database/Config/config.json";
+  private String configFilePath = "src/Model/Database/Config/config.json";
   private Dates datesUtil = new Dates();
 
+  public ConfigService() {
+  }
+
+  public ConfigService(String configFilePath) {
+    this.configFilePath = configFilePath;
+  }
+
   public ConfigDto getConfig() {
-    //UserSession.getInstance().isAuthenticated(); // Verificar que el usuario esté
+    // UserSession.getInstance().isAuthenticated(); // Verificar que el usuario esté
     // autenticado
     ObjectMapper mapper = new ObjectMapper();
     try {
@@ -24,7 +30,7 @@ public class ConfigService {
         return this.mapToDto(config);
       } else {
         // Crear el archivo JSON con el elemento predeterminado si no existe
-        ConfigModel defaultConfig = new ConfigModel(1000.0, 70.0, 20.0, 90.0, "2026-01-01T00:00:00Z");
+        ConfigModel defaultConfig = new ConfigModel(1000.0, 70.0, 20.0, 90.0, 5.0, "2026-01-01T00:00:00Z");
         mapper.writerWithDefaultPrettyPrinter().writeValue(file, defaultConfig);
         return this.mapToDto(defaultConfig);
       }
@@ -35,7 +41,7 @@ public class ConfigService {
   }
 
   public ConfigDto createConfig(ConfigDto configDto) {
-    //UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el
+    // UserSession.getInstance().hasRole(UserRoles.ADMIN); // Verificar que el
     // usuario tenga rol ADMIN
     ConfigDto existingConfig = this.getConfig();
     if (existingConfig != null) {
@@ -49,6 +55,7 @@ public class ConfigService {
           configDto.getTeacherPercentage(),
           configDto.getStudentPercentage(),
           configDto.getWorkerPercentage(),
+          configDto.getScholarPercentage(),
           datesUtil.getCurrentDateTime());
       mapper.writerWithDefaultPrettyPrinter().writeValue(new File(configFilePath), newConfig);
       return this.mapToDto(newConfig);
@@ -59,7 +66,7 @@ public class ConfigService {
   }
 
   public ConfigDto updateConfig(ConfigDto configDto) {
-    //UserSession.getInstance().hasRole(UserRoles.ADMIN);
+    // UserSession.getInstance().hasRole(UserRoles.ADMIN);
     this.validateConfigDto(configDto); // Validar el DTO antes de actualizar
     ObjectMapper mapper = new ObjectMapper();
     try {
@@ -68,6 +75,7 @@ public class ConfigService {
           configDto.getTeacherPercentage(),
           configDto.getStudentPercentage(),
           configDto.getWorkerPercentage(),
+          configDto.getScholarPercentage(),
           datesUtil.getCurrentDateTime());
       mapper.writerWithDefaultPrettyPrinter().writeValue(new File(configFilePath), updatedConfig);
       return this.mapToDto(updatedConfig);
@@ -85,6 +93,7 @@ public class ConfigService {
         model.getTeacherPercentage(),
         model.getStudentPercentage(),
         model.getWorkerPercentage(),
+        model.getScholarPercentage(),
         model.getUpdateAt());
   }
 
@@ -103,6 +112,10 @@ public class ConfigService {
     if (configDto.getWorkerPercentage() == null || configDto.getWorkerPercentage() < 90
         || configDto.getWorkerPercentage() > 110) {
       throw new RuntimeException("El porcentaje para trabajadores debe estar entre 90 y 110");
+    }
+    if (configDto.getScholarPercentage() == null || configDto.getScholarPercentage() < 0
+        || configDto.getScholarPercentage() > 100) {
+      throw new RuntimeException("El porcentaje para becarios debe estar entre 0 y 100");
     }
   }
 

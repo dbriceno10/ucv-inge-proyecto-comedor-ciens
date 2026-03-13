@@ -1,10 +1,6 @@
 package View.Menu;
 
 import View.CustomComponents.*;
-import View.Food.DishListView;           
-import View.Ingredient.IngredientListView; 
-import Context.User.UserSession;
-import DTO.User.AuthUserDto;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,7 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MenuManagementView extends JFrame {
-    private RoundedButton btnCreateMenu, btnInventory, btnDishes, btnConfig;
+    private RoundedButton btnCreateMenu, btnInventory, btnDishes, btnConfig, btnStudents, btnStatistics;
     private RoundedTextField txtDateFrom, txtDateUntil;
     private JPanel menuContainer;
     private Colors color = new Colors();
@@ -53,11 +49,18 @@ public class MenuManagementView extends JFrame {
         btnConfig.setPreferredSize(new Dimension(200, 38)); 
 
         btnConfig.setActionCommand("Configurar CCB");
-        navPanel.add(btnConfig);
 
-        navPanel.add(btnConfig); // Añadimos el tuyo primero (opcional, para que salga a la izquierda)
-        navPanel.add(btnInventory);
-        navPanel.add(btnDishes);
+        btnStudents = new RoundedButton("Estudiantes");
+        stylize_button(btnStudents, color.LIGHT_BLUE);
+        btnStudents.setActionCommand("Estudiantes");
+
+        btnStatistics = new RoundedButton("Estadísticas");
+        stylize_button(btnStatistics, color.LIGHT_BLUE);
+        btnStatistics.setActionCommand("Estadísticas");
+
+        navPanel.add(btnConfig); 
+        navPanel.add(btnStudents); 
+        navPanel.add(btnStatistics);
         navPanel.add(btnInventory);
         navPanel.add(btnDishes);
 
@@ -204,6 +207,8 @@ public class MenuManagementView extends JFrame {
     public void InventoryListener(ActionListener listener) { btnInventory.addActionListener(listener);}
     public void DishesListener(ActionListener listener) { btnDishes.addActionListener(listener);} 
     public void configListener(ActionListener listener) { btnConfig.addActionListener(listener);} 
+    public void StudentsListener(ActionListener listener) { btnStudents.addActionListener(listener);} 
+    public void StatisticsListener(ActionListener listener) { btnStatistics.addActionListener(listener);}
 
     // component getters, not text
     public JPanel getComponentMenuContainer() { return menuContainer; }

@@ -8,10 +8,16 @@ import Model.User.UserModel;
 import Enums.UserRoles;
 
 public class GetUserByIdTest {
+  private static final String FILE_USER = "src/Model/TestDatabase/User/users.json";
+  private static final String FILE_UCV_USERS = "src/Model/TestDatabase/User/ucvUsers.json";
+  private static final String WALLET_FILE_PATH = "src/Model/TestDatabase/Wallet/wallets.json";
+  private static final String MOVEMENTS_FILE_PATH = "src/Model/TestDatabase/Wallet/movements.json";
+
+  private UserService userService = new UserService(FILE_USER, FILE_UCV_USERS, WALLET_FILE_PATH, MOVEMENTS_FILE_PATH);
 
   @Test
   public void testGetUserByIdSuccess() {
-    UserService userService = new UserService();
+
     Integer userId = 1; // Usuario que existe en users.json
 
     UserModel user = userService.getUserById(userId);
@@ -27,7 +33,6 @@ public class GetUserByIdTest {
 
   @Test
   public void testGetUserByIdNotFound() {
-    UserService userService = new UserService();
     Integer userId = 999; // Usuario que no existe
 
     UserModel user = userService.getUserById(userId);

@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class ConfigView extends JDialog { // Usamos JDialog como en WalletView
-    private RoundedTextField txtValueCF, txtStudentPct, txtTeacherPct, txtWorkerPct;
+    private RoundedTextField txtValueCF, txtStudentPct, txtTeacherPct, txtWorkerPct, txtScholarPct;
     private JButton btnClose;
     private RoundedButton btnSave;
     private Colors color = new Colors();
@@ -54,7 +54,7 @@ public class ConfigView extends JDialog { // Usamos JDialog como en WalletView
         add(headerPanel, BorderLayout.NORTH);
 
         // center (El formulario)
-        JPanel formPanel = new JPanel(new GridLayout(8, 1, 5, 5));
+        JPanel formPanel = new JPanel(new GridLayout(10, 1, 5, 5));
         formPanel.setBackground(color.WHITE);
         formPanel.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
 
@@ -62,6 +62,7 @@ public class ConfigView extends JDialog { // Usamos JDialog como en WalletView
         txtStudentPct = new RoundedTextField();
         txtTeacherPct = new RoundedTextField();
         txtWorkerPct = new RoundedTextField();
+        txtScholarPct = new RoundedTextField(); 
 
         formPanel.add(createLabel("Costo Fijo Total (CF):"));
         formPanel.add(txtValueCF);
@@ -71,6 +72,8 @@ public class ConfigView extends JDialog { // Usamos JDialog como en WalletView
         formPanel.add(txtTeacherPct);
         formPanel.add(createLabel("Tarifa Empleados (%):"));
         formPanel.add(txtWorkerPct);
+        formPanel.add(createLabel("Tarifa Becarios (%):"));
+        formPanel.add(txtScholarPct);
         
         add(formPanel, BorderLayout.CENTER);
 
@@ -101,12 +104,14 @@ public class ConfigView extends JDialog { // Usamos JDialog como en WalletView
     public String getTxtStudentPct() { return txtStudentPct.getText(); }
     public String getTxtTeacherPct() { return txtTeacherPct.getText(); }
     public String getTxtWorkerPct() { return txtWorkerPct.getText(); }
+    public String getTxtScholarPct() { return txtScholarPct.getText(); }
 
-    public void setConfigData(String cf, String student, String teacher, String worker) {
+  public void setConfigData(String cf, String student, String teacher, String worker, String scholar) {
         txtValueCF.setText(cf);
         txtStudentPct.setText(student);
         txtTeacherPct.setText(teacher);
         txtWorkerPct.setText(worker);
+        txtScholarPct.setText(scholar);
     }
 
     // Listeners

@@ -4,8 +4,8 @@ import View.Ingredient.IngredientListView;
 import View.Menu.MenuManagementView;
 import View.Food.DishListView;
 import View.Ingredient.IngredientEditorView;
-import Model.Ingredient.IngredientSevice; 
-import DTO.Ingredient.IngredientDto;
+import Model.DTO.Ingredient.IngredientDto;
+import Model.Ingredient.IngredientSevice;
 import Controllers.FoodControllers.DishListController;
 import Controllers.MenuControllers.MenuManagementController;
 

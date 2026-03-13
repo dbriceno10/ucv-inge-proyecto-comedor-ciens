@@ -1,11 +1,11 @@
 package View.Main;
 
 import Enums.MenuOptions;
+import Model.DTO.Food.FoodDto;
+import Model.DTO.Menu.MenuDto;
+import Model.DTO.User.AuthUserDto;
 import View.CustomComponents.*;
 import Context.User.UserSession;
-import DTO.Food.FoodDto;
-import DTO.Menu.MenuDto;
-import DTO.User.AuthUserDto;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -17,6 +17,8 @@ public class DashboardView extends JFrame {
     private JComboBox<String> selectMenu_type;
     private JLabel lblSectionTitle;
     private JPanel cardsPanel;
+    private JPopupMenu profileMenu;
+    private JMenuItem itemConfigProfile, itemLogout;
     private ActionListener cardListener;
 
     private AuthUserDto userSession = UserSession.getInstance().getUser();
@@ -50,6 +52,24 @@ public class DashboardView extends JFrame {
         btnProfile.setIcon(new ImageIcon(imgUser));
         btnProfile.setHorizontalAlignment(SwingConstants.LEFT);
         btnProfile.setPreferredSize(new Dimension(180, 70));
+        btnProfile.setActionCommand("OPEN_PROFILE_MENU");
+
+        // configuración para la lista de btnProfile.
+        profileMenu = new FlatPopupMenu();
+
+        itemConfigProfile = new FlatMenuItem("Configurar perfil");
+        itemConfigProfile.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        itemConfigProfile.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        itemConfigProfile.setActionCommand("CONFIG_PROFILE");
+        
+        itemLogout = new FlatMenuItem("Cerrar sesión");
+        itemLogout.setFont(new Font("SansSerif", Font.BOLD, 14));
+        itemLogout.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        itemLogout.setActionCommand("LOGOUT");
+
+        profileMenu.add(itemConfigProfile);
+        profileMenu.addSeparator();
+        profileMenu.add(itemLogout);
     
         // B. drop-down list. (right)
         String[] menu_options = {MenuOptions.DAILY, MenuOptions.WEEKLY};
@@ -173,6 +193,11 @@ public class DashboardView extends JFrame {
         }
     }
 
+    public void showProfileMenu() {
+        // Se dibuja el menú tomando como ancla el btnProfile, en la posición X=0, Y=alto del botón
+        profileMenu.show(btnProfile, 0, btnProfile.getHeight());
+    }
+
     private class MenuCard extends JPanel {
         private boolean isSelected = false;
         private Color defaultColor = color.ORANGE; 
@@ -191,7 +216,7 @@ public class DashboardView extends JFrame {
             ImageIcon checkIcon = new ImageIcon(imgPath);
 
             // Default image in case of incorrect path or no image for the menu
-            if (checkIcon.getIconWidth() == -1) { checkIcon = new ImageIcon("assets/images/Menu/default.png"); } 
+            if (checkIcon.getIconWidth() == -1) { imgPath = "assets/images/Menu/default.png"; } 
             
             lblImg.setIcon(Utils.ImageUtils.getRoundedIcon(imgPath, 180, 120, 30));
             
@@ -240,4 +265,11 @@ public class DashboardView extends JFrame {
     public void menuTypeListener(ActionListener listener) { selectMenu_type.addActionListener(listener);} 
     public void walletBtnListener(ActionListener listener) { btnWallet.addActionListener(listener);} 
     public void setCardListener(ActionListener listener) { cardListener = listener; }
+
+    public void profileMenuListener(ActionListener listener) { btnProfile.addActionListener(listener); }
+    
+    public void profileMenuOptionsListener(ActionListener listener) { 
+        itemConfigProfile.addActionListener(listener);
+        itemLogout.addActionListener(listener);
+    }
 }
